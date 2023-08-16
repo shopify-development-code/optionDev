@@ -1,0 +1,2183 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+.sd_topbar {
+  display: none;
+}
+
+/* .Polaris-Frame--hasTopBar .Polaris-Frame__Main {
+    padding-top: 0;
+}
+
+.Polaris-Frame--hasTopBar .Polaris-Frame__Navigation {
+    top: 0;
+    height: calc(100% - 0rem);
+} */
+
+.sd-app-activator {
+   margin: 15px 0px;
+}
+
+body[p-color-scheme="light"] {
+  background-color: #e8e8e8 !important;
+}
+
+.toggle-icon {
+  display: none;
+}
+
+.Polaris-Button--primary {
+  background: #2c0069;
+  border: 1px solid #2c0069;
+  box-shadow: none;
+}
+
+.Polaris-Button--primary:hover {
+  background: #2c0069;
+  border: 1px solid #2c0069;
+}
+
+div#app .Polaris-Frame {
+  background-color: transparent;
+}
+
+body,
+a,
+span,
+p,
+div,
+strong {
+  font-family: "Poppins", sans-serif;
+}
+
+.Polaris-Frame {
+  min-height: auto;
+}
+
+/* Top bar css Start */
+
+.sd-topbar .Polaris-TopBar__Contents {
+  border-left: 1px solid #e9e9e9;
+}
+
+.sd-topbar .Polaris-TopBar__SearchField {
+  display: none;
+}
+
+.sd-topbar .Polaris-TopBar__SecondaryMenu {
+  width: 100%;
+}
+
+.sd-topbar
+  .Polaris-TopBar__SecondaryMenu
+  .Polaris-TopBar-Menu__Activator::after {
+  content: none;
+}
+
+.sd-topbar .Polaris-TopBar__SecondaryMenu .sd-back {
+  display: inline-flex;
+  padding: 6px 10px;
+  /* border: 1px solid #e9e9e9; */
+  border-radius: 4px;
+  font-size: 13px;
+  margin-left: 10px;
+}
+
+.sd-topbar .Polaris-TopBar__SecondaryMenu .sd-back .Polaris-Icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 7px;
+}
+
+/* Top bar css End */
+
+.formType {
+  padding: 0;
+}
+
+.formType a {
+  cursor: pointer;
+  color: #000;
+}
+
+.formType li {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 20px;
+  z-index: 999;
+  position: relative;
+  border-bottom: 1px solid #e1e3e5;
+}
+
+.formType li:hover {
+  background-color: #f1f2f3;
+}
+
+.formSIdeBarIcon {
+  display: flex;
+}
+
+.formSIdeBarIcon a {
+  margin-right: 20px;
+}
+
+.formTypeLable {
+  width: 70%;
+}
+
+.fieldsType {
+  max-height: 602px;
+  overflow: auto;
+}
+
+.showHide {
+  display: none;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: #ffffff;
+}
+
+.topnav a.active {
+  background-color: green;
+  color: white;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child) {
+    display: none;
+  }
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topnav.responsive {
+    position: relative;
+  }
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
+
+.topBarLeftSide {
+  padding: 9px;
+}
+
+.topBarLeftSide a {
+  border-right: 1px solid #c4cdd5;
+}
+
+.topBarLeftSide button {
+  margin-left: 13px;
+  margin-top: 7px;
+}
+
+.exitIcon p {
+  opacity: 0;
+  transform: translateX(-0.5rem);
+  transition-property: opacity, transform;
+  transition-duration: var(--p-duration-150);
+  transition-timing-function: var(--p-ease);
+}
+
+.exitIcon p:hover {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.image {
+  width: 100%;
+  max-width: 220px;
+  height: 220px;
+  object-fit: contain;
+}
+
+.mobileView {
+  width: 400px;
+}
+
+.imgDiv {
+  text-align: center;
+  cursor: pointer;
+}
+
+.mview {
+  width: 400px;
+}
+
+.fieldsColorSettings input {
+  border: none;
+  width: 50%;
+}
+
+.theme_setting {
+  position: relative;
+}
+
+.elementsList {
+  overflow: auto;
+  height: 782px;
+}
+
+.elementsList li {
+  padding: 1.2rem 2rem;
+  font-weight: 600;
+  font-size: 1em;
+  justify-content: normal;
+  cursor: pointer;
+}
+
+.elementHeading {
+  background-color: #e5e7e8;
+  padding: 7px 17px;
+  margin-bottom: 7px;
+  margin-top: 8px;
+}
+
+.elementHeading span {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.selectbox {
+  margin-top: 15px;
+}
+
+.headdropdown {
+  margin-left: 12px !important;
+}
+
+.wrapper-class {
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+
+.editor-class {
+  background-color: lightgray;
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+
+.toolbar-class {
+  border: 1px solid #ccc;
+}
+
+.datePicker {
+  width: 100%;
+  border: 1px solid #aeb4b9;
+  padding: 8px;
+  border-radius: 3px;
+}
+
+.dropfield {
+  height: 30px;
+  display: none;
+}
+
+.dropfield1 {
+  height: 30px;
+  border: 2px solid #4b7e4b;
+  background-color: #e4f2e4;
+  text-align: center;
+  display: block;
+}
+
+.dropfield1:hover {
+  background-color: #92cf92;
+}
+
+.elementsList li:hover + .dropfield {
+  border: 1px solid red;
+}
+
+.removeElement {
+  margin-top: 50px;
+}
+
+.coloumWidth {
+  display: flex;
+  flex-direction: column;
+}
+
+.coloumWidth label {
+  margin-bottom: 10px;
+}
+
+.coloumWidth button {
+  margin-right: 10px;
+}
+
+.round_input .Polaris-TextField__Backdrop {
+  border-radius: 20px !important;
+}
+
+.selectbox {
+  display: flex;
+  flex-direction: column;
+}
+
+.box {
+  height: 83vh;
+  overflow: hidden;
+}
+
+.hid-box {
+  right: 100%;
+  position: relative;
+  /* transition: all 0.5s ease-in; */
+  height: 100%;
+}
+
+.hid-box1 {
+  position: absolute;
+  transition: all 0.5s ease-out;
+  height: 100%;
+  right: 0;
+}
+
+.hide-box {
+  right: 100%;
+  position: relative;
+  /* transition: all 0.5s ease-in; */
+  height: 100%;
+}
+
+.hide-box1 {
+  position: absolute;
+  transition: all 0.5s ease-out;
+  height: 100%;
+  right: 0;
+}
+
+.elementLi {
+  background-color: #f1f2f3;
+  display: flex;
+  justify-content: space-between !important;
+  flex-wrap: wrap;
+}
+
+.elementCard {
+  margin-bottom: 10px;
+  border: 1px solid #999191;
+  background-color: #fff;
+  border-radius: 4px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 115px;
+}
+
+.elementLiTwo {
+  justify-content: normal !important;
+}
+
+.elementListCard {
+  margin-right: 10px;
+  min-width: 25.33%;
+  max-width: 26%;
+}
+
+.elementsIcon {
+  margin-bottom: 8px;
+  margin-right: 0;
+}
+
+.addElementBtn {
+  text-align: center;
+  border: 1px solid #bbb;
+  margin-top: 20px;
+}
+
+.addElementBtn:hover {
+  background-color: #e5e7e8;
+}
+
+.addElementBtn button {
+  border: none;
+}
+
+.addElementBtn button:hover {
+  background-color: #e5e7e8;
+}
+
+.box {
+  position: relative;
+  transition-property: width;
+  transition-duration: 2s;
+  transition-timing-function: linear;
+  transition-delay: 1s;
+}
+
+/* sidebar css */
+
+.formSidebar ul {
+  margin: 0;
+  margin-top: 73px !important;
+  padding: 0;
+  height: 100%;
+  width: 260px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #262626;
+  margin-top: 0;
+  width: 7%;
+}
+
+.formSidebarul li {
+  list-style: none;
+}
+
+.formSidebar ul li a {
+  display: block;
+  font-family: "Montserrat", sans-serif;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 10px;
+  color: #fff;
+  position: relative;
+  padding: 30px 0px 30px 0;
+  text-align: center;
+}
+
+.formSidebar ul li a:before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 0%;
+  height: 90%;
+  background: #e3e9f7;
+  border-radius: 40px 0px 0px 20px;
+  z-index: -1;
+  transition: all 300ms ease-in-out;
+}
+
+.formSidebar ul li a:hover {
+  color: #2b2626;
+}
+
+.formSidebar ul li a:hover:before {
+  width: 95%;
+}
+
+.sidebarElement {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarElement span {
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.sidebarElement .Polaris-Icon--colorBase svg {
+  fill: #fff;
+}
+
+.sidebarActiveElement .Polaris-Icon--colorBase svg {
+  fill: #000;
+}
+
+.wrapper {
+  margin-left: 145px;
+}
+
+.formFooterBtn {
+  color: #fff;
+  border: none;
+  padding: 6px 17px;
+  border-radius: 4px;
+}
+
+/* display file css */
+
+.openForm {
+  margin-bottom: 20px;
+}
+
+.showTemplates {
+  margin-top: 42px;
+  text-align: center;
+}
+
+.eachTemplate {
+  background-image: url("https://qikify-cdn.nyc3.digitaloceanspaces.com/local/contactform/instances/4/115c4f92b4fdf30ed99cb41bb7efcf9386fe48540dea01ba79aef0eefe24654e.png");
+}
+
+.popupLayout {
+  margin-top: 42px;
+}
+
+.eachTemplateActive {
+  border: 8px solid #a7c08b;
+}
+
+.eachTemplate {
+  height: 150px;
+  width: 150px;
+  margin: auto;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.createNewForm {
+  padding: 11px 17px;
+  background-color: #262626;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.createNewForm:hover {
+  background-color: #949499;
+}
+
+.activeSideBar a {
+  display: block;
+  font-family: "Montserrat", sans-serif;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 10px;
+  color: #fff;
+  position: relative;
+  padding: 30px 0px 30px 0;
+  text-align: center;
+  background: #e3e9f7;
+  border-radius: 40px 0px 0px 20px;
+  height: 90%;
+  color: #000 !important;
+}
+
+.backBtnEditField .Polaris-Icon {
+  margin: 0;
+}
+
+.backBtnEditField {
+  color: #000;
+  display: flex;
+  margin-bottom: 10px;
+}
+
+/* checkbox css */
+
+.checkcss {
+  display: flex;
+  width: 77px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fieldsColorSettings {
+  padding: 6px 10px;
+  border: 1px solid grey;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.fieldsColorSettings span {
+  padding: 4px 42px;
+  border-radius: 5px;
+  margin-right: 10px;
+  border: 1px solid #d0cdcd;
+}
+
+.colorChanges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.colorChangeSec {
+  width: 40%;
+  margin-bottom: 20px;
+}
+
+.addoptions .Polaris-TextField__Backdrop {
+  border: none;
+  border-bottom: 1px solid #d0cdcd;
+  border-radius: 0;
+}
+
+.addoptions {
+  position: relative;
+}
+
+.displayScreen {
+  overflow: auto;
+  height: 82vh;
+}
+
+.displayScreen h1 {
+  font-size: "30px";
+  margin-bottom: 10px;
+}
+
+.Emailtextarea {
+  margin-top: 20px;
+  width: -webkit-fill-available;
+  height: 200px;
+}
+
+.modalTitle {
+  padding: 23px 0;
+  font-size: 21px;
+  margin: 0;
+  text-align: center;
+}
+
+.apply_on .ant-checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.apply_on .ant-checkbox-group-item {
+  margin-bottom: 10px;
+  width: 33%;
+}
+
+.tableApplyOn {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tableApplyOn span {
+  border: 1px solid #eaeaea;
+  padding: 2px 5px;
+  border-radius: 6px;
+  margin-right: 8px;
+  margin-bottom: 4px;
+}
+
+.listElement {
+  width: 60%;
+  cursor: pointer;
+}
+
+.backBtn_field span {
+  font-size: 19px;
+  font-weight: 500;
+}
+
+.backBtn_field button {
+  border-radius: 100px;
+  margin-right: 10px;
+  padding: 0.4rem 0.8rem;
+}
+
+.requiredField {
+  display: none;
+}
+
+.formView {
+  display: flex;
+}
+
+.formImage {
+  width: 40%;
+}
+
+.formFields {
+  width: 60%;
+}
+
+/* /////anchor click disable css//////// */
+
+.anchorclick {
+  pointer-events: none;
+}
+
+/* //////navigation ////////////// */
+
+.Polaris-Navigation {
+  background-color: rgb(255, 255, 255);
+}
+
+/* //////////////////////card css/////////////////////////////// */
+
+.home_page {
+  border: 2px solid lightgrey;
+  border-radius: 8px;
+  background-color: #ffffff;
+  overflow: hidden;
+  min-height: 217px;
+}
+
+.home_page:hover {
+  border-color: #2c0069;
+}
+
+.home_page.active-card {
+  background-color: #fff;
+  border-color: #2c0069;
+  box-shadow: 0px 1px 6px rgb(44 0 105 / 70%);
+}
+
+.home_page.active-card .actionBtns {
+  border-color: #d9d9d9;
+}
+
+.formData {
+  position: relative;
+}
+
+.formProducts {
+  padding: 22px;
+  min-height: 135px;
+}
+
+.formData h3 {
+  margin: 0 0 10px;
+}
+
+.formData #cardheading {
+  font-size: 14px;
+  line-height: normal;
+  color: #495057;
+  font-weight: 600;
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.formData .actionBtns p {
+  margin: 0px;
+  font-size: 12px;
+  line-height: normal;
+  color: #74788d;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 30px;
+  background-color: transparent;
+}
+
+/* .home_page:hover .formData .actionBtns p {
+    background-color: #349369;
+    color: #fff;
+} */
+
+.home-section {
+  padding: 30px 0px;
+}
+
+.themsettingClr {
+  cursor: no-drop;
+}
+
+.actionBtns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px;
+  border-bottom: 1px solid #efefef;
+}
+
+.actionBtns .Polaris-Icon .Polaris-Icon__Svg {
+  width: 14px;
+  height: 14px;
+  fill: #50505a;
+}
+
+.statusBtns {
+  padding: 13px 0px 0px;
+}
+
+.statusBtns select {
+  border-radius: 8px;
+  padding: 8px 12px;
+  background-color: transparent;
+  color: #585858;
+  font-weight: 500;
+  outline: none;
+  font-size: 12px;
+  line-height: normal;
+  border: 1px solid #ced4da;
+  width: 100%;
+}
+
+.activeBtn select {
+  background: #e1e1e1;
+  border-color: #adadad;
+  color: #3a3737;
+}
+
+.action_edit_icon {
+  display: flex;
+  justify-content: space-between;
+}
+
+.action_edit_icon a {
+  border-radius: 100px;
+  margin: 0 5px;
+}
+
+.action_edit_icon a .Polaris-Icon {
+  height: 1rem;
+  width: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.serachInput {
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.serachInput span {
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
+.serachInput input {
+  border-radius: 60px;
+  padding: 14px 30px;
+  padding-left: 48px;
+  border: 1px solid #e9e9ef;
+  width: 100%;
+  outline: none;
+  box-shadow: 0px 0px 5px #c7c2c2;
+  font-size: 13px;
+  color: #74788d;
+  line-height: normal;
+  font-weight: 500;
+  letter-spacing: 0.48px;
+}
+
+.serachInput input::placeholder {
+  color: #9699a7;
+}
+
+.serachInput .Polaris-Icon__Svg {
+  fill: #9699a7;
+}
+
+.CreateHeaderScreen {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.CreateHeaderScreen h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: #2e2e2e;
+}
+
+.createNewbtn {
+  background-color: #2c0069;
+  padding: 12px 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.createNewbtn:hover,
+.Polaris-Button--primary:hover {
+  background-color: #7962b7;
+}
+
+.createNewbtn .btnIcon {
+  background-color: #ffff;
+  color: #2c0069;
+  border-radius: 100%;
+  margin-right: 5px;
+  font-weight: 600;
+  font-size: 17px;
+  display: none;
+  width: 20px;
+  text-align: center;
+  height: 20px;
+  line-height: 20px;
+  vertical-align: middle;
+}
+
+.next_prev_btns {
+  padding: 10px 0px;
+  text-align: center;
+}
+
+.next_prev_btns .Polaris-Button {
+  margin-left: 15px;
+  padding: 7px 10px;
+  border-radius: 50%;
+  width: 36px;
+}
+
+/* dashboard css end */
+
+/* side bar */
+
+.sd-navigation .logoImg {
+  padding: 15px 0px 30px;
+  display: block;
+  margin: 0 auto;
+}
+
+.sd-navigation1 .Polaris-Navigation__Section {
+  border: 0;
+}
+
+.sd-navigation1 {
+  padding: 0 10px;
+}
+
+.sd-navigation1 .Polaris-Navigation__SectionHeading {
+  width: 100%;
+  padding-left: 15px;
+}
+
+.sd-navigation1 .Polaris-Navigation__SectionHeading .Polaris-Navigation__Text {
+  font-size: 12px;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.layoutSidebar .Polaris-Navigation {
+  background-color: #ffffff;
+}
+
+.sd-navigation .Polaris-Navigation {
+  background-color: #2c0069;
+}
+
+.sd-navigation .sd-navigation1 .Polaris-Navigation__ListItem {
+  padding: 5px 12px;
+  color: #fff;
+  position: relative;
+  font-size: 13px;
+  transition: all 0.4s;
+  font-weight: 500;
+  border-radius: 5px;
+  letter-spacing: 0.32px;
+  border: 0;
+  margin-bottom: 2px;
+  cursor: pointer;
+}
+
+.sd-navigation .sd-navigation1 .Polaris-Navigation__ListItem .Polaris-Icon {
+  width: 15px;
+  height: 15px;
+  margin-top: 2px;
+}
+
+.sd-navigation
+  .sd-navigation1
+  .Polaris-Navigation__ListItem
+  .Polaris-Icon
+  .Polaris-Icon__Svg {
+  fill: #fff;
+}
+
+.sd-navigation
+  .sd-navigation1
+  .Polaris-Navigation__ListItem
+  .Polaris-Navigation__Text {
+  font-size: 13px;
+}
+
+.sd-navigation .sd-navigation1 .Polaris-Navigation__ListItem:hover {
+  background-color: #7962b7;
+  color: #fff;
+}
+
+.sd-navigation .sd-navigation1 .Polaris-Navigation__ListItem.active {
+  background-color: #7962b7;
+  color: #fff;
+}
+
+.sd-navigation
+  .sd-navigation1
+  .Polaris-Navigation__ListItem:hover
+  .Polaris-Icon__Svg,
+.sd-navigation
+  .sd-navigation1
+  .Polaris-Navigation__ListItem.active
+  .Polaris-Icon__Svg {
+  fill: #fff;
+}
+
+.sd-navigation
+  .sd-navigation1
+  .Polaris-Navigation__ListItem.Polaris-Navigation__Item--selected::before {
+  content: none;
+  background-color: #656cf0;
+}
+
+.layOutSidebarList {
+  padding: 18px 0;
+  border-top: none !important;
+}
+
+.layOutSidebarList .Polaris-Navigation__Icon {
+  margin-left: 15px;
+}
+
+.activeSideBarClr {
+  background-image: linear-gradient(to right, #f4f2ff, white) !important;
+}
+
+.layoutSidebar
+  .Polaris-Navigation__PrimaryNavigation.Polaris-Scrollable.Polaris-Scrollable--vertical {
+  padding-top: 0;
+}
+
+.homePagePagination {
+  text-align: right;
+  margin-top: 25px;
+}
+
+/* ////////////Mainheader file css//////////////////// */
+
+.mainHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.subHeading {
+  display: flex;
+  align-items: center;
+}
+
+.subHeading span {
+  margin-right: 10px;
+  fill: #86868b;
+}
+
+.subHeading h4 {
+  font-size: 21px;
+  margin: 0;
+}
+
+.profileData {
+  flex-direction: column;
+  display: flex;
+}
+
+.profileData span {
+  color: #a7a7a7;
+  margin-right: 10px !important;
+}
+
+.profilePic {
+  background-image: url(../images/formimg.png);
+  background-position: center;
+  background-size: cover;
+  padding: 26px 28px;
+  border-radius: 50%;
+  margin-right: 10px !important;
+}
+
+.rightSection span {
+  margin-right: 40px;
+}
+
+/* /////////layout clAAASSS////////// */
+
+.mainBody {
+  max-width: 85%;
+  margin: 30px auto;
+  padding: 0;
+}
+
+/* //////////products logo on cards css///////////////// */
+
+.sd-advanced-option-Tag img {
+  border: 1px solid #545151;
+}
+
+.sd-advanced-option-Tag .moreproduct {
+  font-size: 12px;
+  line-height: normal;
+  color: #74788d;
+  font-weight: 500;
+  margin-left: 5px;
+}
+
+/* //////////////modal images on open//////////// */
+
+.img-wrap {
+  max-width: 961px;
+  overflow-y: auto;
+  margin-bottom: 23px;
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 200px;
+}
+
+/* .img-wrap .close {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  z-index: 100;
+} */
+
+img {
+  max-width: 100%;
+}
+
+.img-icon {
+  position: relative;
+  max-width: 100px;
+  margin: 0 10px 10px;
+}
+
+.img-icon img {
+  display: block;
+  padding: 5px;
+}
+
+.img-icon .close {
+  position: absolute;
+  right: 0;
+  display: none;
+}
+
+.img-icon:hover {
+  border: 2px solid rgb(91, 181, 255);
+}
+
+.img-icon:hover .close {
+  display: block;
+}
+
+.selectcolor {
+  border: 2px solid rgb(39, 231, 119);
+}
+
+.parahead {
+  font-size: 16px;
+  max-width: 650px;
+  margin: 0 auto 15px;
+}
+
+.mainimagediv {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.noresult {
+  width: 100%;
+  padding: 0 8px;
+  text-align: center;
+}
+
+.left_appearence .Polaris-SkeletonThumbnail {
+  width: 100%;
+  height: 291px;
+  border-radius: 10px;
+  background-color: #eff2fd;
+}
+
+.sd-ado-miantab-panel {
+  display: flex;
+}
+
+.outertab {
+  flex: 0 0 81px;
+  max-width: 81px;
+  background-color: #2c0069;
+  min-height: 94vh;
+  position: relative;
+  z-index: 999;
+}
+
+.tabdata {
+  flex: 0 0 87%;
+  max-width: 87%;
+  padding: 35px;
+  background-color: #ffffff;
+}
+
+.outertab .tab-item {
+  text-align: center;
+  font-size: 12px;
+  line-height: normal;
+  color: #e8e8e8;
+  font-weight: 500;
+  padding: 18px 10px;
+  cursor: pointer;
+}
+
+.outertab .tab-item.active-tab {
+  background-color: #4d0aa9;
+}
+
+.outertab .tab-item .Polaris-Icon {
+  margin: 10px auto;
+}
+
+.outertab .tab-item .Polaris-Icon .Polaris-Icon__Svg {
+  fill: #fff;
+}
+
+.sd-ado-maindatasets {
+  padding: 10px 35px 15px;
+}
+
+.sd-ado-maindatasets .Polaris-TextField__Input {
+  min-height: 40px;
+  font-size: 12px;
+  color: #535464;
+  font-weight: 500;
+}
+
+.all_apperence .sd-ado-feild .Polaris-Select__Input {
+  padding: 8px 12px;
+}
+
+.Polaris-Select__Backdrop::after,
+.Polaris-TextField__Backdrop::after {
+  content: none;
+}
+
+.sd-ado-maindatasets .Polaris-TextField__Input,
+.all_apperence .sd-ado-feild .Polaris-Select__SelectedOption,
+.all_apperence .sd-ado-feild .Polaris-Select__Input,
+.all_apperence .sd-ado-feild .Polaris-TextField__Input {
+  font-size: 12px;
+  color: #535464;
+  font-weight: 500;
+}
+
+.sd-ado-maindatasets .Polaris-TextField__Backdrop {
+  border-color: #d8d8d8;
+}
+
+.select-products .Polaris-Card > .Polaris-Card__Section {
+  padding: 0;
+}
+
+.select-products .Polaris-Card__Section .Polaris-Card__Section {
+  padding: 10px 20px;
+}
+
+.select-products .Polaris-Card__Section .Polaris-Choice .Polaris-Choice__Label {
+  font-size: 12px;
+  color: #74788d;
+}
+
+.demo-loadmore-list .ant-list-items {
+  max-height: 512px;
+  overflow: hidden;
+  overflow-y: auto;
+  padding-right: 12px;
+  margin-top: 20px;
+}
+
+.leftSidebar ::-webkit-scrollbar,
+.demo-loadmore-list .ant-list-items::-webkit-scrollbar,
+.all_elements_layout .right_appearence::-webkit-scrollbar {
+  width: 5px;
+  background: #f1f1f1;
+}
+
+.leftSidebar ::-webkit-scrollbar-thumb,
+.demo-loadmore-list .ant-list-items::-webkit-scrollbar-thumb,
+.all_elements_layout .right_appearence::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+}
+
+.right_appearence .sd-ado-output-check {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.tabdata .demo-loadmore-list .ant-list-items .ant-list-item {
+  align-items: center;
+  padding: 14px 20px;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid #d1d1d1;
+  margin-bottom: 10px;
+}
+
+.demo-loadmore-list .ant-list-items .ant-list-item .ant-list-item-meta {
+  align-items: center;
+}
+
+.demo-loadmore-list .ant-list-items .ant-list-item .ant-avatar-image {
+  border: 1px solid #d7d7d7;
+}
+
+.demo-loadmore-list
+  .ant-list-items
+  .ant-list-item
+  .Polaris-Icon
+  .Polaris-Icon__Svg {
+  width: 15px;
+  height: 15px;
+}
+
+.demo-loadmore-list .ant-list-items .ant-list-item .ant-list-item-meta-title {
+  line-height: 1.5715;
+  font-size: 13px;
+  color: #74788d;
+  font-weight: 400;
+  margin: 0;
+}
+
+.demo-loadmore-list
+  .ant-list-items
+  .ant-list-item
+  .ant-list-item-meta-title
+  > a {
+  color: #74788d;
+}
+
+.sd-ado-miantab-panel .color_picker {
+  padding: 0 10px;
+}
+
+.sd-ado-maindatasets .Polaris-Labelled__LabelWrapper {
+  margin-top: 16px;
+}
+
+.sd-ado-maindatasets .add_on_price_option {
+  margin-bottom: 16px;
+}
+
+.sd-ado-maindatasets div[style="display: flex;"] .Polaris-Icon {
+  margin-left: 10px;
+  width: 17px;
+  height: 17px;
+}
+
+.tabdata.set-appear {
+  padding: 0;
+}
+
+.tabdata.set-appear .Polaris-Tabs__Panel .Polaris-Card {
+  box-shadow: none;
+}
+
+.all_apperence {
+  padding: 15px 35px;
+}
+
+.all_apperence .sd-ado-feild {
+  margin-bottom: 16px;
+  clear: both;
+}
+
+.tabdata.set-appear .Polaris-Tabs__Panel .Polaris-Card .Polaris-Card__Section {
+  padding: 0;
+}
+
+.sd-ado-maindatasets .Polaris-Label__Text,
+.sd-ado-maindatasets span,
+.all_apperence .sd-ado-feild .Polaris-Label__Text,
+.all_apperence .sd-ado-feild .Polaris-TextStyle--variationSubdued {
+  font-size: 12px;
+  line-height: normal;
+  color: #74788d;
+  font-weight: 500;
+}
+
+.select .Polaris-Connected__Item .Polaris-Button {
+  min-height: 40px;
+}
+
+.select .Polaris-Button .Polaris-Button__Content .Polaris-Button__Text {
+  margin: 0;
+}
+
+.all_apperence .sd-ado-feild .Polaris-Button,
+.sd-ado-miantab-panel .color_picker .sd-ado-apprearence-color .Polaris-Button {
+  width: 100%;
+  padding: 3px 8px;
+  margin-top: 5px;
+}
+
+.all_apperence .sd-ado-feild .Polaris-Button .Polaris-Button__Content,
+.sd-ado-miantab-panel
+  .color_picker
+  .sd-ado-apprearence-color
+  .Polaris-Button
+  .Polaris-Button__Content {
+  justify-content: flex-start;
+  font-size: 12px;
+  color: #7789aa;
+}
+
+.all_apperence .sd-ado-feild .Polaris-Button__Content input[type="color"],
+.sd-ado-miantab-panel
+  .color_picker
+  .sd-ado-apprearence-color
+  .Polaris-Button
+  .Polaris-Button__Content
+  input[type="color"] {
+  border: 0;
+  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  box-shadow: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.globallayout-tabs .ant-tabs-content {
+  flex-wrap: wrap;
+}
+
+.globallayout-tabs .ant-tabs-content .enable-glayout {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.globallayout-tabs .ant-tabs .ant-tabs-nav-list {
+  width: 100%;
+}
+
+.globallayout-tabs .ant-tabs-nav .ant-tabs-tab {
+  margin: 0;
+  text-align: center;
+  flex: 0 0 33%;
+  max-width: 33%;
+  padding: 0;
+}
+
+/* .globallayout-tabs .ant-tabs-nav .ant-tabs-tab:first-child {
+  display: none;
+} */
+
+.globallayout-tabs label.Polaris-Choice {
+  margin-bottom: 18px;
+}
+
+.globallayout-tabs .ant-tabs-nav .ant-tabs-tab .ant-tabs-tab-btn {
+  width: 100%;
+  margin-right: 10px;
+  padding-bottom: 20px;
+}
+
+.globallayout-tabs .ant-tabs-nav .ant-tabs-tab:nth-child(4) .ant-tabs-tab-btn {
+  margin: 0;
+}
+
+.ant-tabs-ink-bar {
+  display: none;
+}
+
+.globallayout-tabs .ant-tabs-nav .ant-tabs-tab .g-layout {
+  padding: 20px 8px;
+  color: #7789aa;
+  position: relative;
+  transition: all 0.4s;
+  text-align: center;
+  border-radius: 5px;
+  background-color: #f7f4fb;
+  border: 2px solid transparent;
+  white-space: normal;
+  font-size: 12px;
+  line-height: normal;
+}
+
+.globallayout-tabs .ant-tabs-nav .ant-tabs-tab .g-layout .Polaris-Icon {
+  width: 16px;
+  height: 16px;
+  margin-bottom: 10px;
+}
+
+.globallayout-tabs .ant-tabs-nav .ant-tabs-tab.ant-tabs-tab-active .g-layout,
+.globallayout-tabs .ant-tabs-nav .ant-tabs-tab:hover .g-layout {
+  border-color: #2c0069;
+  background: transparent;
+  color: #2c0069;
+}
+
+.globallayout-tabs
+  .ant-tabs-nav
+  .ant-tabs-tab.ant-tabs-tab-active
+  .ant-tabs-tab-btn {
+  color: #2c0069;
+}
+
+.globallayout-tabs .ant-tabs-content .ant-tabs-tabpane .Polaris-Card {
+  box-shadow: none;
+}
+
+.globallayout-tabs
+  .ant-tabs-content
+  .ant-tabs-tabpane
+  .Polaris-Card
+  .Polaris-Card__Section {
+  padding: 0;
+}
+
+.general-layout .Polaris-Select__Input {
+  padding: 0 12px;
+}
+
+.full_width .Polaris-FormLayout__Item .Polaris-Label__Text {
+  font-size: 12px;
+  color: #74788d;
+}
+
+.full_width .Polaris-Select .Polaris-Select__Input {
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.full_width .Polaris-Select .Polaris-Select__Content,
+#clear_all_products .Polaris-Select__Content,
+.Polaris-OptionList__Options .Polaris-OptionList-Option__Label {
+  font-size: 12px;
+}
+
+/* paragraph headings */
+
+.sd-para h1 {
+  font-size: 28px;
+}
+
+.sd-para h2 {
+  font-size: 21px;
+}
+
+.sd-para h3 {
+  font-size: 18.72px;
+}
+
+.sd-para h4 {
+  font-size: 16px;
+}
+
+.sd-para h5 {
+  font-size: 13.28px;
+}
+
+.sd-para h6 {
+  font-size: 10.72px;
+}
+
+/* paragraph all headings list view */
+
+.tabdata.set-appear .Polaris-Card {
+  overflow: unset;
+}
+
+.ql-align-right {
+  text-align: right;
+}
+
+.ql-align-left {
+  text-align: left;
+}
+
+.ql-align-center {
+  text-align: center;
+}
+
+.ql-align-justify {
+  text-align: justify;
+}
+
+/* labels large font line break */
+
+.sd-ado-output-check,
+small {
+  word-break: break-word;
+}
+
+/* ///image swatch upload input field */
+
+/* ////image upload */
+
+.sd-image-upload {
+  width: 35%;
+  border-radius: 0px;
+  border: 1px solid #ccc;
+  outline: none;
+  padding: 10px 15px;
+  font-size: 13px;
+}
+
+/* label break */
+
+.ql-icon-picker {
+  display: none;
+}
+
+/*****************CSS for Contact Us Page*********************/
+
+.contact-card {
+  border-radius: 5px;
+}
+
+.contact-card .contact-form {
+  padding: 0px 15px;
+}
+
+.contact-card .contact-form .ant-input {
+  min-height: 42px;
+  padding: 6px 15px;
+  border: 1px solid #d1d1d1;
+}
+
+.contact-btn-submit {
+  text-align: center;
+}
+
+.contact-btn-submit .ant-btn-primary {
+  background-color: #2c0069;
+  border-color: #2c0069;
+  padding: 10px 30px;
+  height: auto;
+}
+
+.contact-btn-submit .ant-btn-primary:hover {
+  background-color: #2c0069;
+  border-color: #2c0069;
+}
+
+/**********************Instructions Page**********************************/
+
+.instruction-Wrapper {
+  border-radius: 5px;
+}
+
+.instruction-Wrapper .ant-card-body {
+  padding: 0px;
+}
+
+.instruction-main-wrapper {
+  width: 100%;
+}
+
+.idocs-navigation {
+  position: fixed;
+  margin-top: 20px;
+  width: 12%;
+}
+
+.instruction-menu {
+  width: 10%;
+}
+
+.idocs-navigation .nav-menu {
+  list-style-type: none;
+}
+
+.idocs-navigation .nav-menu .nav-item.active {
+  background-color: #294ce0;
+  border-radius: 3px;
+  padding: 5px 10px;
+}
+
+.idocs-navigation .nav-menu .nav-item.active a {
+  color: #fff;
+}
+
+.idocs-navigation .nav-menu .nav-item {
+  border-radius: 3px;
+  padding: 5px 10px;
+}
+
+.idocs-navigation .nav-menu .nav-item a {
+  color: #000;
+}
+
+.idocs-content {
+  width: 80%;
+  float: right;
+  border-left: 1px solid rgba(219, 219, 219, 0.884);
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+.idocs-container {
+  padding: 10px 30px;
+}
+
+.idocs-container h1 {
+  font-size: 2rem;
+}
+
+.idocs-container h2 {
+  font-size: 1.5rem;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+.wow-privacy {
+  background-color: #ffffff;
+  width: 45%;
+  padding: 15px;
+  margin: auto;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.wow-privacy h1 {
+  text-align: center;
+  font-size: 18px;
+  color: #000000;
+}
+
+.wow-footer {
+  text-align: center;
+}
+
+.wow-privacy-logo {
+  text-align: center;
+  margin: 20px 0px;
+}
+
+.wow-privacy-content {
+  background-color: #e8e8ff;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.wow-privacy h2 {
+  margin: 10px 0px;
+  color: #000;
+}
+
+.sd-card-inner-cont {
+  width: 100%;
+  height: auto;
+}
+
+.sd-card-list-cont {
+  width: 100%;
+}
+
+.sd-card-image-cont {
+  width: 100%;
+  margin: 13px 0px;
+  border: 1px solid #0000000f;
+  border-radius: 3px;
+}
+
+.sd-card-image-cont > img {
+  width: 100%;
+}
+
+.sd-instruction-cont {
+  display: flex;
+}
+
+.wowoption-tool-tip {
+  font-size: 12px;
+}
+
+.all_options .checkbox_container,
+.wowoption-checkboxes-outer .checkbox_container {
+  margin: 0 0 5px;
+  font-size: 12px;
+}
+
+.main_image_swatch .wowoption-imageswatch_outer,
+.main_image_swatch .wowoption-colorswatch_outer {
+  padding: 3px;
+}
+
+.sd-ado-maindatasets .select span {
+  width: auto;
+  height: auto;
+}
+
+.sd-ado-maindatasets .select .Polaris-Connected__Item:not(:first-child) {
+  margin-left: 14px;
+}
+
+.sd-ado-maindatasets .Polaris-Stack.Polaris-Stack--vertical {
+  margin-top: 0;
+}
+
+.Polaris-Button svg {
+  width: 14px;
+  height: 14px;
+  margin: auto;
+}
+
+.Polaris-OptionList-Checkbox__Backdrop::before,
+.Polaris-Checkbox__Backdrop::before {
+  background-color: #2c0069;
+}
+
+.wow-swatches-color-box.wow-color-box .Polaris-Connected__Item {
+  flex: 0 1 auto;
+}
+
+.wow-swatches-color-box .Polaris-Button {
+  box-shadow: none;
+  border: 0;
+}
+
+.wow-swatches-color-box .Polaris-Button input[type="color"] {
+  width: 34px;
+  padding: 0 2px;
+  border: 1px solid #cfcfcf;
+  box-shadow: none;
+  background: #fff;
+}
+
+.wow-swatches-color-box .Polaris-Select .Polaris-Select__Content {
+  min-height: 39px;
+}
+
+.theme-editor-btn {
+  margin-top: 20px;
+}
+.theme-editor-widget-appblock {
+  margin-top: 16px;
+}
+
+.theme-editor-widget-appblock .Polaris-Heading {
+  font-size: 16px !important;
+}
+
+/* ========== Responsive Style ========== */
+
+@media (max-width: 1280px) {
+  .globallayout-tabs .ant-tabs .ant-tabs-nav-list {
+    flex-wrap: wrap;
+  }
+  .globallayout-tabs .ant-tabs-nav .ant-tabs-tab {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .globallayout-tabs .ant-tabs-nav .ant-tabs-tab .g-layout {
+    padding: 10px 8px;
+  }
+  .globallayout-tabs .ant-tabs-nav .ant-tabs-tab .g-layout .Polaris-Icon {
+    margin-bottom: 5px;
+  }
+  .outertab .tab-item .Polaris-Icon {
+    margin: 0px auto 10px;
+  }
+  .home-section .ant-row .ant-col.ant-col-6 {
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+  }
+  .tabdata {
+    padding: 20px;
+  }
+  .all_apperence {
+    padding: 15px 20px;
+  }
+  #sd-elements-div {
+    width: calc(100% - 140px);
+  }
+  .sd-ado-maindatasets {
+    padding: 0px 20px 15px;
+  }
+  .ant-list-item-action {
+    margin-left: 12px;
+  }
+  .icons-box #duplicate,
+  .icons-box #view,
+  .icons-box #delete {
+    width: 24px;
+  }
+  .inputDatadiv {
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 991px) {
+  .sd-topbar {
+    display: block;
+  }
+  .Polaris-Frame--hasTopBar .Polaris-Frame__Main {
+    padding-top: 57px;
+  }
+  .sd-adotopnav {
+    padding: 0 20px;
+  }
+  .sd-search-header-Outer {
+    max-width: 100%;
+  }
+  .sd-optionSet-name-input,
+  .sd-desktop-mobile-view {
+    max-width: 50%;
+  }
+  .leftSidebar {
+    background: transparent;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    transition: all 0.3s linear;
+    padding-top: 0px;
+    z-index: 11;
+  }
+  .leftSidebar .outertab .tab-item {
+    pointer-events: none;
+    opacity: 0.3;
+    transition: all 0.3s linear;
+  }
+  .outertab .tab-item .Polaris-Icon {
+    margin: 5px auto;
+  }
+  .toggle-icon {
+    display: flex;
+    padding: 20px 15px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+  }
+  .toggle-icon .mob-close .Polaris-Icon,
+  .mob-res .toggle-icon .Polaris-Icon {
+    opacity: 0;
+    transition: all 0.2s linear;
+  }
+  .toggle-icon .mob-close {
+    position: absolute;
+  }
+  .mob-res .toggle-icon .mob-close .Polaris-Icon {
+    opacity: 1;
+  }
+  .toggle-icon .Polaris-Icon__Svg {
+    fill: #fff;
+  }
+  .tabdata {
+    position: fixed;
+    top: 55px;
+    left: -100%;
+    transition: all 0.8s linear;
+    z-index: 99;
+    bottom: 0;
+    min-width: 360px;
+    max-width: 360px;
+    overflow-y: auto;
+  }
+  .leftSidebar.mob-res .outertab .tab-item {
+    pointer-events: all;
+    opacity: 1;
+  }
+  .mob-res .tabdata {
+    left: 64px;
+  }
+  .mob-pol .Polaris-Layout__Section--oneThird {
+    flex: 0 0 4rem;
+  }
+  .sd-ado-topbar {
+    padding: 45px 40px 45px 20px;
+    height: 100%;
+    margin-top: 50px;
+  }
+  .outertab {
+    flex: 0 0 64px;
+    max-width: 64px;
+  }
+  .outertab .tab-item {
+    font-size: 11px;
+    padding: 10px 7px;
+  }
+  .demo-loadmore-list .ant-list-items {
+    max-height: 500px;
+  }
+  .home-section .ant-row .ant-col.ant-col-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .inputDatadivMain {
+    padding: 8px 15px;
+  }
+  .inputDatadivMain .add_element p {
+    font-size: 12px;
+  }
+  .all_elements_layout {
+    flex-wrap: wrap;
+  }
+  .left_appearence {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .right_appearence {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding-left: 0px;
+  }
+  .left_appearence .Polaris-SkeletonThumbnail {
+    margin-bottom: 20px;
+  }
+  .sd-ado-leftnav {
+    -ms-flex: 0 0 20%;
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+  .sd-ado-rightnav {
+    -ms-flex: 0 0 80%;
+    flex: 0 0 80%;
+    max-width: 80%;
+  }
+  .inputDatadivMain .icon {
+    margin-right: 5px;
+  }
+  #add_to_cart {
+    padding: 14px;
+  }
+  #add_to_cart .Polaris-Button__Text {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 767px) {
+  .mainBody {
+    max-width: 95%;
+    margin: 15px auto;
+  }
+  .sd-navigation1 {
+    padding: 0 20px;
+  }
+  .sd-desktop-mobile-view {
+    display: none;
+  }
+  .sd-optionSet-name-input {
+    max-width: 100%;
+  }
+  .sd-navigation .Polaris-Navigation .Polaris-Navigation__LogoContainer {
+    display: none;
+  }
+  .sd-navigation .logoImg {
+    padding: 30px 0px;
+  }
+  .leftSidebar {
+    top: 63px;
+  }
+  .tabdata {
+    top: 63px;
+  }
+  .demo-loadmore-list .ant-list-items {
+    max-height: 280px;
+  }
+  .demo-loadmore-list .ant-list-items .ant-list-item {
+    padding: 7px 12px;
+  }
+  .demo-loadmore-list
+    .ant-list-items
+    .ant-list-item
+    .Polaris-Icon
+    .Polaris-Icon__Svg {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 563px) {
+  .sd-ado-topbar {
+    padding: 25px 27px 25px 100px;
+  }
+  .sd-ado-leftnav .Polaris-Navigation__Item .Polaris-Navigation__Text {
+    display: none;
+  }
+  .sd-ado-leftnav .Polaris-Navigation__Item .Polaris-Navigation__Icon {
+    padding: 6px 10px;
+    height: auto;
+    width: auto;
+    margin: 3px 0px;
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tabdata {
+    min-width: 270px;
+    max-width: 270px;
+  }
+  .home-section .ant-row .ant-col.ant-col-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .leftSidebar .Polaris-Navigation__Section .Polaris-Navigation__ListItem {
+    padding: 6px;
+  }
+  .leftSidebar
+    .Polaris-Navigation__Section
+    .Polaris-Navigation__ListItem
+    .Polaris-Navigation__Item {
+    padding: 15px 10px;
+  }
+}
+
+@media (max-width: 375px) {
+  .CreateHeaderScreen {
+    flex-wrap: wrap;
+  }
+  .CreateHeaderScreen h2 {
+    margin: 0 0 10px;
+  }
+  .mob-res .tabdata {
+    left: 58px;
+  }
+  .outertab {
+    flex: 0 0 58px;
+    max-width: 58px;
+  }
+  .tabdata {
+    min-width: 250px;
+    max-width: 250px;
+    padding: 15px;
+  }
+  .outertab .tab-item {
+    font-size: 10px;
+    padding: 10px 3px;
+  }
+  .icon {
+    margin-right: 8px;
+  }
+  #sd-elements-div {
+    width: calc(100% - 110px);
+  }
+}
