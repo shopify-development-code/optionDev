@@ -1,3 +1,28 @@
-# This file stores configurations for your Shopify app.
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-scopes = "write_products"
+name = "Genie Options Development"
+client_id = "232a8ae5eeebd995e254d74787d9f1ba"
+application_url = "https://cooling-cotton-jr-cardiovascular.trycloudflare.com"
+embedded = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_products,write_products,read_orders,write_orders,read_themes"
+use_legacy_install_flow = true
+
+[auth]
+redirect_urls = [
+  "https://cooling-cotton-jr-cardiovascular.trycloudflare.com/auth/callback",
+  "https://cooling-cotton-jr-cardiovascular.trycloudflare.com/auth/shopify/callback",
+  "https://cooling-cotton-jr-cardiovascular.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2023-07"
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "nahidp-store.myshopify.com"
