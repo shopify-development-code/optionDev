@@ -113,56 +113,48 @@ export async function updateOptionSet(req, res) {
 }
 
 export async function deleteOptionSet(req, res) {
-  let deletingID = req.body.id;
-  let shop = req.body.shop;
-
-  await Schema.deleteOne({ _id: deletingID, store: shop })
-    .then(() => {
-      res.send({ status: true, data: "Option Set Deleted" });
-    })
-    .catch((err) => {
-      res.send({ status: false, data: "Error Deleting File" });
-    });
+  try {
+    const shop = res.locals.shopify.session.shop;
+    const deletingID = req.body.id;
+    const result = await Schema.deleteOne({ _id: deletingID, shop: shop });
+    if (result.deletedCount === 1) {
+      res.json({ status: true, data: "Option Set Deleted" });
+    } else {
+      res.json({ status: false, data: "Error Deleting File" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ status: false, data: "Something went wrong!!!" });
+  }
 }
 
 export async function copyOptionSet(req, res) {
-  let shop = req.body.shop;
+  try {
+    const { shop, id, name_length, fileName } = req.body;
 
-  let data = await Schema.findById({ _id: req.body.id });
-  // let products = {
-  //   all_resources: {},
-  //   collections: [],
-  //   conditional_type: ["all_condn"],
-  //   conditions: [],
-  //   product_added: [],
-  //   type: "none",
-  // };
-  let p = data.option_set.products;
+    const data = await Schema.findById(id);
+    const { products } = data.option_set;
 
-  let note = new Schema({
-    setID: data.setID,
-    shop: shop,
-    option_set: { elements: data.option_set.elements, products: p },
-    name: data.name + " (" + req.body.name_length + ")",
-    fileName: req.body.fileName,
-    layout: data.layout,
-    mainLayout: data.mainLayout,
-    counter: data.counter,
-    status: false,
-    // imageURL: data.imageURL,
-  });
-  let copied_id = false;
-  let savedData = note.save(function (err) {
-    if (err) {
-      copied_id = true;
-    }
-  });
-  if (!copied_id) {
-    res.send({ status: true, data: note, mesg: "Option Set Duplicated" });
-  } else {
-    res.send({ status: false, mesg: "database error" });
+    const note = new Schema({
+      setID: data.setID,
+      shop,
+      option_set: { elements: data.option_set.elements, products },
+      name: `${data.name} (${name_length})`,
+      fileName,
+      layout: data.layout,
+      mainLayout: data.mainLayout,
+      counter: data.counter,
+      status: false,
+    });
+
+    await note.save();
+    res.json({ status: true, data: note, mesg: "Option Set Duplicated" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: false, mesg: "database error" });
   }
 }
+
 
 export async function checkOptionSetOnInstall(req, res) {
   let findData = req.query.Params;
@@ -662,39 +654,36 @@ export async function themeInstallation(req, res) {
 }
 
 export async function getFormList(req, res) {
+  try {
+    const { id, shop } = req.body;
+    const n = 12;
+    const skipCount = (id > 0 ? (id - 1) * n : 0);
 
-  const id = req.body.id;
-  let shop = req.body.shop;
-  let n = 12;
+    const returnData = await Schema.find({ shop }, { name: 1, option_set: 1, status: 1, _id: 1 })
+      .sort({ _id: -1 })
+      .skip(skipCount)
+      .limit(n);
 
-  const returnData = await Schema.find(
-    { shop: shop },
-    { name: 1, option_set: 1, status: 1, _id: 1 }
-
-    // { form_name: 1, "common.display.form_type": 1, "common.apply_on": 1 }
-  )
-    .sort({ _id: -1 })
-    .skip(id > 0 ? (id - 1) * n : 0)
-    .limit(n);
-
-  let total = await Schema.countDocuments({ shop: shop });
-
-  res.send({
-    returnData: returnData,
-    total: id > 1 ? total - (id - 1) * n : total,
-    n: n,
-    wholedata: total,
-  });
+    const total = await Schema.countDocuments({ shop });
+    res.json({ returnData, total: id > 1 ? total - skipCount : total, n, wholedata: total });
+  } catch (error) {
+    console.error("enter", error);
+    res.status(500).json({ error: 'Something went wrong' });
+  }
 }
+
 
 export async function getFormNames(req, res) {
-  console.log("enter in all form names");
-  let shop = req.body.shop;
-
-  // await Schema.find({ shop: shop }, { name: 1 }).then(data=> res.send(data))
-  let names = await Schema.find({ shop: shop }, { name: 1 });
-  res.send({ names: names });
+  try {
+    const { shop } = req.body;
+    const names = await Schema.find({ shop }, { name: 1 });
+    res.json({ names });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Something went wrong' });
+  }
 }
+
 
 export async function searchByName(req, res) {
   console.log("search api ", req.body);

@@ -38,6 +38,8 @@ const optionsetSchema = new mongoose.Schema(
   }
 );
 
+optionsetSchema.index({shop : 1});
+
 export const Schema = mongoose.model("optionset", optionsetSchema);
 
 //// to save the activivated custom products after checkout

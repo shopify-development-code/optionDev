@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllOptionSet, getCredentials, getFormList, getThemeId, saveOptionSet } from "../../controllers/admin/backendController.js";
+import { copyOptionSet, deleteOptionSet, getAllOptionSet, getCredentials, getFormList, getFormNames, getThemeId, saveOptionSet } from "../../controllers/admin/backendController.js";
 import { contactEmail } from "../../controllers/admin/mailController.js";
 // import { verifyToken } from "../middleware/verifyToken.js";
 // import {
@@ -33,9 +33,9 @@ adminRoutes.post("/getAllOptionSet", getAllOptionSet);
 
 // adminRoutes.post("/api/updateOptionSetByID", verifyToken, updateOptionSet);
 
-// adminRoutes.post("/api/deleteOptionSetByID", verifyToken, deleteOptionSet);
+adminRoutes.post("/deleteOptionSetByID", deleteOptionSet);
 
-// adminRoutes.post("/api/copyOptionSet", verifyToken, copyOptionSet);
+adminRoutes.post("/copyOptionSet", copyOptionSet);
 
 // adminRoutes.post(
 //   "/api/getinstallOptionset",
@@ -65,9 +65,7 @@ adminRoutes.post("/getCredentials", getCredentials);
 
 // adminRoutes.post("/api/themeInstallation", verifyToken, themeInstallation);
 
-// adminRoutes.post("/getformlist", verifyToken, getFormList);
-
-// adminRoutes.post("/getFormNames", verifyToken, getFormNames);
+adminRoutes.post("/getFormNames", getFormNames);
 
 // adminRoutes.post("/searchByName", verifyToken, searchByName);
 
