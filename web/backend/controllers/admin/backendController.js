@@ -64,53 +64,40 @@ export async function getAllOptionSet(req, res) {
 }
 
 export async function updateOptionSet(req, res) {
-  let shop = req.body.shop;
-  // console.log("zxcvbnm", req.body);
+  try {
+    const { shop, status: pstatus, id, name, params } = req.body;
 
-  let credentialsData = await credentials.findOne({ shop: shop });
-  var status;
-  // let accessToken = credentialsData.accessToken;
-  let pstatus = req.body.status;
-  if (pstatus == "set_active") {
-    status = true;
-  } else if (pstatus == "set_draft") {
-    status = false;
-  }
-  console.log("zxcvbnm", req.body.counter);
-
-  let error_log = {};
-  let query = { _id: req.body.id };
-  let check = false;
-
-  Schema.findOneAndUpdate(
-    query,
-    {
-      option_set: {
-        elements: req.body.params.elements,
-        products: req.body.params.products,
-      },
-      shop: shop,
-      name: req.body.name,
-      layout: req.body.params.layout,
-      mainLayout: req.body.params.mainLayout,
-      counter: req.body.params.counter,
-      status: status,
-      // imageURL: getUrl,
-    },
-    { upsert: true },
-    function (err, doc) {
-      if (err) {
-        check = true;
-      }
+    let status = false;
+    if (pstatus === "set_active") {
+      status = true;
     }
-  );
-  if (!check) {
-    error_log = { noerror: true, data: "" };
-  } else {
-    error_log = { noerror: false, data: "database error" };
+
+    const query = { _id: id };
+    const update = {
+      option_set: {
+        elements: params.elements,
+        products: params.products,
+      },
+      shop,
+      name,
+      layout: params.layout,
+      mainLayout: params.mainLayout,
+      counter: params.counter,
+      status,
+    };
+
+    const options = { upsert: true, new: true, useFindAndModify: false };
+    const doc = await Schema.findOneAndUpdate(query, update, options);
+
+    const error_log = { noerror: true, data: "" };
+    res.send(error_log);
+  } catch (error) {
+    console.error("Error:", error);
+    const error_log = { noerror: false, data: "database error" };
+    res.status(500).send(error_log);
   }
-  res.send(error_log);
 }
+
 
 export async function deleteOptionSet(req, res) {
   try {

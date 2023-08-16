@@ -2,7 +2,7 @@
 
 name = "Genie Options Development"
 client_id = "232a8ae5eeebd995e254d74787d9f1ba"
-application_url = "https://cooling-cotton-jr-cardiovascular.trycloudflare.com"
+application_url = "https://wages-suspended-partnerships-connection.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -12,9 +12,9 @@ use_legacy_install_flow = true
 
 [auth]
 redirect_urls = [
-  "https://cooling-cotton-jr-cardiovascular.trycloudflare.com/auth/callback",
-  "https://cooling-cotton-jr-cardiovascular.trycloudflare.com/auth/shopify/callback",
-  "https://cooling-cotton-jr-cardiovascular.trycloudflare.com/api/auth/callback"
+  "https://wages-suspended-partnerships-connection.trycloudflare.com/auth/callback",
+  "https://wages-suspended-partnerships-connection.trycloudflare.com/auth/shopify/callback",
+  "https://wages-suspended-partnerships-connection.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

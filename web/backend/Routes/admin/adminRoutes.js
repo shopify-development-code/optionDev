@@ -1,5 +1,5 @@
 import express from "express";
-import { copyOptionSet, deleteOptionSet, getAllOptionSet, getCredentials, getFormList, getFormNames, getThemeId, saveOptionSet } from "../../controllers/admin/backendController.js";
+import { copyOptionSet, deleteOptionSet, getAllOptionSet, getCredentials, getFormList, getFormNames, getThemeId, saveOptionSet, updateOptionSet } from "../../controllers/admin/backendController.js";
 import { contactEmail } from "../../controllers/admin/mailController.js";
 // import { verifyToken } from "../middleware/verifyToken.js";
 // import {
@@ -31,7 +31,7 @@ adminRoutes.post("/saveOptionSet", saveOptionSet);
 
 adminRoutes.post("/getAllOptionSet", getAllOptionSet);
 
-// adminRoutes.post("/api/updateOptionSetByID", verifyToken, updateOptionSet);
+adminRoutes.post("/updateOptionSetByID", updateOptionSet);
 
 adminRoutes.post("/deleteOptionSetByID", deleteOptionSet);
 
