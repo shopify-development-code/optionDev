@@ -29,5 +29,3 @@ function FunctionalCreate() {
 
 export default FunctionalCreate;
 
-// this file is made to use useparms hook to get id from url and than id is passed as props to class component createoptions
-// as we can not use the useparam hook in class components

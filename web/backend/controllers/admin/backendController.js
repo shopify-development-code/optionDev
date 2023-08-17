@@ -2,6 +2,7 @@ import { credentials, Schema, custom } from "../../Schema/schema.js";
 import shopify from "../../../shopify.js";
 import {DataType} from "@shopify/shopify-api";
 import fs from "fs";
+import { getShopifyData } from "../../helpers/backend_helpers.js";
 
 export async function saveOptionSet(req, res) {
   const shop = req.body.shop;
@@ -251,10 +252,10 @@ export async function updateSettngs(req, res) {
 
 //Delete the draft product from the backend bulk delete
 export async function deleteDraftProducts(req, res) {
-  let shop = req.body.shop;
-  let credentialsData = await getCredentialsResponse(shop);
-  let accessToken = credentialsData.accessToken;
-  let param = {
+  const { shop } = res.locals.shopify.session;
+  const { accessToken, session } = res.locals.shopify.session;
+
+  const param = {
     path: "products",
     query: {
       fields: "id",
@@ -265,66 +266,39 @@ export async function deleteDraftProducts(req, res) {
 
   const getproductsList = await getShopifyData(shop, accessToken, param);
   const productList = getproductsList.response.body.products;
-  // console.log(productList.length);
-  // console.log(productList);
-  if (productList.length == 0) {
-    // console.log("productList.length, product length");
-    // console.log(productList.length);
+
+  if (productList.length === 0) {
     res.send({ status: false, message: "No Product To Delete Exist" });
   } else {
-    // console.log("enter in else condition");
-    const client = new Shopify.Clients.Rest(shop, accessToken);
-    let check = false;
-    let resp;
-    for (var j = 0; j < productList.length; j++) {
-      let delDraftResponse = await client
+    const client = new shopify.api.clients.Rest({ session });
+    let resp = { sat: false, message: "err" };
+
+    for (const product of productList) {
+      const delDraftResponse = await client
         .delete({
-          path: `products/${productList[j].id}`,
+          path: `products/${product.id}`,
         })
-        .then((rep) => {
-          let data = {
-            sat: true,
-            message: "All Products has been Deleted",
-          };
-          resp = data;
-        })
-        .catch((rep) => {
-          let data = {
-            sat: false,
-            message: "err",
-          };
-          resp = data;
+        .then(() => {
+          resp = { sat: true, message: "All Products have been Deleted" };
         });
-      if (j == productList.length - 1) {
-        check = true;
-      }
 
       if (resp.sat) {
-        console.log("if resp.sat");
         try {
-          await custom
-            .deleteOne({
-              pid: productList[j].id,
-              shop: shop,
-              product_status: "draft",
-            })
-            .then(() => {
-              // console.log('customproducts record deleted successfully');
-            })
-            .catch((err) => {
-              // console.log('customproducts error in delete records');
-            });
+          await custom.deleteOne({
+            pid: product.id,
+            shop,
+            product_status: "draft",
+          });
         } catch (error) {
-          // console.log(error);
           continue;
         }
       }
     }
-    if (check) {
-      res.send({ status: resp.sat, message: resp.message });
-    }
+    res.send({ status: resp.sat, message: resp.message });
   }
 }
+
+
 
 export async function getDefaultInstallationData(req, res) {
   const shop = req.query.shop;
@@ -673,120 +647,169 @@ export async function getFormNames(req, res) {
 
 
 export async function searchByName(req, res) {
-  console.log("search api ", req.body);
-  console.log(req.body, " ==? search api");
-  const id = req.body.value;
-  const body = req.body;
-  let shop = req.body.shop;
-  let n = 12;
+  const { body } = req;
+  const { find, value, shop } = body;
+  const n = 12;
 
-  let total_data = await Schema.find({
-    $and: [
-      { name: { $regex: body.find, $options: "i" } },
-      { store: { $regex: shop } },
-    ],
-  }).count();
-  if (id > 1) {
-    total_data = total_data - (id - 1) * n;
+  try {
+    let total_data = await Schema.find({
+      name: { $regex: find, $options: "i" },
+      shop: { $regex: shop },
+    }).count();
+
+    if (value > 1) {
+      total_data -= (value - 1) * n;
+    }
+
+    const data = await Schema.find({
+      name: { $regex: find, $options: "i" },
+      shop: { $regex: shop },
+    })
+      .sort({ _id: -1 })
+      .skip(value > 0 ? (value - 1) * n : 0)
+      .limit(n)
+      .select({ name: 1, option_set: 1, store: 1, status: 1 });
+
+    res.send({ data, total_data });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ error: "An error occurred" });
   }
-  console.log(total_data);
-  Schema.find(
-    {
-      $and: [
-        { name: { $regex: body.find, $options: "i" } },
-        { store: { $regex: shop } },
-      ],
-    },
-    { name: 1, option_set: 1, store: 1, status: 1 }
-  )
-    .sort({ _id: -1 })
-    .skip(body.value > 0 ? (body.value - 1) * n : 0)
-    .limit(n)
-    .then((data) => res.send({ data: data, total_data: total_data }))
-    .catch((err) => console.log(err));
 }
+
+
+// export async function setformstatus(req, res) {
+//   console.log("hello", req.body.key);
+//   let type = req.body.type;
+//   let key = req.body.key;
+//   let id = req.body.productids;
+//   let shop = req.body.shop;
+//   let currentstatus = req.body.currentstatus;
+//   if (currentstatus == "true") {
+//     if (type == "none") {
+//       res.send({ status: false, data: "First add products to optionset" });
+//     } else if (type == "all") {
+//       const data1 = await Schema.find(
+//         { shop: shop, status: "true", "option_set.products.type": "all" },
+//         { "option_set.products": 1, name: 1 }
+//       );
+//       // console.log(data1[0].name)
+//       if (data1.length > 0) {
+//         res.send({
+//           status: false,
+//           data: `Selected Product is already active in "${data1[0].name}" Optionset`,
+//         });
+//       } else {
+//         // console.log(data1.length, "allllllll");
+//         let filter = { shop: shop, _id: key };
+//         let update = { status: true };
+//         const data = await Schema.findOneAndUpdate(filter, update);
+//         res.send({
+//           status: true,
+//           data: "Optionset status updated but preference will be given to the optionset of particular product",
+//         });
+//       }
+//     } else {
+//       const data = await Schema.find(
+//         { shop: shop, status: "true", "option_set.products.type": "manual" },
+//         { "option_set.products": 1, name: 1 }
+//       );
+//       let allid = [];
+//       let all = data.map((element) => {
+//         element.option_set.products.product_added.map((ele) => {
+//           allid.push(ele.product_id);
+//         });
+//       });
+//       const common = [];
+//       allid.some((item) => {
+//         if (id.includes(item)) common.push(item);
+//       });
+//       if (common.length > 0) {
+//         console.log("Fff", common);
+//         let commonname;
+//         data.map((element) => {
+//           element.option_set.products.product_added.map((ele) => {
+//             console.log("ady", ele.product_id);
+//             if (common[0] == ele.product_id) {
+//               commonname = element.name;
+//             }
+//           });
+//         });
+//         res.send({
+//           status: false,
+//           data: `Same product is available in other optionset (${commonname})`,
+//         });
+//       } else {
+//         let filter = { shop: shop, _id: key };
+//         let update = { status: true };
+//         const data = await Schema.findOneAndUpdate(filter, update);
+//         res.send({
+//           status: true,
+//           data: "Optionset status updated",
+//         });
+//       }
+//     }
+//   } else if (currentstatus == "false") {
+//     let filter = { shop: shop, _id: key };
+//     let update = { status: false };
+//     const data = await Schema.findOneAndUpdate(filter, update);
+//     res.send({
+//       status: true,
+//       data: "Optionset status updated",
+//     });
+//   }
+// }
 
 export async function setformstatus(req, res) {
-  console.log("hello", req.body.key);
-  let type = req.body.type;
-  let key = req.body.key;
-  let id = req.body.productids;
-  let shop = req.body.shop;
-  let currentstatus = req.body.currentstatus;
-  if (currentstatus == "true") {
-    if (type == "none") {
-      res.send({ status: false, data: "First add products to optionset" });
-    } else if (type == "all") {
-      const data1 = await Schema.find(
-        { shop: shop, status: "true", "option_set.products.type": "all" },
-        { "option_set.products": 1, name: 1 }
-      );
-      // console.log(data1[0].name)
-      if (data1.length > 0) {
-        res.send({
-          status: false,
-          data: `Selected Product is already active in "${data1[0].name}" Optionset`,
-        });
-      } else {
-        // console.log(data1.length, "allllllll");
-        let filter = { shop: shop, _id: key };
-        let update = { status: true };
-        const data = await Schema.findOneAndUpdate(filter, update);
-        res.send({
-          status: true,
-          data: "Optionset status updated but preference will be given to the optionset of particular product",
-        });
+  try {
+    const { type, key, productids: id, shop, currentstatus } = req.body;
+
+    const filter = { shop, _id: key };
+    let update = {};
+
+    if (currentstatus === "true") {
+      if (type === "none") {
+        return res.send({ status: false, data: "First add products to optionset" });
       }
-    } else {
-      const data = await Schema.find(
-        { shop: shop, status: "true", "option_set.products.type": "manual" },
-        { "option_set.products": 1, name: 1 }
-      );
-      let allid = [];
-      let all = data.map((element) => {
-        element.option_set.products.product_added.map((ele) => {
-          allid.push(ele.product_id);
-        });
-      });
-      const common = [];
-      allid.some((item) => {
-        if (id.includes(item)) common.push(item);
-      });
-      if (common.length > 0) {
-        console.log("Fff", common);
-        let commonname;
-        data.map((element) => {
-          element.option_set.products.product_added.map((ele) => {
-            console.log("ady", ele.product_id);
-            if (common[0] == ele.product_id) {
-              commonname = element.name;
-            }
+
+      const query = { shop, status: "true", "option_set.products.type": type };
+      const projection = { "option_set.products": 1, name: 1 };
+
+      if (type === "all") {
+        const data1 = await Schema.findOne(query, projection);
+        if (data1) {
+          return res.send({
+            status: false,
+            data: `Selected Product is already active in "${data1.name}" Optionset`,
           });
-        });
-        res.send({
-          status: false,
-          data: `Same product is available in other optionset (${commonname})`,
-        });
+        }
       } else {
-        let filter = { shop: shop, _id: key };
-        let update = { status: true };
-        const data = await Schema.findOneAndUpdate(filter, update);
-        res.send({
-          status: true,
-          data: "Optionset status updated",
-        });
+        const data = await Schema.find(query, projection);
+        const allid = data.flatMap(element => element.option_set.products.product_added.map(ele => ele.product_id));
+        const common = allid.filter(item => id.includes(item));
+
+        if (common.length > 0) {
+          const commonname = data.find(element => common[0] === element.option_set.products.product_added.find(ele => ele.product_id === common[0]).product_id).name;
+          return res.send({
+            status: false,
+            data: `Same product is available in other optionset (${commonname})`,
+          });
+        }
       }
+
+      update = { status: true };
+    } else if (currentstatus === "false") {
+      update = { status: false };
     }
-  } else if (currentstatus == "false") {
-    let filter = { shop: shop, _id: key };
-    let update = { status: false };
+
     const data = await Schema.findOneAndUpdate(filter, update);
-    res.send({
-      status: true,
-      data: "Optionset status updated",
-    });
+    res.send({ status: true, data: "Optionset status updated" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "An error occurred" });
   }
 }
+
 
 export async function makedir(req, res) {
   let dirname = req.body.shop;

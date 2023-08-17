@@ -26,6 +26,7 @@ extensions/*/build
 
 .gitignore
 package.json
+shopify.web.toml
 shopify.app.toml
 
 # Node library SQLite database

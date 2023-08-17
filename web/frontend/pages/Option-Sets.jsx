@@ -279,8 +279,7 @@ export default function FrameExample(props) {
       value: page ?? pageCount,
       shop: getShop,
     };
-    // const data = await axios.post(`/searchByName/`, search_val);
-    let data = await DynamicApi(`/searchByName/`, search_val, "POST", app);
+    let data = await DynamicApi(`/api/searchByName`, search_val, "POST", app);
 
     if (data.status === 200) {
       if (data.data.data.length < 1) {
@@ -327,28 +326,20 @@ export default function FrameExample(props) {
       getFormListData();
     }
   };
+
+
   const setformstatus = async (e, data) => {
     setIsLoading(true);
     setSearchForm("");
-
     setproductids([]);
-    // console.log(data.option_set.products.product_added);
     let ab = data.option_set.products.product_added;
     let bc = [];
     ab.map((data) => {
-      // console.log(data.product_id);
       bc.push(data.product_id);
       setproductids(bc);
     });
-    // const response = await axios.post("/setformstatus", {
-    //   productids: bc,
-    //   shop: getShop,
-    //   currentstatus: e.target.value,
-    //   key: data._id,
-    //   type: data.option_set.products.type,
-    // });
     const response = await DynamicApi(
-      "/setformstatus",
+      "/api/setformstatus",
       {
         productids: bc,
         shop: getShop,
@@ -362,17 +353,12 @@ export default function FrameExample(props) {
 
     setIsLoading(false);
     setContentMsg(response.data.data);
-    // response.data.includes("Same product is available in other optionset")? setErrorFound(false):
     setErrorFound(response.data);
     settoasterror(response.data.status);
-
-    // console.log("fhskdufhsjhf", response);
     getFormListData();
   };
 
   function renderPage() {
-    // console.log(TableData);
-
     if (TableData.length > 0) {
       return (
         <>
@@ -411,12 +397,6 @@ export default function FrameExample(props) {
                                       .charAt(0)
                                       .toUpperCase() +
                                     data.option_set.products.type.slice(1)}
-                                {/* {handleProductButton(
-                                data.option_set.products.type,
-                                data._id,
-                                data.name,
-                                data
-                                )} */}
                               </p>
                               <div className="action_edit_icon">
                                 <a
@@ -811,23 +791,18 @@ export default function FrameExample(props) {
         />
       );
     }
-    // else {
-    //   return <></>;
-    // }
   };
 
   function chageUserInterface() {
     if (step == 0) {
       return pageMarkup;
     } else {
-      // Checking(editoptionid);
       navigate(`/option-sets/createoptions/${editoptionid}`);
     }
   }
   return (
     <div style={{ height: "500px" }}>
       {chageUserInterface()}
-      {/* {resourcePickFunc()} */}
       {toastMarkup()}
     </div>
   );

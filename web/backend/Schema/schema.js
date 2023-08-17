@@ -17,6 +17,8 @@ const credentialSchema = new mongoose.Schema(
   }
 );
 
+credentialSchema.index({shop : 1});
+
 export const credentials = mongoose.model("Credentials", credentialSchema);
 
 /** SAVE THE OPTION SET */
@@ -42,8 +44,6 @@ optionsetSchema.index({shop : 1});
 
 export const Schema = mongoose.model("optionset", optionsetSchema);
 
-//// to save the activivated custom products after checkout
-
 const customproducts = new mongoose.Schema(
   {
     pid: Number,
@@ -58,5 +58,7 @@ const customproducts = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+customproducts.index({pid :1, shop: 1, product_status: 1})
 
 export const custom = mongoose.model("customproducts", customproducts);

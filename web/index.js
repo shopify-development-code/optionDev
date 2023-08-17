@@ -11,6 +11,7 @@ import { DataType } from "@shopify/shopify-api";
 import adminRoutes from "./backend/Routes/admin/adminRoutes.js";
 import cors from 'cors';
 import { verifyWebhooks } from "./backend/controllers/webhooks/verifyWebhooks.js";
+import { privayPolicy } from "./backend/controllers/admin/privacyPolicy.js";
 
 dbMongo();
 
@@ -19,15 +20,19 @@ const PORT = parseInt(
   10
 );
 
+
+console.log(process.env.HOST)
+
 const STATIC_PATH =
   process.env.NODE_ENV === "production"
-    ? `${process.cwd()}/frontend/dist`
+    ? `${process.cwd()}/web/frontend/dist`
     : `${process.cwd()}/frontend/`;
 
     
-    const app = express();
+const app = express();
 
 app.post(shopify.config.auth.path, express.text({type: '*/*'}), verifyWebhooks);
+app.get("/api/privacy-policy", privayPolicy);
 
 app.use(cors({ origin: "*" }));
 app.use(express.json());
@@ -38,11 +43,8 @@ app.get(
   shopify.config.auth.callbackPath,
   shopify.auth.callback(),
   async (req, res, next) => {
-
-    const shop = res.locals.shopify.session.shop;
-    const accessToken = res.locals.shopify.session.accessToken;
-    const session = res.locals.shopify.session;
-
+    const { shop } = res.locals.shopify.session;
+    const { accessToken, session } = res.locals.shopify.session;
     const mainSettings = {
       settings: {
         general: {
@@ -64,37 +66,34 @@ app.get(
       },
     };
 
-    const existingShop = await credentials.findOne({shop : shop});
-  
-      if (!existingShop) {
-        const client = new shopify.api.clients.Rest({session});
-        const theme = await client.get({ path: "themes", type: "json" });
-        const themeId = theme.body.themes.find((el) => el.role === "main");
-        const getAssetsData = await client.get({ path: `themes/${themeId.id}/assets`, type: DataType.JSON });
-         const findJsonTemplate = getAssetsData.body.assets.find((asset) => { 
-             return asset.key === "templates/product.json"; 
-         }); 
+    const existingShop = await credentials.findOne({ shop });
 
-       let themeType = findJsonTemplate == undefined ? "vintage" : "modern";
-  
-        // Create and save shop data
-        const shopData = new credentials({
-          shop: shop,
-          accessToken: accessToken,
-          active_status: 1,
-          payment_status: 0,
-          main_settings: mainSettings,
-          theme_type: themeType,
-        });
-  
-        await shopData.save(); // Use await to make sure the data is saved before proceeding
-  
-        console.log("Shop Info successfully saved");
-      }
-     next();
+    if (!existingShop) {
+      const client = new shopify.api.clients.Rest({ session });
+      const theme = await client.get({ path: "themes", type: "json" });
+      const themeId = theme.body.themes.find((el) => el.role === "main");
+      const getAssetsData = await client.get({ path: `themes/${themeId.id}/assets`, type: DataType.JSON });
+      const findJsonTemplate = getAssetsData.body.assets.find((asset) => asset.key === "templates/product.json");
+
+      const themeType = findJsonTemplate ? "modern" : "vintage";
+
+      const shopData = new credentials({
+        shop,
+        accessToken,
+        active_status: 1,
+        payment_status: 0,
+        main_settings: mainSettings,
+        theme_type: themeType,
+      });
+
+      await shopData.save();
+      console.log("Shop Info successfully saved");
+    }
+    next();
   },
   shopify.redirectToShopifyOrAppRoot()
 );
+
 
 app.post(
   shopify.config.webhooks.path,
@@ -102,8 +101,6 @@ app.post(
 );
 
 app.use("/api/", shopify.validateAuthenticatedSession(), adminRoutes);
-
-app.use(express.json());
 
 app.use(shopify.cspHeaders());
 app.use(serveStatic(STATIC_PATH, { index: false }));

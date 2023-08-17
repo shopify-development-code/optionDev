@@ -19,7 +19,6 @@ import { DynamicApi } from "./common/DynamicAxios";
 
 class Createoptions extends Component {
   constructor(props) {
-    console.log(props.app);
     super(props);
     this.theme = {};
     this.state = {
@@ -1414,8 +1413,6 @@ class Createoptions extends Component {
                   this_data.props.app
                 );
 
-                // console.log("gggggggg", response);
-
                 if (response != "" && response != undefined) {
                   if (response.status == 200) {
                     this_data.setState({
@@ -2370,8 +2367,6 @@ class Createoptions extends Component {
   handleTabChange = (e, val) => {
     this.changeState(val);
     // console.log(e);
-
-    // setSelected(e);
     this.setState({ tab: e });
     this.handleAddElementTab(e);
     setTimeout(() => {
@@ -2400,28 +2395,7 @@ class Createoptions extends Component {
           .getElementsByClassName("leftSidebar")[0]
           .classList.remove("mob-res");
   };
-  // stickybar = (val) => {
-  //   return (
-  //     <div className="outertab">
-  //           <div className="toggle-icon" onClick={this.togglemob}>
-  //           <Icon source={MobileHamburgerMajor} color="base" />
-  //           </div>
-  //       {/* <Tabs tabs={tabs} selected={selected} onSelect={handleTabChange} fitted > </Tabs> */}
-  //       <div className="tab-item " onClick={() => this.handleTabChange(0, val)}>
-  //         <Icon source={HomeMajor} color="base" />
-  //         Elements
-  //       </div>
-  //       <div className="tab-item" onClick={() => this.handleTabChange(1, val)}>
-  //         <Icon source={ProductsMajor} color="base" />
-  //         Products
-  //       </div>
-  //       <div className="tab-item" onClick={() => this.handleTabChange(2, val)}>
-  //         <Icon source={TemplateMajor} color="base" />
-  //         Layout
-  //       </div>
-  //     </div>
-  //   );
-  // };
+
   stickybar = (val) => {
     return (
       <div className="outertab">

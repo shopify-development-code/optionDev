@@ -13,10 +13,6 @@ export async function contactEmail(req, res) {
     const __dirname = path.dirname(__filename);
     const dirPath = path.join(__dirname, "../../Templates");
 
-    console.log(dirPath, "full path....")
-
-    console.log(process.env.EMAIL_USERNAME, "userName")
-
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,

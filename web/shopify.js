@@ -5,9 +5,7 @@ import { restResources } from "@shopify/shopify-api/rest/admin/2023-07";
 
 const DB_PATH = `${process.cwd()}/database.sqlite`;
 
-
 console.log(LATEST_API_VERSION, "api")
-
 
 const shopify = shopifyApp({
   api: {
