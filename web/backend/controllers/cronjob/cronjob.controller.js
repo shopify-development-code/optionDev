@@ -1,4 +1,4 @@
-import { credentials, custom } from "../Schema/schema.js";
+import { credentials, custom } from "../../Schema/schema.js";
 import axios from "axios";
 import path from "path";
 import { fileURLToPath } from "url";

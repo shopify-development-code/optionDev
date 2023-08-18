@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Card, Banner, Button } from "@shopify/polaris";
+import { Banner, Button } from "@shopify/polaris";
+import {Card as AntCard} from 'antd';
 import { useAPI } from "../store/Getshop";
 import { DynamicApi } from "../components/common/DynamicAxios";
 import { getBridge } from "../store/GetAppBridge";
@@ -28,30 +29,10 @@ const WidgetPosition = () => {
     setThemeId(response?.data?.id);
   }
 
-  //   useEffect(() => {
-  //     async function fetchDataFromGetApi() {
-  //       setIsLoading(true);
-
-  //       let optionset_params = { shop: shop };
-  //       let response = await DynamicApi(
-  //         "/api/getCredentials",
-  //         optionset_params,
-  //         "POST",
-  //         app
-  //       );
-  //       console.log(response);
-  //       if (response != "" && response != undefined) {
-  //         setThemeType(response.data.theme_type);
-  //       }
-  //     }
-  //     fetchDataFromGetApi();
-  //     setIsLoading(false);
-  //   }, []);
-
   return (
     <>
-      <Card title="Widget Position" sectioned>
-        <p>
+      <AntCard title="Widget Position" style={{marginBottom : "15px"}}>
+        <p style={{marginBottom : "10px"}}>
           Adjust the Genie Product Options app block displayed on product page.
           (App blocks are flexible. Merchants can use the theme editor to add,
           remove, and reorder app blocks at the section level for easy
@@ -66,17 +47,17 @@ const WidgetPosition = () => {
             Go to Theme Editor
           </Button>
         </div>
-      </Card>
-      <Card title="How to activate and deactivate app blocks." sectioned>
+      </AntCard>
+      <AntCard title="How to activate and deactivate app blocks.">
         <div>
-          <video width="100%" class="video_ply_now" controls>
+          <video width="100%" className="video_ply_now" controls>
             <source
               src="https://cdn.shopify.com/videos/c/o/v/d4b0ef7ad96a43cf8cb11e31235d7f25.mp4"
               type="video/mp4"
             />
           </video>
         </div>
-      </Card>
+      </AntCard>
     </>
   );
 };

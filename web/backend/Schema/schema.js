@@ -41,6 +41,7 @@ const optionsetSchema = new mongoose.Schema(
 );
 
 optionsetSchema.index({shop : 1});
+optionsetSchema.index({shop : 1, name: 1, option_set: 1, status: 1});
 
 export const Schema = mongoose.model("optionset", optionsetSchema);
 
@@ -62,3 +63,20 @@ const customproducts = new mongoose.Schema(
 customproducts.index({pid :1, shop: 1, product_status: 1})
 
 export const custom = mongoose.model("customproducts", customproducts);
+
+
+const storeSchema = new mongoose.Schema(
+  {
+    shop: String ,
+    email : String,
+    country_name : String,
+    shop_owner : String,
+    iana_timezone : String
+  },
+
+  { timestamps: true }
+);
+
+const merchantInfo = mongoose.model("merchantInfo", storeSchema);
+
+export default merchantInfo;

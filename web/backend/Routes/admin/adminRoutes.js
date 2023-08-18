@@ -1,5 +1,5 @@
 import express from "express";
-import { copyOptionSet, deleteDraftProducts, deleteOptionSet, getAllOptionSet, getCredentials, getFormList, getFormNames, getThemeId, saveOptionSet, searchByName, setformstatus, updateOptionSet } from "../../controllers/admin/backendController.js";
+import { copyOptionSet, deleteDraftProducts, deleteOptionSet, getAllOptionSet, getCredentials, getFormList, getFormNames, getThemeId, saveOptionSet, saveTheme, searchByName, setformstatus, themeInstallation, themePlan, updateOptionSet, updateSettngs } from "../../controllers/admin/backendController.js";
 import { contactEmail } from "../../controllers/admin/mailController.js";
 // import { verifyToken } from "../middleware/verifyToken.js";
 // import {
@@ -28,13 +28,9 @@ import { contactEmail } from "../../controllers/admin/mailController.js";
 const adminRoutes = express.Router();
 
 adminRoutes.post("/saveOptionSet", saveOptionSet);
-
 adminRoutes.post("/getAllOptionSet", getAllOptionSet);
-
 adminRoutes.post("/updateOptionSetByID", updateOptionSet);
-
 adminRoutes.post("/deleteOptionSetByID", deleteOptionSet);
-
 adminRoutes.post("/copyOptionSet", copyOptionSet);
 
 // adminRoutes.post(
@@ -47,7 +43,7 @@ adminRoutes.post("/getCredentials", getCredentials);
 
 // adminRoutes.post("/api/getScriptFile", verifyToken, handleServerScript);
 
-// adminRoutes.post("/api/updateSettngs", verifyToken, updateSettngs);
+adminRoutes.post("/updateSettngs", updateSettngs);
 
 adminRoutes.post("/deleteDraftProducts", deleteDraftProducts);
 
@@ -61,9 +57,9 @@ adminRoutes.post("/deleteDraftProducts", deleteDraftProducts);
 
 // adminRoutes.post("/api/checkThemeChosen", verifyToken, checkChosenTheme);
 
-// adminRoutes.post("/api/saveTheme", verifyToken, saveTheme);
+adminRoutes.post("saveTheme", saveTheme);
 
-// adminRoutes.post("/api/themeInstallation", verifyToken, themeInstallation);
+adminRoutes.post("themeInstallation", themeInstallation);
 
 adminRoutes.post("/getFormNames", getFormNames);
 
@@ -74,6 +70,7 @@ adminRoutes.post("/setformstatus", setformstatus);
 // // adminRoutes.post("/api/makedir", verifyToken, makedir);
 
 adminRoutes.post("/shopify/theme-id", getThemeId);
+adminRoutes.post("/shopify/theme-plan", themePlan);
 
 adminRoutes.post("/getformlist", getFormList);
 adminRoutes.post("/contact", contactEmail);

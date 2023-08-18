@@ -166,22 +166,17 @@ export default function Setting() {
       shop: shop,
     };
     setloading(true);
-    // setIsLoading(true);
-
     let url = "/api/updateSettngs";
-    // let response = await axios.post(url, params);
     let response = await DynamicApi(url, params, "POST", app);
 
     if (response != "" && response != undefined) {
       setErrorMessage(response.data.mesage);
       setToastActive(true);
       setloading(false);
-      // setIsLoading(false);
     } else {
       setErrorMessage("some error occured");
       setToastActive(true);
       setloading(false);
-      // setIsLoading(fasle);
     }
   };
 

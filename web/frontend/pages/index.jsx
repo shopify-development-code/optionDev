@@ -6,10 +6,11 @@ import {
   List,
   Box,
   HorizontalStack,
-  Button
+  Button,
+  CalloutCard
 } from "@shopify/polaris";
 import { useAPI } from "../store/Getshop";
-
+import {Card as AntCard} from 'antd';
 import dashPic from "../assets/images/embed.png";
 import { DynamicApi } from "../components/common/DynamicAxios";
 import { getBridge } from "../store/GetAppBridge";
@@ -19,11 +20,6 @@ export default function dashboard() {
   const { app } = getBridge();
 
   const [themeId, setThemeId] = useState("");
-
-  const [appActive, setAppActive] = useState(false);
-  const contentStatus = appActive ? "Deactivate" : "Click here";
-  const textStatus = appActive ? "activated" : "deactivated";
-  const shopOriginW = new URL(location).searchParams.get("shop");
 
 
   async function getThemeId() {
@@ -50,49 +46,49 @@ export default function dashboard() {
     <div className="full_width">
       <div className="sd-app-activator">
         <Card>
-          <HorizontalStack gap={{xs: '2', sm: '4'}} align="space-between">
+          <HorizontalStack gap={{xs: '2', sm: '4'}} align="space-between" blockAlign="center">
             <Text > You can enable this app in
               your Store. </Text>
-            <Button onClick={handleEmbedBtn} primary>{contentStatus}</Button>
+            <Button onClick={handleEmbedBtn} primary disabled={themeId !== "" ? false : true}>Click here</Button>
           </HorizontalStack>
         </Card>
       </div>
       <div className="sd-dashboard-card">
-        <Card title="Steps to enable/disable the app:" sectioned >
+        <AntCard title="Steps to enable/disable the app:" >
           <div className="sd-card-inner-cont">
             <div className="sd-card-list-cont">
               <List type="number">
                 <List.Item>
                   From your Shopify admin, go to{" "}
-                  <Text variation="strong">
+                  <Text fontWeight="bold" as="span">
                     Online Store &#62; Themes.
                   </Text>{" "}
                 </List.Item>
                 <List.Item>
                   Find the theme that you want to edit, and then click{" "}
-                  <Text variation="strong"> Customize.</Text>
+                  <Text fontWeight="bold" as="span"> Customize.</Text>
                 </List.Item>
                 <List.Item>
                   Click the{" "}
-                  <Text variation="strong">App embeds tab.</Text>
+                  <Text fontWeight="bold" as="span">App embeds tab.</Text>
                 </List.Item>
 
                 <List.Item>
                   Click the Select the app embed that you want to activate or
                   click the Search bar and enter a{" "}
-                  <Text variation="strong">search </Text> term to
+                  <Text fontWeight="bold" as="span">search </Text> term to
                   search through your installed apps.
                 </List.Item>
                 <List.Item>
                   Click the Beside the app embed that you want to activate,{" "}
-                  <Text variation="strong">
+                  <Text fontWeight="bold" as="span">
                     {" "}
                     click the toggle to activate it
                   </Text>
                 </List.Item>
                 <List.Item>
                   And{" "}
-                  <Text variation="strong">
+                  <Text fontWeight="bold" as="span">
                     {" "}
                     click the Save button{" "}
                   </Text>{" "}
@@ -104,7 +100,7 @@ export default function dashboard() {
               <img src={dashPic} alt="step5" />
             </div>
           </div>
-        </Card>
+        </AntCard>
       </div>
     </div>
   );

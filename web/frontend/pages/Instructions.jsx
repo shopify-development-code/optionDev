@@ -1,10 +1,9 @@
 import React from "react";
 import {
-  LegacyCard,
   Text,
   List,
-  Tabs,
 } from "@shopify/polaris";
+import { Card } from "antd";
 import { useState, useCallback } from "react";
 import optionSetimg from "../assets/images/optionSet.png";
 
@@ -15,31 +14,31 @@ const Instructions = () => {
       <List type="number">
         <List.Item>
           From your Shopify admin, go to{" "}
-          <Text variation="strong">Online Store &#62; Themes.</Text>{" "}
+          <Text variant="bold" as="span">Online Store &#62; Themes.</Text>{" "}
         </List.Item>
         <List.Item>
           Find the theme that you want to edit, and then click{" "}
-          <Text variation="strong"> Customize.</Text>
+          <Text variant="bold" as="span"> Customize.</Text>
         </List.Item>
         <List.Item>
-          Click the <Text variation="strong">App embeds tab.</Text>
+          Click the <Text variant="bold" as="span">App embeds tab.</Text>
         </List.Item>
 
         <List.Item>
           Click the Select the app embed that you want to activate or click the
           Search bar and enter a{" "}
-          <Text variation="strong">search </Text> term to search
+          <Text variant="bold" as="span">search </Text> term to search
           through your installed apps.
         </List.Item>
         <List.Item>
           Click the Beside the app embed that you want to activate,{" "}
-          <Text variation="strong">
+          <Text variant="bold" as="span">
             {" "}
             click the toggle to activate it
           </Text>
         </List.Item>
         <List.Item>
-          And <Text variation="strong"> click the Save button </Text>{" "}
+          And <Text variant="bold" as="span"> click the Save button </Text>{" "}
           to save it.
         </List.Item>
       </List>
@@ -53,35 +52,35 @@ const Instructions = () => {
           <List type="number">
             <List.Item>
               From your Shopify admin, go to{" "}
-              <Text variation="strong">
+              <Text variant="bold" as="span">
                 Online Store &#62; Themes.
               </Text>{" "}
             </List.Item>
             <List.Item>
               Find the theme that you want to edit, and then click{" "}
-              <Text variation="strong"> Customize.</Text>
+              <Text variant="bold" as="span"> Customize.</Text>
             </List.Item>
             <List.Item>
               Click the{" "}
-              <Text variation="strong">App embeds tab.</Text>
+              <Text variant="bold" as="span">App embeds tab.</Text>
             </List.Item>
 
             <List.Item>
               Click the Select the app embed that you want to activate or click
               the Search bar and enter a{" "}
-              <Text variation="strong">search </Text> term to search
+              <Text variant="bold" as="span">search </Text> term to search
               through your installed apps.
             </List.Item>
             <List.Item>
               Click the Beside the app embed that you want to activate,{" "}
-              <Text variation="strong">
+              <Text variant="bold" as="span">
                 {" "}
                 click the toggle to activate it
               </Text>
             </List.Item>
             <List.Item>
               And{" "}
-              <Text variation="strong"> click the Save button </Text>{" "}
+              <Text variant="bold" as="span"> click the Save button </Text>{" "}
               to save it.
             </List.Item>
           </List>
@@ -94,11 +93,11 @@ const Instructions = () => {
             <List type="number">
               <List.Item>
                 Go to {""}
-                <Text variation="strong">option set</Text> menu.
+                <Text variant="bold" as="span">option set</Text> menu.
               </List.Item>
               <List.Item>
                 Click the
-                <Text variation="strong">
+                <Text variant="bold" as="span">
                   {" "}
                   Create new option set{" "}
                 </Text>
@@ -106,41 +105,41 @@ const Instructions = () => {
               </List.Item>
               <List.Item>
                 Enter the name in the{" "}
-                <Text variation="strong">optionset name field.</Text>
+                <Text variant="bold" as="span">optionset name field.</Text>
               </List.Item>
 
               <List.Item>
                 click the
-                <Text variation="strong"> Add Element Button</Text> to
+                <Text variant="bold" as="span"> Add Element Button</Text> to
                 add element to your OptionSet.{" "}
               </List.Item>
               <List.Item>
-                Select the <Text variation="strong"> Element.</Text>
+                Select the <Text variant="bold" as="span"> Element.</Text>
               </List.Item>
               <List.Item>
                 Add and edit{" "}
-                <Text variation="strong">
+                <Text variant="bold" as="span">
                   {" "}
                   Setting and Appearence{" "}
                 </Text>{" "}
                 according to you.{" "}
               </List.Item>
               <List.Item>
-                Go to <Text variation="strong"> Products.</Text>
+                Go to <Text variant="bold" as="span"> Products.</Text>
               </List.Item>
               <List.Item>
-                Select <Text variation="strong"> Product.</Text>
+                Select <Text variant="bold" as="span"> Product.</Text>
               </List.Item>
               <List.Item>
-                Go to <Text variation="strong">Layout.</Text>
+                Go to <Text variant="bold" as="span">Layout.</Text>
               </List.Item>
               <List.Item>
-                Enable <Text variation="strong">Global layout</Text>{" "}
+                Enable <Text variant="bold" as="span">Global layout</Text>{" "}
                 and adjust the Layout{" "}
               </List.Item>
               <List.Item>
                 click the{" "}
-                <Text variation="strong">Save Button {""}</Text>
+                <Text variant="bold" as="span">Save Button {""}</Text>
                 to save the process.
               </List.Item>
             </List>
@@ -159,7 +158,7 @@ const Instructions = () => {
         <div>
           <List type="number">
             <List.Item>
-              <Text variation="strong">
+              <Text variant="bold" as="span">
                 Clear Duplicate Products:{" "}
               </Text>{" "}
               Whenever customers purchased a product that have applied options
@@ -168,27 +167,27 @@ const Instructions = () => {
               to time. This will not affect anything in the store.
             </List.Item>
             <List.Item>
-              <Text variation="strong">
+              <Text variant="bold" as="span">
                 {" "}
                 Product page translation:{" "}
               </Text>
               There user can add some labels and addon.
             </List.Item>
             <List.Item>
-              <Text variation="strong">Cart page: </Text>
+              <Text variant="bold" as="span">Cart page: </Text>
               There user can change label on cart page.
             </List.Item>
 
             <List.Item>
-              <Text variation="strong">Option set widget: </Text>
+              <Text variant="bold" as="span">Option set widget: </Text>
               There user can choose the position on the OptionSet.
             </List.Item>
             <List.Item>
-              <Text variation="strong">Allowed extensions: </Text>
+              <Text variant="bold" as="span">Allowed extensions: </Text>
               There user can choose the format of the file.
             </List.Item>
             <List.Item>
-              <Text variation="strong">
+              <Text variant="bold" as="span">
                 Error messages translations{" "}
               </Text>{" "}
               There user can make his own error message.
@@ -201,27 +200,23 @@ const Instructions = () => {
 
   const tabs = [
     {
-      id: "sd-dashboard",
-      content: "Dashboard",
+      key: 0,
+      tab: "Dashboard",
     },
     {
-      id: "sd-optionSet",
-      content: "How to Create Option Set?",
+      key: 1,
+      tab: "How to Create Option Set?",
     },
     {
-      id: "sd-setting",
-      content: "Settings",
+      key: 2,
+      tab: "Settings",
     },
   ];
 
 return (
-    <LegacyCard>
-      <Tabs tabs={tabs} selected={selected} onSelect={handleTabChange}>
-        <LegacyCard.Section title={tabs[selected].content}>
-          <p>{Instructions}</p>
-        </LegacyCard.Section>
-      </Tabs>
-    </LegacyCard>
+    <Card tabIndex={selected} onTabChange={handleTabChange} tabList={tabs}>
+       <p>{Instructions}</p>
+    </Card>
   );
 };
 

@@ -1,15 +1,8 @@
-import { credentials } from "../Schema/schema.js";
 import shopify from "../../shopify.js";
 
 /******************************************************************************************************* 
                     GLOBAL FUNCTION Start 
 *******************************************************************************************************/
-
-export async function getCredentialsResponse(shop) {
-  let documentQuery = { shop: shop };
-  let credentialsData = await credentials.findOne(documentQuery);
-  return credentialsData;
-}
 
 //PUT API of shopify
 // export async function putShopifyData(shop, accessToken, param) {

@@ -3,11 +3,10 @@ import { AppProvider, TopBar, Frame } from "@shopify/polaris";
 import { ArrowLeftMinor } from "@shopify/polaris-icons";
 import NavigationHeader from "./navigation";
 import { Outlet, useLocation } from "react-router-dom";
-// import pic from "/assets/images/logo.png";
 import pic from "../../assets/images/logo.png";
 import { useAPI } from "../../store/Getshop";
 import { useNavigate } from "@shopify/app-bridge-react";
-// import { DynamicApi } from "../common/DynamicAxios";
+import { DynamicApi } from "../common/DynamicAxios";
 import { getBridge } from "../../store/GetAppBridge";
 
 function MainLayout() {
@@ -18,20 +17,20 @@ function MainLayout() {
   const [isLoading, setIsLoading] = useState(false);
   const [themeData, setThemeData] = useState({});
 
-  // useEffect(() => {
-  //   async function fetchDataFromGetApi() {
-  //     let optionset_params = { shop: getShop };
-  //     let response = await DynamicApi(
-  //       "/api/getCredentials",
-  //       optionset_params,
-  //       "POST",
-  //       app
-  //     );
-  //     console.log("res settings ");
-  //     setThemeData(response.data);
-  //   }
-  //   fetchDataFromGetApi();
-  // }, []);
+  useEffect(() => {
+    async function fetchDataFromGetApi() {
+      let optionset_params = { shop: getShop };
+      let response = await DynamicApi(
+        "/api/getCredentials",
+        optionset_params,
+        "POST",
+        app
+      );
+      console.log("res settings ");
+      setThemeData(response.data);
+    }
+    fetchDataFromGetApi();
+  }, []);
 
   const [userMenuActive, setUserMenuActive] = useState(false);
   const [mobileNavigationActive, setMobileNavigationActive] = useState(false);

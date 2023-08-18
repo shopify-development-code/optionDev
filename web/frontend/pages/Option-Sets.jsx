@@ -125,9 +125,6 @@ export default function FrameExample(props) {
 
   async function copyElement(params) {
     let response = await DynamicApi("/api/copyOptionSet", params, "POST", app);
-
-    // console.log(response.data.mesg)
-
     if (response != "" && response != undefined) {
       if (response.data != "") {
         setDisabledButton(false);
@@ -366,7 +363,6 @@ export default function FrameExample(props) {
             <div className="home-section">
               <div className="serachInput">
                 <Icon source={SearchMinor} color="base" />
-
                 <input
                   type="search"
                   onChange={handleSearchForm}
@@ -380,7 +376,7 @@ export default function FrameExample(props) {
                     <img src={noresult} />
                   </div>
                 ) : (
-                  TableData.map((data, index) => (
+                  TableData.map((data) => (
                     <React.Fragment key={data._id}>
                       <Col className="gutter-row " span={6}>
                         <div
@@ -510,45 +506,6 @@ export default function FrameExample(props) {
                               </div>
                             </div>
                           </div>
-
-                          {/* <div className="actionBtns">
-                            <div className="action_edit_icon">
-                              <a
-                                className={disabledButton ? "anchorclick" : ""}
-                                id={data._id}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleClick("edit", e.currentTarget.id);
-                                }}
-                              >
-                                <Icon source={EditMajor} color="success" />
-                              </a>
-                              <a
-                                className={disabledButton ? "anchorclick" : ""}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleClick("copy_set", e.currentTarget.id);
-                                }}
-                                id={data._id}
-                              >
-                                <Icon source={DuplicateMinor} color="success" />
-                              </a>
-                            </div>
-                            <div>
-                              <a
-                                className={disabledButton ? "anchorclick" : ""}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  let id = e.currentTarget.id;
-                                  setReCheck(true);
-                                  setDeleteId(id);
-                                }}
-                                id={data._id}
-                              >
-                                <Icon source={DeleteMajor} color="critical" />
-                              </a>
-                            </div>
-                          </div> */}
                         </div>
                       </Col>
                     </React.Fragment>
@@ -765,7 +722,7 @@ export default function FrameExample(props) {
       <SkeletonPage>
         <Layout>
           <Layout.Section>
-            <Card sectioned>
+            <Card>
               <VerticalStack gap={5}>
                 <SkeletonDisplayText size="small" />
                 <SkeletonBodyText lines={10} />

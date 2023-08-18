@@ -42,8 +42,6 @@ export async function getAllOptionSet(req, res) {
   try {
     let shop = req.body.shop;
     let settings = await credentials.findOne({ shop: shop });
-
-    console.log(settings, "settings")
   
     let schema_data = await Schema.find({ shop: shop });
     if (schema_data) {
@@ -61,7 +59,6 @@ export async function getAllOptionSet(req, res) {
   } catch(err) {
     res.send({ status: false, response: "Something Went wrong" });
   }
- 
 }
 
 export async function updateOptionSet(req, res) {
@@ -98,7 +95,6 @@ export async function updateOptionSet(req, res) {
     res.status(500).send(error_log);
   }
 }
-
 
 export async function deleteOptionSet(req, res) {
   try {
@@ -155,33 +151,27 @@ export async function checkOptionSetOnInstall(req, res) {
 }
 
 export async function getCredentials(req, res) {
-  // let shop = "yuvatheme-shinedezign.myshopify.com";
-  let shop = req.body.shop;
-
-  // if (shop == undefined) {
-  //   res.send({ noerror: false, data: "Error Fetching data " });
-  // } else {
-  // let shop = req.body.shop;
-  let settings = await credentials.findOne({ shop: shop });
-  // let data = await Schema.find({ shop: shop });
-  // console.log(data)
-  // console.log("dfsdf", settings);
-
-  if (settings != null) {
-    res.send({
-      noerror: true,
-      // data: data,
-      settings: settings.main_settings,
-      theme_type: settings.theme_type,
-      installation: settings.first_time,
-      theme: settings.theme_chosen,
-      mainTheme: settings.theme_chosen,
-    });
-  } else {
-    res.send({ noerror: false, data: "Error Fetching data" });
+  try {
+    const shop = res.locals.shopify.session.shop;
+    const settings = await credentials.findOne({ shop });
+    if (settings) {
+      res.send({
+        noerror: true,
+        settings: settings.main_settings,
+        theme_type: settings.theme_type,
+        installation: settings.first_time,
+        theme: settings.theme_chosen,
+        mainTheme: settings.theme_chosen,
+      });
+    } else {
+      res.send({ noerror: false, data: "No data found for the specified shop" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ noerror: false, data: "An error occurred" });
   }
-  // }
 }
+
 
 export async function handleServerScript(req, res) {
   const doc = printer.createPdfKitDocument(
@@ -198,63 +188,37 @@ export async function handleServerScript(req, res) {
 
 //Update the main setting in the main Credentials table
 export async function updateSettngs(req, res) {
-  console.log("kjhjkbhkjbkj", req.body);
-  let shop = req.body.shop;
-  let mainsettings = {};
-  mainsettings.settings = req.body.settings;
-  let credentialsData = await getCredentialsResponse(shop);
-  // let accessToken = credentialsData.accessToken;
-  // let settingTheme = credentialsData.theme_chosen;
-  // let settingFile = `<script>\n{% raw %}\n
-  //   Shine.setting = ${JSON.stringify(mainsettings)};
-  //   \n{% endraw %}\n</script>`;
+  const shop = req.body.shop;
+  const mainsettings = { settings: req.body.settings };
+  try {
+    const changeData = await credentials.findOneAndUpdate(
+      { shop },
+      { main_settings: mainsettings },
+      { upsert: true }
+    );
 
-  // let param = {
-  //   path: `themes/${settingTheme}/assets`,
-  //   data: {
-  //     asset: {
-  //       key: `snippets/sd.mainoptions.setting.liquid`,
-  //       value: settingFile,
-  //     },
-  //   },
-  //   type: DataType.JSON,
-  // };
-  // let settingFileCreated = await putShopifyData(shop, accessToken, param);
-
-  // if (true == settingFileCreated.status) {
-  let dbcheck = true;
-  const changeData = credentials.findOneAndUpdate(
-    { shop: shop },
-    { main_settings: mainsettings },
-    { upsert: true },
-    function (err, doc) {
-      if (err) {
-        dbcheck = false;
-      }
+    if (changeData) {
+      res.send({ status: true, mesage: "Settings Updated" });
+    } else {
+      res.send({
+        status: false,
+        mesage: "Error Updating the database, Please Try Again updates",
+      });
     }
-  );
-
-  if (true == dbcheck) {
-    res.send({ status: true, mesage: "Settings Updated" });
-  } else {
-    res.send({
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({
       status: false,
-      mesage: "Error Updating the datatabase,  Please Try Again updates",
+      mesage: "An error occurred while updating settings",
     });
   }
-  // } else {
-  //   res.send({
-  //     status: false,
-  //     mesage: "Error Updating the Snippet File Please , Try Again updates",
-  //   });
-  // }
 }
+
 
 //Delete the draft product from the backend bulk delete
 export async function deleteDraftProducts(req, res) {
   const { shop } = res.locals.shopify.session;
   const { accessToken, session } = res.locals.shopify.session;
-
   const param = {
     path: "products",
     query: {
@@ -616,7 +580,8 @@ export async function themeInstallation(req, res) {
 
 export async function getFormList(req, res) {
   try {
-    const { id, shop } = req.body;
+    const { id } = req.body;
+    const shop = res.locals.shopify.session.shop;
     const n = 12;
     const skipCount = (id > 0 ? (id - 1) * n : 0);
 
@@ -647,8 +612,8 @@ export async function getFormNames(req, res) {
 
 
 export async function searchByName(req, res) {
-  const { body } = req;
-  const { find, value, shop } = body;
+  const { find, value } = req.body;
+  const shop = res.locals.shopify.session.shop;
   const n = 12;
 
   try {
@@ -822,46 +787,38 @@ export async function makedir(req, res) {
   }
 }
 
-// export async function getThemeId(req, res) {
-//   let shop = req.body.shop;
-//   console.log('helo')
-//   const result = await credentials.findOne({ shop: shop });
-//   console.log('test')
-//   const client = new Shopify.Clients.Rest(shop, result.accessToken);
-//   console.log('bbbb')
-//   const theme = await client.get({
-//     path: "themes",
-//     type: DataType.JSON,
-//   });
-//   const themeId = theme.body.themes.find((el) => {
-//     return el.role === "main";
-//   });
-//   console.log(themeId, 'themeId')
-
-//   res.json({ id: themeId.id });
-// }
-
 export async function getThemeId(req, res) {
   try {
-    console.log(res.locals, "locals")
     const session = res.locals.shopify.session;
-
     const client = new shopify.api.clients.Rest({session});
     const {
       body: { themes },
     } = await client.get({ path: "themes", type: DataType.JSON });
     const { id } = themes.find((el) => el.role === "main");
-
-
-    // const client = new shopify.api.clients.Rest({session});
-    //     const theme = await client.get({ path: "themes", type: "json" });
-    //     const themeId = theme.body.themes.find((el) => el.role === "main");
-
-
-
     res.status(200).json({ id });
   } catch (err) {
     console.error(err);
     res.status(500).send("Error getting theme ID");
+  }
+}
+
+
+export const themePlan = async (req, res) => {
+  try{
+    const session = res.locals.shopify.session;
+    const hasActivePlan = await shopify.api.rest.Shop.all({
+       session
+     })
+     const data = {
+        myshopify_domain : hasActivePlan.data[0].myshopify_domain,
+        shop_owner : hasActivePlan.data[0].shop_owner,
+        plan_name : hasActivePlan.data[0].plan_name,
+        email : hasActivePlan.data[0].email
+     }
+     if(hasActivePlan) {
+        res.status(200).send(data)
+     }
+  } catch(err) {
+     res.status(401).send("Unauthorized")
   }
 }
