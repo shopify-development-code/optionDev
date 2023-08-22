@@ -7,7 +7,6 @@ import {
 } from "./components";
 import ContextAppbridge from "./store/GetAppBridge";
 import Auth from "./Auth";
-import "./assets/css/app.css";
 
 export default function App() {
   return (

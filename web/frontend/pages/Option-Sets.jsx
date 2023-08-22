@@ -32,17 +32,14 @@ import noimage from "../assets/images/noimage.png";
 
 export default function FrameExample(props) {
   const { app } = getBridge();
-
   const { getShop } = useAPI();
-  // const [shopName, setShopName] = useState(getshop());  //getshop() is used instead of state
+  const navigate = useNavigate();
+  
   const [productids, setproductids] = useState([]); // used to store product id to compare when we are changing sactive or draft status from card option
-  // const [allproductids, setallproductids] = useState([]); /// get all ids of added products
   const [searchdataempty, setsearchdataempty] = useState(false); // to give no page found
   const [IsLoad, setIsLoad] = useState(true); // to shoe the loader skeleton
   const [totaldocs, settotaldocs] = useState(0); // total documents coming from db
   const [page, setpage] = useState(0); // pagination page number
-  // const [collectionModal, setCollectionModal] = useState({ open: false });
-  // const [productModal, setProductModal] = useState({ open: false });
   const [reCheck, setReCheck] = useState(false);
   const [errorFound, setErrorFound] = useState(false);
   const toggleActive = useCallback(
@@ -50,25 +47,17 @@ export default function FrameExample(props) {
     []
   );
   const [isLoading, setIsLoading] = useState(false);
-  // const [allCheckedProduct, setAllCheckedProduct] = useState([]);
   const [fileName, setFileName] = useState(new Date().valueOf());
   const [disabledButton, setDisabledButton] = useState(false);
   const [contentMsg, setContentMsg] = useState("");
   const [deleteId, setDeleteId] = useState("");
   const [searchForm, setSearchForm] = useState("");
-  // const [needResource, setNeedResource] = useState(false);
-  // const [whichResource, setWhichResource] = useState("");
-  // const [productsAdded, setProductsAdded] = useState([]);
-  // const [autoProduct, setAutoProduct] = useState([]);
-  // const [collectionCopy, setCollectionCopy] = useState({});
-  // const [activeCollectionId, setActiveCollectionId] = useState("");
   const [step, setStep] = useState(0);
   const [pageCount, setpageCount] = useState(1);
   const [TableData, setTableData] = useState([]);
   const [editoptionid, seteditoptionid] = useState("");
   const [fullres, setfullres] = useState();
   const [toasterror, settoasterror] = useState(false);
-  const navigate = useNavigate();
 
   const fullscreen = Fullscreen.create(app);
 
@@ -78,15 +67,10 @@ export default function FrameExample(props) {
   }, []);
 
   async function getFormListData(pages) {
-    // let ttt = await axios.post("/api/makedir", { shop: getShop });
     setsearchdataempty(false);
     setIsLoading(true);
-
-    // const id = pages ?? pageCount;
-    const id =  pageCount;
+    const id =  pages ?? pageCount;
     let params = { shop: getShop, id: id };
-    // let url = "/getformlist";
-    // let res = await axios.post(url, params);
     await DynamicApi("/api/getformlist", params, "POST", app)
       .then((res) => {
         setfullres(res.data);
@@ -188,7 +172,6 @@ export default function FrameExample(props) {
       copyElement(params);
     } else if (id == "check_products") {
       const result = TableData.filter((elem) => elem._id == val);
-      // setSelectedOptionSet(val);
       let productData = result[0].option_set.products;
       let type = productData.type;
       let productArray = [];
@@ -264,7 +247,6 @@ export default function FrameExample(props) {
       } else if (type == "all") {
         productArray.push({ title: "All products", index: 0 });
       }
-      // setSelectedProducts(productArray);
     }
   }
 
@@ -290,7 +272,6 @@ export default function FrameExample(props) {
   }
 
   const handleNextPage = () => {
-    // console.log(searchForm);
     if (searchForm.length < 1) {
       setpageCount(pageCount + 1);
       getFormListData(pageCount + 1);
@@ -313,13 +294,9 @@ export default function FrameExample(props) {
     setpageCount(1);
     const search_val = e.target.value;
     setSearchForm(e.target.value);
-    // console.log(search_val.length);
     if (search_val.length >= 1) {
-      // console.log("helllooooooo length badi hai");
       getFormBySearch(search_val);
     } else {
-      // console.log("helllooooooo length nahi hai");
-
       getFormListData();
     }
   };
@@ -581,38 +558,7 @@ export default function FrameExample(props) {
       );
     }
   }
-  // const handleSelectChange = (value, id) => {
-  //   let newId = id.split("_");
-  //   let index = parseInt(newId[1]);
-  //   let items = [...autoProduct];
-  //   let pos = items
-  //     .map((element) => {
-  //       return element.index;
-  //     })
-  //     .indexOf(index);
-  //   let item = { ...items[pos] };
-  //   if (newId[0] == "product") {
-  //     if (value == "collections") {
-  //       item.value = "null";
-  //     } else {
-  //       item.value = item.oldVal;
-  //     }
-  //     item.product_type = value;
-  //   } else if (newId[0] == "validator") {
-  //     item.validator = value;
-  //   } else if (newId[0] == "addon") {
-  //     item.value = value;
-  //     item.oldVal = value;
-  //   } else if (newId[0] == "value") {
-  //     item.collection_items = value;
-  //   }
-  //   items[pos] = item;
-  //   setAutoProduct(items);
-  // };
-
-  // const Checking = (editoptionid) => {
-  //   navigate(`/option-sets/createoptions/${editoptionid}`);
-  // };
+ 
   function handlefullScreen() {
     fullscreen.dispatch(Fullscreen.Action.ENTER);
     navigate(`/option-sets/createoptions`);
@@ -620,8 +566,6 @@ export default function FrameExample(props) {
 
   const actualPageMarkup = (
     <div className="sd-option-wrapper">
-      {/* <Layout>
-        <Layout.Section> */}
       <div className="CreateHeaderScreen">
         <h2>Option sets</h2>
         <div className="createNewbtn" onClick={handlefullScreen}>
@@ -630,92 +574,11 @@ export default function FrameExample(props) {
         </div>
       </div>
       <div className="box-wrapper">
-        {/* <Card sectioned> */}
         {renderPage()}
-        {/* </Card> */}
       </div>
-      {/* </Layout.Section>
-      </Layout> */}
     </div>
   );
 
-  // const resourcePickFunc = () => {
-  //   // console.log(whichResource);
-  //   if (needResource) {
-  //     if (whichResource == "product") {
-  //       return (
-  //         <ResourcePicker
-  //           resourceType="Product"
-  //           open={productModal.open}
-  //           initialQuery=""
-  //           onCancel={() => {
-  //             setNeedResource(false);
-  //             setWhichResource("");
-  //             setProductModal({ open: false });
-  //           }}
-  //           showVariants={false}
-  //           initialSelectionIds={productsAdded}
-  //           onSelection={(resources) => {
-  //             // let result = [];
-  //             let data = [];
-  //             resources.selection.map((element) => {
-  //               let productImage = element.images
-  //                 ? element.images[0].originalSrc
-  //                 : "no-image";
-
-  //               let product_id = element.id.split("/");
-  //               product_id = product_id[product_id.length - 1];
-  //               data.push({
-  //                 id: element.id,
-  //                 product_id: product_id,
-  //                 title: element.title,
-  //                 originalSrc: productImage,
-  //               });
-  //               console.log(data);
-  //             });
-  //             setProductsAdded(data);
-  //             setNeedResource(false);
-  //             setWhichResource("");
-  //           }}
-  //         />
-  //       );
-  //     } else {
-  //       return (
-  //         <ResourcePicker
-  //           resourceType="Collection"
-  //           open={collectionModal.open}
-  //           onCancel={() => {
-  //             setNeedResource(false);
-  //             setWhichResource("");
-  //             setCollectionModal({ open: false });
-  //           }}
-  //           selectMultiple={false}
-  //           showVariants={false}
-  //           initialSelectionIds={collectionCopy[activeCollectionId]}
-  //           onSelection={(resources) => {
-  //             let result = [];
-  //             let data = [];
-  //             resources.selection.map((element) => {
-  //               result.push({ id: element.id });
-  //               let product_id = element.id.split("/");
-  //               product_id = product_id[product_id.length - 1];
-  //               data.push({ id: product_id, image: "", title: element.title });
-  //             });
-  //             let items = { ...collectionCopy };
-  //             items[activeCollectionId] = result;
-  //             setCollectionCopy(items);
-  //             setCollectionModal({ open: false });
-  //             setNeedResource(false);
-  //             setWhichResource("");
-  //             handleSelectChange(data, activeCollectionId);
-  //           }}
-  //         />
-  //       );
-  //     }
-  //   } else {
-  //     return <div></div>;
-  //   }
-  // };
 
   const loadingPageMarkup = (
     <>

@@ -7,48 +7,36 @@ import {
   Button,
   TextField,
   Text,
-  ButtonGroup,
   Select,
-  HorizontalStack,
+  VerticalStack,
 } from "@shopify/polaris";
 import {
   DesktopMajor,
   MobileMajor,
   ArrowLeftMinor,
 } from "@shopify/polaris-icons";
-import { element } from "prop-types";
-// import { useRouter } from "next/router";
-// import { useNavigate } from "react-router-dom";
 import { useNavigate } from "@shopify/app-bridge-react";
 import { Fullscreen } from "@shopify/app-bridge/actions";
 import { useAppBridge } from "@shopify/app-bridge-react";
+
 export default function Header(props) {
-  //   const router = useRouter();
   const navigate = useNavigate();
   const app = useAppBridge();
   const fullscreen = Fullscreen.create(app);
   const [backModal, setBackModal] = useState(false);
   const [checkInstall, setCheckInstall] = useState(props.checkInstall);
   const [error_status, setErrorStatus] = useState(false);
-  const [fullSc, setFullsc] = useState(true);
-  // const [saveBool, setSaveBool] = useState(props.buttonBool);
-  // const [namedSet, setNamedSet] = useState(props.name);
+
   const options = [
     { label: "Draft", value: "set_draft" },
     { label: "Active", value: "set_active" },
   ];
-  // console.log(typeof props.status);
-  // console.log(props.status);
+
   const handleSelect = (value) => {
-    // console.log(value);
-    // console.log(props.allChecked);
-    // console.log(props.selectedProductRules);
     let allProductData = props.allChecked;
     let checkProduct = props.selectedProductRules.product_added;
     let check = true;
     if (value != "set_draft") {
-      // console.log("jjjjjjjjj");
-      /** PRODUCT BASED CONDITION START [MANUAL / ALL / AUTO(FUTURE SCOPE] ) */
       if (props.selectedProductRules.type == "manual") {
         for (var k = 0; k < checkProduct.length; k++) {
           allProductData.map((element) => {
@@ -139,7 +127,6 @@ export default function Header(props) {
   };
   const saveAllData = () => {
     let name = props.name;
-    // console.log(props.allNames);
     if (name.trim() != "") {
       let allName = props.allNames.filter(
         (element) =>
@@ -301,15 +288,12 @@ export default function Header(props) {
       );
     }
   };
+
   useEffect(() => {
-    // history.pushState(null, null, location.href);
-    // window.onpopstate = function () {
-    //   history.go(1);
-    // };
     fullscreen.dispatch(Fullscreen.Action.ENTER);
   }, []);
+
   const handleExitFullScrren = () => {
-    // fullscreen.dispatch(Fullscreen.Action.EXIT);
     if (props.action_perform) {
       setBackModal({ open: true });
     } else {
@@ -327,13 +311,6 @@ export default function Header(props) {
             {
               label: val,
               icon: ArrowLeftMinor,
-              // onClick: () => {
-              //   if (props.action_perform) {
-              //     setBackModal({ open: true });
-              //   } else {
-              //     changeMainState();
-              //     navigate("/option-sets");
-              //   }
               onClick: () => {
                 handleExitFullScrren();
               },
@@ -371,7 +348,6 @@ export default function Header(props) {
     } else {
       props.toastErrorSucessState(
         true,
-        // "Same Name Already Exists. Please Choose a different Name!",
         "Enter a valid name!",
         true
       );
@@ -433,7 +409,6 @@ export default function Header(props) {
     <div className="sd-adotopnav">
       {navigationMarkup()}
       <div className="sd-ado-rightnav">
-        {/* <TopBar userMenu={userMenuMarkup()} searchField={searchFieldMarkup()} /> */}
         <TopBar userMenu={userMenuMarkup()} searchField={searchFieldMarkup()} />
       </div>
       <Modal
@@ -447,9 +422,6 @@ export default function Header(props) {
           content: "Yes",
           onAction: () => {
             changeMainState();
-            // router.push({
-            //   pathname: "/option-sets",
-            // });
             navigate("/option-sets");
           },
         }}
@@ -463,9 +435,9 @@ export default function Header(props) {
         ]}
       >
         <Modal.Section>
-          <Text>
-            All your changes may not be saved. Do you want to continue ?
-          </Text>
+          <VerticalStack>
+             All your changes may not be saved. Do you want to continue ?
+          </VerticalStack>
         </Modal.Section>
       </Modal>
     </div>

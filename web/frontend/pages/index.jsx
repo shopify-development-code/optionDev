@@ -2,12 +2,9 @@ import React, {useState, useEffect } from "react";
 import {
   Card,
   Text,
-  VerticalStack,
   List,
-  Box,
   HorizontalStack,
   Button,
-  CalloutCard
 } from "@shopify/polaris";
 import { useAPI } from "../store/Getshop";
 import {Card as AntCard} from 'antd';
@@ -47,7 +44,7 @@ export default function dashboard() {
       <div className="sd-app-activator">
         <Card>
           <HorizontalStack gap={{xs: '2', sm: '4'}} align="space-between" blockAlign="center">
-            <Text > You can enable this app in
+            <Text as="p"> You can <Text as="span" fontWeight="semibold">enable</Text> this app in
               your Store. </Text>
             <Button onClick={handleEmbedBtn} primary disabled={themeId !== "" ? false : true}>Click here</Button>
           </HorizontalStack>

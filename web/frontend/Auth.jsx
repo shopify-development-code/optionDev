@@ -40,8 +40,9 @@ const Auth = () => {
  }
 
   return(
-      themePlan.email == "shikhapant.shinedezign@gmail.com" || themePlan.email == "shiv.whmcsglobal@gmail.com" || themePlan.email == "shiv.whmcsglobalservices@gmail.com" ? 
-        <Routes pages = {pages} /> : themePlan.plan_name == "partner_test" || themePlan.plan_name == "trial" ? <UpgradeYourPlan /> :  <Routes pages = {pages} />
+      // themePlan.email == "shikhapant.shinedezign@gmail.com" || themePlan.email == "shiv.whmcsglobal@gmail.com" || themePlan.email == "shiv.whmcsglobalservices@gmail.com" ? 
+      //   <Routes pages = {pages} /> : themePlan.plan_name == "partner_test" || themePlan.plan_name == "trial" ? <UpgradeYourPlan /> :  <Routes pages = {pages} />
+      <Routes pages={pages} />
   )
 }
 

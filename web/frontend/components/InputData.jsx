@@ -9,6 +9,7 @@ import {
   Icon,
   Text,
   Button,
+  VerticalStack,
 } from "@shopify/polaris";
 import {
   QuestionMarkMinor,
@@ -21,7 +22,6 @@ import Swatches from "./Swatches";
 import Appearence from "./Appearence";
 import Paragraph from "./Paragraph";
 import Conditions from "./Conditions";
-import FileElement from "./File";
 
 class InputData extends Component {
   constructor(props) {
@@ -72,14 +72,6 @@ class InputData extends Component {
   saveConditionalData(arr) {
     let items = [...this.state.items];
     items = arr;
-    // let allItems = [];
-    // items.map((element,index) => {
-    //     allItems.push(element);
-    //     if(allItems[index].name == "Checkbox"){
-
-    //     }
-    //     allItems[index].value = "";
-    // })
     this.state.items = items;
     this.props.saveData(items);
     this.props.makeConditionalChange();
@@ -95,7 +87,6 @@ class InputData extends Component {
         let check = true;
         if (items[0].name == "Paragraph") {
           if (this.state.index == 1) {
-            // check = false;
           }
         }
         let obj = {};
@@ -146,13 +137,11 @@ class InputData extends Component {
     this.props.handleError(bool, obj);
   }
   handleTextChange(value, id) {
-    // console.log(value, id);
     let items = [...this.props.data];
     let item = { ...items[this.state.index] };
     let newItem = { ...item.setting };
 
     if (id == "label") {
-      // check the label is not used any where
       let check = [];
       items.map((element, index) => {
         if (index != this.props.index - 1) {
@@ -203,12 +192,10 @@ class InputData extends Component {
     } else if (id == "help_text") {
       newItem.helptext = value;
     } else if (id == "hidden") {
-      // console.log(newItem.hidden_label);
       newItem.hidden_label = !newItem.hidden_label;
     } else if (id == "reqd") {
       newItem.required = !newItem.required;
     } else if (id == "time_format") {
-      // from here we are saving the datetime data
       newItem.time_format = value;
     } else if (id == "date_format") {
       newItem.date_format = value;
@@ -255,7 +242,6 @@ class InputData extends Component {
     } else if (id == "file_extension") {
       newItem.allowed_extensions = value;
     }
-    // console.log(item.setting);
 
     item.setting = newItem;
     items[this.state.index] = item;
@@ -314,16 +300,6 @@ class InputData extends Component {
           />
         );
       }
-      // else if (this.state.type == "File") {
-      //   return (
-      //     <FileElement
-      //       extension={
-      //         this.state.items[this.state.index].setting.allowed_extensions
-      //       }
-      //       saveFileData={this.handleTextChange}
-      //     />
-      //   );
-      // }
       else if (
         this.state.type == "Dropdown" ||
         this.state.type == "Checkbox" ||
@@ -336,14 +312,12 @@ class InputData extends Component {
             handleError={this.handleSelectError}
             toastErrorSucessState={this.handleValidation}
             shop={this.props.shop}
-            // shop_id={this.props.shop_id}
             mainTheme={this.props.mainTheme}
             type={this.state.type}
             saveData={this.selectSaveData}
             data={this.state.items}
             index={this.state.index}
             handleLoader={this.props.handleLoader}
-            // showimage={this.props.showimage}
           />
         );
       } else if (this.state.type === "Color Swatches") {
@@ -376,7 +350,6 @@ class InputData extends Component {
   }
 
   showInputFeilds() {
-    // console.log(this.state.items[this.state.index].name);
     if (this.state.items[this.state.index].name != "Paragraph") {
       return (
         <div className="sd-ado-maindatasets">
@@ -493,7 +466,6 @@ class InputData extends Component {
             onChange={this.handleTextChange}
           />
           {this.checkTheType()}
-          {/* {this.showConditionPerElement()} */}
           <Button
             id="sd-ado-removeelement"
             size="slim"
@@ -511,25 +483,7 @@ class InputData extends Component {
     } else {
       return (
         <div className="sd-ado-maindatasets">
-          {/* <TextField
-            label={
-              <div style={{ display: "flex" }}>
-                <Text>Label</Text>
-                <Tooltip content="Enter label name" dismissOnMouseOut>
-                  <Icon source={QuestionMarkMinor}></Icon>
-                </Tooltip>
-              </div>
-            }
-            id="label"
-            value={this.state.items[this.state.index].setting.label}
-            onChange={this.handleTextChange}
-            maxLength={50}
-            error={this.state.label_error}
-            showCharacterCount
-            onpaste="return false"
-          /> */}
           {this.checkTheType()}
-          {/* {this.showConditionPerElement()} */}
           <Button
             id="sd-ado-removeelement"
             size="slim"
@@ -567,14 +521,14 @@ class InputData extends Component {
       return (
         <div>
           <div className="conditional_logic_HorizontalStack">
-            <HorizontalStack>
+            <VerticalStack>
               <Checkbox
                 label="Conditional Logic"
                 id="conditional_logic_check"
                 checked={this.state.items[this.state.index].conditionalField}
                 onChange={this.handleConditionalSelect}
               />
-            </HorizontalStack>
+            </VerticalStack>
           </div>
           {this.showCondtions()}
         </div>
@@ -597,7 +551,7 @@ class InputData extends Component {
         content: (
           <div className="set-icon">
             <Icon source={ColorsMajor} color="base" />
-            Appearence{" "}
+            Appearance{" "}
           </div>
         ),
       },
@@ -625,16 +579,14 @@ class InputData extends Component {
     console.log(this.state.items[this.state.index].name);
     this.state.type = this.state.items[this.state.index].name;
     if (val == 0) {
-      return <Card>{this.showInputFeilds()}</Card>;
+      return this.showInputFeilds();
     } else if (val == 1) {
-      return <Card>{this.appearenceType()}</Card>;
+      return this.appearenceType();
     }
   }
   setAppearence(obj) {
-    // console.log(obj);
     let items = [...this.props.data];
     let item = { ...items[this.state.index] };
-    // console.log(item);
     let newItem = { ...item.setting };
     let appearenceItem = { ...newItem.css };
     appearenceItem = obj;

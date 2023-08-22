@@ -12,6 +12,7 @@ import adminRoutes from "./backend/Routes/admin/adminRoutes.js";
 import cors from 'cors';
 import { verifyWebhooks } from "./backend/controllers/webhooks/verifyWebhooks.js";
 import { privayPolicy } from "./backend/controllers/admin/privacyPolicy.js";
+import storeRoutes from "./backend/Routes/storefront/storeRoutes.js";
 
 dbMongo();
 
@@ -32,11 +33,12 @@ const STATIC_PATH =
 const app = express();
 
 app.post(shopify.config.webhooks.path, express.text({type: '*/*'}), verifyWebhooks);
+app.use(express.json());
 
 app.use(cors({ origin: "*" }));
 app.get("/api/privacy-policy", privayPolicy);
+app.use("/api/", storeRoutes);
 
-app.use(express.json());
 
 // Set up Shopify authentication and webhook handling
 app.get(shopify.config.auth.path, shopify.auth.begin());

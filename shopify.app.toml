@@ -2,7 +2,7 @@
 
 name = "Genie Options Development"
 client_id = "232a8ae5eeebd995e254d74787d9f1ba"
-application_url = "https://list-impressed-alto-infant.trycloudflare.com"
+application_url = "https://beads-uploaded-best-biography.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -12,9 +12,9 @@ use_legacy_install_flow = true
 
 [auth]
 redirect_urls = [
-  "https://list-impressed-alto-infant.trycloudflare.com/auth/callback",
-  "https://list-impressed-alto-infant.trycloudflare.com/auth/shopify/callback",
-  "https://list-impressed-alto-infant.trycloudflare.com/api/auth/callback"
+  "https://beads-uploaded-best-biography.trycloudflare.com/auth/callback",
+  "https://beads-uploaded-best-biography.trycloudflare.com/auth/shopify/callback",
+  "https://beads-uploaded-best-biography.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

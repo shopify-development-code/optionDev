@@ -13,7 +13,7 @@ import FunctionalCreate from "./pages/option-sets/createOptions";
 export default function Routes({ pages }) {
   const routes = useRoutes(pages);
   const routeComponents = routes.map(({ path, component: Component }) => (
-    // path !== "/option-sets/createoptions/:id" && 
+    // path !== "/option-sets/" && 
     <Route key={path} path={path} element={<Component />}/>
   ));
 
@@ -24,7 +24,8 @@ export default function Routes({ pages }) {
       <Route element={<MainLayout />}>
          {routeComponents}
       </Route>
-      <Route path="/option-sets/createoptions/:id" element={<FunctionalCreate />} />
+      {/* <Route path="/option-sets/createoptions" element={<FunctionalCreate />} /> */}
+      <Route path="/option-sets/createoptions/:id" element={<FunctionalCreate />} /> 
       <Route path="*" element={<NotFound />} />
     </ReactRouterRoutes>
   );

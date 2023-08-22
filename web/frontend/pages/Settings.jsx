@@ -16,6 +16,7 @@ import { Spin } from "antd";
 import { useAPI } from "../store/Getshop";
 import { DynamicApi } from "../components/common/DynamicAxios";
 import { getBridge } from "../store/GetAppBridge";
+
 export default function Setting() {
   const { getShop } = useAPI();
   const { app } = getBridge();
@@ -41,30 +42,16 @@ export default function Setting() {
   const [themeType, setThemeType] = useState("");
   const [themeId, setThemeId] = useState("");
   useEffect(() => {
-    // console.log(shop);
     async function fetchDataFromGetApi() {
-      // console.log(document.cookie );
       setIsLoading(true);
-      // let shop_url = "/api/getShop";
-      // let shop_response = await axios.post(shop_url);
-      // const shopName = shop_response.data;
-      // console.log(shopName);
-      // setShop(shopName);
-      // let optionset_url = "/api/getCredentials";
       let optionset_params = { shop: shop };
-      // let response = await axios.post(optionset_url, optionset_params);
       let response = await DynamicApi(
         "/api/getCredentials",
         optionset_params,
         "POST",
         app
       );
-      console.log("res settings ");
-      console.log(response);
-
-      // console.log("ffffff", response);
       if (response != "" && response != undefined) {
-        // console.log(response.data.settings.settings);
         setMainSettings(response.data.settings.settings);
         setWidgetPosition(
           response.data.settings.settings.general.widget_position
@@ -77,21 +64,8 @@ export default function Setting() {
     fetchDataFromGetApi();
     setIsLoading(false);
   }, []);
-  // const handleToggle = useCallback(() => {
-  //   setIsLoading(true);
-  //   let settings = { ...mainSettings };
-  //   setAppActive((appActive) => !appActive);
-  //   setPrimaryButton((primaryButton) => !primaryButton);
-  //   settings.general.enabled = !appActive;
-  //   setMainSettings(settings);
-  //   handleSave();
-  //   setIsLoading(false);
-  // }, []);
-  // console.log(selected);
   const handleextension = (e) => {
     let items = { ...mainSettings };
-
-    // console.log(e);
     setSelected(e);
     setDisableButton(false);
     items.allowed_extensions = e;
@@ -193,57 +167,28 @@ export default function Setting() {
     let url = "/api/deleteDraftProducts";
     let params = { command: "delete_products", shop: shop };
     setloading(true);
-    // setIsLoading(true);
-
-    // let response = await axios.post(url, params);
     let response = await DynamicApi(url, params, "POST", app);
 
     if (response != "" && response != undefined) {
       setErrorMessage(response.data.message);
       setToastActive(true);
       setloading(false);
-      // setIsLoading(false);
     }
   };
-  // console.log(mainSettings)
-  // const handleHelpText = useCallback((value) => sethelpText(value), []);
-  const handleHelpText = (value) => {
-    let items = { ...mainSettings };
-    items.general.help_text_settings = value;
-    sethelpText(value);
-    setMainSettings(items);
-    setDisableButton(false);
-  };
-  // const handleWidgetPosition = useCallback(
-  //   (value) => setWidgetPosition(value),
-  //   []
-  // );
+
   const handleWidgetPosition = (value) => {
-    // console.log(value);
-    // console.log(mainSettings);
     let items = { ...mainSettings };
     items.general.widget_position = value;
     setWidgetPosition(value);
     setMainSettings(items);
-
     setDisableButton(false);
   };
 
   const widgetPositionOptions = [
-    // { label: "Before Product Variant", value: "before_variant" },
-    // { label: "After Product Variant", value: "after_variant" },
     { label: "Before Add To Cart Button", value: "before_atc" },
     { label: "After Add To Cart Button", value: "after_atc" },
   ];
 
-  // useEffect(() => {
-  //   getThemeId();
-  // }, []);
-
-  // const handleRedirectThemeEditor = () => {
-  //   console.log("themeId=>", themeId);
-  //   window.open(`https://${getShop}/admin/themes/${themeId}/editor`);
-  // };
   return (
     <Spin tip="Please Wait..." spinning={loading}>
       <div className="full_width">
@@ -253,7 +198,7 @@ export default function Setting() {
             title="Clear duplicate products"
             description=""
           >
-            <Card sectioned>
+            <Card>
               <FormLayout>
                 <div>
                   <p>
@@ -346,7 +291,6 @@ export default function Setting() {
                     options={widgetPositionOptions}
                     onChange={handleWidgetPosition}
                     value={widgetPosition}
-                    // value={mainSettings?.general?.widget_position}
                   />
                 </FormLayout>
               </Card>

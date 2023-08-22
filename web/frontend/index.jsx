@@ -1,5 +1,6 @@
 import App from "./App";
 import "./assets/css/style.css";
+import "./assets/css/App.css";
 import { createRoot } from 'react-dom/client';
 import { Suspense } from "react";
 import { Text } from "@shopify/polaris";

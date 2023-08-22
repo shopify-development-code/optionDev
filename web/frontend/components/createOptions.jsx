@@ -27,7 +27,6 @@ class Createoptions extends Component {
       mobtoggle: true,
       redirect: false,
       showimage1: "",
-      // imageURL: "",
       saveimageparams: {}, // image parameters
       editId: props.id,
       shop: this.props.shopname,
@@ -412,7 +411,6 @@ class Createoptions extends Component {
             columnWidth: 100,
             button_text: "#000000",
             text_hover: "#ff0000",
-            // text_active: "#ddd",
             button_hover: "#ddd",
             button_active: "#ff0000",
           },
@@ -450,7 +448,6 @@ class Createoptions extends Component {
             columnWidth: 100,
             button_text: "#000000",
             text_hover: "#ff0000",
-            // text_active: "#ddd",
             button_hover: "#ddd",
             button_active: "#ff0000",
           },
@@ -551,7 +548,6 @@ class Createoptions extends Component {
               addon: 0,
               name: "161240197649941016",
               url: "",
-              // name: this.state.option_counter.getTime(),
               count: this.state.option_counter.getTime(),
               error: false,
             },
@@ -593,29 +589,13 @@ class Createoptions extends Component {
   /********************* LIFECYCLE EVENTS START ************************/
 
   async componentDidMount() {
-    // this.getmaintheme();
-    // let shop_url = "/api/getShop";
-    // let shop_response = await axios.post(shop_url);
-    // console.log(shop_response)
-    // const shopName = shop_response.data;
-    // this.setState({ shop: shopName });
     this.fetchDataFromGetApi();
-    // window.addEventListener("beforeunload", this.onUnload);
     if (!this.state.status) {
       this.setState({ status: "set_draft" });
     } else {
       this.setState({ status: "set_active" });
     }
   }
-
-  /********************* LIFECYCLE EVENTS END  ************************/
-
-  ////////////////////////////////////////// api hit to set states needed
-  // getmaintheme = async () => {
-  //   let maintheme = await axios.get("/api/getThemeData");
-  //   console.log(maintheme.data.res);
-  //   this.setState({ mainTheme: maintheme.data.res });
-  // };
 
   fetchDataFromGetApi = async () => {
     this.setState({ isLoading: true });
@@ -629,7 +609,6 @@ class Createoptions extends Component {
     let editcreateoptionsdata = option_set_data.data.response;
 
     if (option_set_data.data.status) {
-      // this.setState({ mainTheme: option_set_data.data.mainTheme });
       this.setState({ installation: option_set_data.data.installation });
       if (option_set_data.data.response.length > 0) {
         let allChecked = [...this.state.AllCheckedProduct];
@@ -648,7 +627,6 @@ class Createoptions extends Component {
           which.id = element._id;
           which.status = element.status;
           allch.push(element.option_set.products);
-          // allChecked.push(element.option_set.products);
           all_names.push({ name: element.name, id: element._id });
         });
         this.setState({ allChecked: allch });
@@ -668,18 +646,12 @@ class Createoptions extends Component {
         }
       }
       if (this.state.editId != undefined) {
-        console.log("enter when id is present");
         const result = editcreateoptionsdata.filter(
           (elem) => elem._id == this.state.editId
         );
-        // console.log(result)
         let obj = result[0];
-        // console.log(result);
-        console.log(obj);
 
         obj.all_names = this.state.allNames;
-        // obj.allChecked = this.state.AllCheckedProduct;
-        // console.log(obj);
         this.setState({
           fileName: obj.fileName,
           optionSetData: obj.option_set.elements,
@@ -692,21 +664,14 @@ class Createoptions extends Component {
           color_layout: obj.layout.color_layout,
           general_layout: obj.layout.general_layout,
           typo_layout: obj.layout.typo_layout,
-          // error_msg: obj.layout.error_msg,
           counter: obj.counter,
           status: obj.status == true ? "set_active" : "set_draft",
-          // allChecked: obj.allChecked,
-          // showimage1: obj.imageURL,
           selectedProductRules: obj.option_set.products,
         });
-
-        // console.log(this.state.imageURL)
       }
       this.setState({ isLoading: false });
     }
   };
-
-  /////////////////////////////////////////// function from index which is passed as props in app
 
   saveOptionSetData = (inc, obj) => {
     if (inc) {
@@ -748,31 +713,12 @@ class Createoptions extends Component {
     }
   };
 
-  // itemsCounter = async () => {
-  //   let url = "/api/getCredentials";
-  //   let response = await axios.post(url, params);
-  //   if (response != "" && response != undefined) {
-  //   }
-  // };
-
   handleStatus = (value) => {
-    // console.log(value)
     this.setState({
       status: value,
       action_perform: true,
     });
   };
-
-  // onUnload = (event) => {
-  //   if (this.state.action_perform) {
-  //     const e = event || window.event;
-  //     e.preventDefault();
-  //     if (e) {
-  //       e.returnValue = "";
-  //     }
-  //     return "";
-  //   }
-  // };
 
   handleAddElementTab = (num) => {
     this.setState({
@@ -785,10 +731,7 @@ class Createoptions extends Component {
   };
 
   handleLayout = (id, value, type) => {
-    // console.log("handle Layout");
-    // console.log(id, value, type);
     let color_layout = { ...this.state.color_layout };
-    // let error_msg = { ...this.state.error_msg };
     let general_layout = { ...this.state.general_layout };
     let typo_layout = { ...this.state.typo_layout };
 
@@ -878,53 +821,12 @@ class Createoptions extends Component {
       }
       this.setState({ typo_layout: typo_layout });
     }
-    // else if (type == "error") {
-    //   switch (id) {
-    //     case "error_reqd":
-    //       error_msg.required = value;
-    //       break;
-    //     case "error_invalid_one":
-    //       error_msg.invalid = value;
-    //       break;
-    //     case "error_invalid_number":
-    //       error_msg.invalid_number = value;
-    //       break;
-    //     case "error_char_limit":
-    //       error_msg.character_limit = value;
-    //       break;
-    //     case "error_min_value":
-    //       error_msg.min_value_allowed = value;
-    //       break;
-    //     case "error_max_value":
-    //       error_msg.max_value_allowed = value;
-    //       break;
-    //     case "error_min_selection":
-    //       error_msg.min_selection_allowed = value;
-    //       break;
-    //     case "error_exact_selection":
-    //       error_msg.exact_selection_allowed = value;
-    //       break;
-    //     case "error_file_size":
-    //       error_msg.file_size_limit = value;
-    //       break;
-    //     case "error_file_not":
-    //       error_msg.file_not_alowed = value;
-    //       break;
-    //     case "error_max_selection":
-    //       error_msg.max_selection_allowed = value;
-    //       break;
-    //   }
-    //   this.setState({
-    //     error_msg: error_msg,
-    //   });
-    // }
     this.setState({
       action_perform: true,
     });
   };
 
   handleProducts = (value, type) => {
-    // console.log(value);
     let items = { ...this.state.selectedProductRules };
     switch (type) {
       case "type":
@@ -1009,15 +911,12 @@ class Createoptions extends Component {
   };
   saveDatatoDB = async () => {
     setTimeout(() => {
-      // console.log(this.state.noticeErrorSucess);
       let all = [0, 1, 2];
       let i = all.indexOf(1);
       all.splice(i, 1);
 
       if (this.state.noticeErrorSucess == "Please Select Products") {
         if (this.state.step == 2) {
-          // console.log("step2");
-
           this.changeState("optionset");
           this.handleAddElementTab(1);
           document
@@ -1029,8 +928,6 @@ class Createoptions extends Component {
               [element].classList.remove("active-tab");
           });
         } else if (this.state.step == 3) {
-          // console.log("step3");
-
           this.changeState("inputdata");
           this.handleAddElementTab(1);
           document
@@ -1042,14 +939,9 @@ class Createoptions extends Component {
               [element].classList.remove("active-tab");
           });
         } else if (this.state.step == 1) {
-          // console.log("step1");
           this.handleAddElementTab(1);
-          // console.log(this.state.tab);
-
           this.changeState(false);
-
           this.changeState(true);
-
           document
             .getElementsByClassName("tab-item")[1]
             .classList.add("active-tab");
@@ -1062,13 +954,10 @@ class Createoptions extends Component {
       }
 
       if (this.state.noticeErrorSucess == "Add Elements to Your Option Set") {
-        // console.log("enetered in elements");
         let all = [0, 1, 2];
         let i = all.indexOf(0);
         all.splice(i, 1);
         if (this.state.step == 2) {
-          // console.log("step2");
-          // this.changeState("optionset");
           this.handleAddElementTab(0);
           document
             .getElementsByClassName("tab-item")[0]
@@ -1079,7 +968,6 @@ class Createoptions extends Component {
               [element].classList.remove("active-tab");
           });
         } else if (this.state.step == 3) {
-          // console.log("step3");
 
           this.changeState("inputdata");
           this.handleAddElementTab(0);
@@ -1092,7 +980,6 @@ class Createoptions extends Component {
               [element].classList.remove("active-tab");
           });
         } else if (this.state.step == 1) {
-          // console.log("step1");
 
           this.changeState(true);
           this.handleAddElementTab(0);
@@ -1139,11 +1026,6 @@ class Createoptions extends Component {
           let temp = [...this.state.optionSetData];
           this.state.optionSetData.map((element, index) => {
             let item = { ...temp[index] };
-            // if (element.name != "Paragraph" && element.name != "Checkbox") {
-            //   item.value = "";
-            // } else if (element.name == "Checkbox") {
-            //   item.value = [];
-            // }
             if (element.name == "Checkbox") {
               item.value = [];
             } else if (element.name != "Paragraph") {
@@ -1152,8 +1034,7 @@ class Createoptions extends Component {
             temp[index] = item;
           });
           let productCheck = false;
-          if (this.state.selectedProductRules.type != "none") {
-            /** PRODUCT BASED CONDITION START [MANUAL / ALL / AUTO(FUTURE SCOPE] ) */
+          if (this.state.selectedProductRules.type != "none") {  
             if (this.state.selectedProductRules.type == "manual") {
               if (this.state.selectedProductRules.product_added.length != 0) {
                 let allProductData = this.state.allChecked;
@@ -1161,7 +1042,6 @@ class Createoptions extends Component {
                   this.state.selectedProductRules.product_added;
                 productCheck = true;
                 if (this.state.status == "set_active") {
-                  // console.log(allProductData);
                   for (var k = 0; k < checkProduct.length; k++) {
                     allProductData.map((element) => {
                       if (element.type == "manual" && element.status != false) {
@@ -1176,10 +1056,6 @@ class Createoptions extends Component {
                     });
                   }
                 }
-                // if (this.state.selectedProductRules.type == "all") {
-                //   productCheck = true;
-
-                // }
                 if (!productCheck) {
                   this.setState({
                     toastErrorSuccessMarkup: true,
@@ -1191,12 +1067,6 @@ class Createoptions extends Component {
                   });
                 }
               } else {
-                // if (this.state.step === 2) {
-                //   this.handleTabChange(1, "optionset");
-                // } else if (this.state.step === 3) {
-                //   this.handleTabChange(1, "inputdata");
-                // }
-                // console.log("no projdjkd");
                 this.setState({
                   toastErrorSuccessMarkup: true,
                   noticeErrorSucess: "Please Add Products",
@@ -1228,7 +1098,6 @@ class Createoptions extends Component {
                 });
               }
             } else if (this.state.selectedProductRules.type == "auto") {
-              //Future Scope
               productCheck = true;
               if (this.state.selectedProductRules.conditions.length > 0) {
                 let result = this.state.selectedProductRules.conditions.filter(
@@ -1278,39 +1147,27 @@ class Createoptions extends Component {
                   color_layout: this.state.color_layout,
                   typo_layout: this.state.typo_layout,
                   general_layout: this.state.general_layout,
-                  // error_msg: this.state.error_msg,
                 },
                 name: this.state.name,
                 fileName: this.state.fileName,
                 shop: this.state.shop,
                 mainTheme: this.state.mainTheme,
                 counter: this.state.counter,
-                // imagename: this.state.saveimageparams.fileName,
-                // imagesize: this.state.saveimageparams.size,
-                // image: this.state.saveimageparams.file,
-                // type: this.state.saveimageparams.type,
               };
               if (
                 option_set_topography.elements.length > 0 ||
                 option_set_topography.products.length > 0
               ) {
-                // console.log("kdfhjksDHFjshdfjkhsdkjf", option_set_topography);
                 this.setState({
                   buttonBool: true,
                   isLoading: true,
                 });
-                // let response = await axios.post(
-                //   "/api/saveOptionSet",
-                //   option_set_topography,
-                //   {}
-                // );
                 let response = await DynamicApi(
                   "/api/saveOptionSet",
                   option_set_topography,
                   "POST",
                   this.props.app
                 );
-                // console.log("klop", response);
                 if (response != undefined && response != "") {
                   if (response.status == 200) {
                     this.setState({
@@ -1322,7 +1179,6 @@ class Createoptions extends Component {
                     });
                     if (response.data.status) {
                       setTimeout(() => {
-                        // this.setState({ redirect: true });
                         this.props.redirection();
                       }, 1000);
                     }
@@ -1383,29 +1239,15 @@ class Createoptions extends Component {
                     color_layout: this.state.color_layout,
                     typo_layout: this.state.typo_layout,
                     general_layout: this.state.general_layout,
-                    // error_msg: this.state.error_msg,
                   },
                   fileName: this.state.fileName,
                   counter: this.state.counter,
-                  // imagename: this.state.saveimageparams.fileName,
-                  // imagesize: this.state.saveimageparams.size,
-                  // image: this.state.saveimageparams.file,
-                  // type: this.state.saveimageparams.type,
                 },
               };
 
               let this_data = this;
 
               async function updateData() {
-                // this_data.setState({
-                //   isLoading:true
-                // });
-                // console.log(this_data.state.counter);
-                // let response = await axios.post(
-                //   "/api/updateOptionSetByID",
-                //   params
-                // );
-
                 let response = await DynamicApi(
                   "/api/updateOptionSetByID",
                   params,
@@ -1493,15 +1335,8 @@ class Createoptions extends Component {
       newData[0].conditions = conditions;
       newData[0].conditionalField = false;
     }
-    // console.log(newData);
     this.state.optionSetData = newData;
     this.state.action_perform = true;
-    // this.setState({optionSetData: newData});
-    // this.setState({action_perform: true});
-    // this.setState({
-    //   optionSetData: newData,
-    //   action_perform: true,
-    // });
     this.removeElement(startIndex, endIndex);
   };
 
@@ -2027,76 +1862,6 @@ class Createoptions extends Component {
     return allValue;
   };
 
-  // handleDeleteItem = (name) => {
-  //   if (name == "Text Area") {
-  //     this.state.counter.text_area = this.state.counter.text_area - 1;
-  //           this.setState({
-  //             ...this.state.counter,
-  //             text_area: this.state.counter.text_area - 1,
-  //           });
-  //   } else if (name == "Text") {
-  //     this.state.counter.text = this.state.counter.text - 1;
-  //           this.setState({
-  //             ...this.state.counter,
-  //             text: this.state.counter.text - 1,
-  //           });
-  //   } else if (name == "Number") {
-  //     this.state.counter.number = this.state.counter.number - 1;
-  //           this.setState({
-  //             ...this.state.counter,
-  //             number: this.state.counter.number - 1,
-  //           });
-  //   } else if (name == "File") {
-  //     this.state.counter.file = this.state.counter.file - 1;
-  //           this.setState({
-  //             ...this.state.counter,
-  //             file: this.state.counter.file - 1,
-  //           });
-  //   } else if (name == "Datetime") {
-  //     this.state.counter.datetime = this.state.counter.datetime - 1;
-  //           this.setState({
-  //             ...this.state.counter,
-  //             datetime: this.state.counter.datetime - 1,
-  //           });
-  //   } else if (name == "Dropdown") {
-  //     this.state.counter.dropdown = this.state.counter.dropdown - 1;
-  //           this.setState({
-  //             ...this.state.counter,
-  //             dropdown: this.state.counter.dropdown - 1,
-  //           });
-  //   } else if (name == "Checkbox") {
-  //     this.state.counter.checkboxes = this.state.counter.checkboxes - 1;
-  //           this.setState({
-  //             ...this.state.counter,
-  //             checkboxes: this.state.counter.checkboxes - 1,
-  //           });
-  //   } else if (name == "Radio Buttons") {
-  //     this.state.counter.radio_buttons = this.state.counter.radio_buttons - 1;
-  //           this.setState({
-  //             ...this.state.counter,
-  //             radio_buttons: this.state.counter.radio_buttons - 1,
-  //           });
-  //   } else if (name == "Color Swatches") {
-  //     this.state.counter.color_swatches = this.state.counter.color_swatches - 1;
-  //           this.setState({
-  //             ...this.state.counter,
-  //             color_swatches: this.state.counter.color_swatches - 1,
-  //           });
-  //   } else if (name == "Image Swatches") {
-  //     this.state.counter.image_swatches = this.state.counter.image_swatches - 1;
-  //           this.setState({
-  //             ...this.state.counter,
-  //             image_swatches: this.state.counter.image_swatches - 1,
-  //           });
-  //   } else if (name == "Buttons") {
-  //     this.state.counter.buttons = this.state.counter.buttons - 1;
-  //           this.setState({
-  //             ...this.state.counter,
-  //             buttons: this.state.counter.buttons - 1,
-  //           });
-  //   }
-  // };
-
   handleDeletingIndex = (id) => {
     let errorBlock = { ...this.state.label_error };
     // console.log(errorBlock);
@@ -2366,7 +2131,6 @@ class Createoptions extends Component {
   };
   handleTabChange = (e, val) => {
     this.changeState(val);
-    // console.log(e);
     this.setState({ tab: e });
     this.handleAddElementTab(e);
     setTimeout(() => {
@@ -2405,7 +2169,6 @@ class Createoptions extends Component {
           </span>
           <Icon source={MobileHamburgerMajor} color="base" />
         </div>
-        {/* <Tabs tabs={tabs} selected={selected} onSelect={handleTabChange} fitted > </Tabs> */}
         <div
           className="tab-item active-tab"
           onClick={() => this.handleTabChange(0, val)}
@@ -2447,7 +2210,6 @@ class Createoptions extends Component {
             singleLayout={this.state.mainLayout}
             typo_layout={this.state.typo_layout}
             general_layout={this.state.general_layout}
-            // error_msg={this.state.error_msg}
             color_layout={this.state.color_layout}
             handleLayout={this.handleLayout}
             checkInstall={this.state.checkInstall}
@@ -2481,7 +2243,6 @@ class Createoptions extends Component {
             data={this.state.optionSetData}
             counter={this.state.counter}
             handleLoader={this.handleLoader}
-            // showimage={this.showimage}
           />
         </div>
       );
@@ -2560,7 +2321,6 @@ class Createoptions extends Component {
         <AllElements
           generalLayout={this.state.general_layout}
           typoLayout={this.state.typo_layout}
-          // errorLayout={this.state.error_msg}
           colorLayout={this.state.color_layout}
           mainLayout={this.state.mainLayout}
           keyValue={this.state.key}
@@ -2570,8 +2330,6 @@ class Createoptions extends Component {
           data={this.state.optionSetData}
           products={this.state.selectedProductRules}
           correctswatch={this.state.correctswatch}
-          // showimage={this.state.showimage1}
-          // imageURL={this.state.imageURL}
         />
       </div>
     );
@@ -2619,13 +2377,11 @@ class Createoptions extends Component {
   handleLoader = (v) => {
     this.setState({ isLoading: v });
   };
+
   render() {
-    // console.log(this.state.optionSetData);
-    // console.log(this.state.counter);
 
     return (
       <Spin tip="Please Wait..." spinning={this.state.isLoading}>
-        {/* {this.state.redirect && <Navigate to="/option-sets" replace={true} />} */}
         <div>
           <Header
             handleStatus={this.handleStatus}
