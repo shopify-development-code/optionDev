@@ -215,7 +215,7 @@ const Instructions = () => {
 
 return (
     <Card tabIndex={selected} onTabChange={handleTabChange} tabList={tabs}>
-       <p>{Instructions}</p>
+       <div>{Instructions}</div>
     </Card>
   );
 };

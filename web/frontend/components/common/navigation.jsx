@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import {
   Navigation,
   Icon,
@@ -30,13 +30,10 @@ export default function NavigationHeader(props) {
   ];
 
   const subNav2 = [
-    { name: "Contact Us", icon: FollowUpEmailMajor, url: "/contactUs" },
+    { name: "Contact Us", icon: FollowUpEmailMajor, url: "/contactus" },
     { name: "Instruction", icon: CircleInformationMajor, url: "/instructions" },
   ];
 
-  const handleClick = useCallback(() => {
-    navigate("/");
-  });
   
   return (
     <div className="sd-navigation">
@@ -65,7 +62,6 @@ export default function NavigationHeader(props) {
                   <span className="Polaris-Navigation__Text">
                     {sideNav.name}
                   </span>
-                  {/* </Link> */}
                 </li>
               );
             })}
@@ -95,7 +91,6 @@ export default function NavigationHeader(props) {
                       <span className="Polaris-Navigation__Text">
                         {subNav.name}
                       </span>
-                      {/* </Link> */}
                     </li>
                   );
                 })

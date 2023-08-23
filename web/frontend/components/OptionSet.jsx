@@ -97,14 +97,6 @@ function optionSet(props) {
     {
       title: "Swatches",
       items: [
-        // {
-        //     label: 'Buttons',
-        //     icon: BuyButtonButtonLayoutMajor,
-        //     onClick:() => {
-        //         const data = "Buttons"
-        //         updateClientData(data)
-        //     },
-        // },
         {
           label: "Image swatches",
           icon: ImagesMajor,

@@ -561,7 +561,7 @@ export default function FrameExample(props) {
  
   function handlefullScreen() {
     fullscreen.dispatch(Fullscreen.Action.ENTER);
-    navigate(`/option-sets/createoptions`);
+    navigate(`/option-sets/createoptions/create-new`);
   }
 
   const actualPageMarkup = (

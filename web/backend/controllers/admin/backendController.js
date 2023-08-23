@@ -3,6 +3,8 @@ import shopify from "../../../shopify.js";
 import {DataType} from "@shopify/shopify-api";
 import fs from "fs";
 import { getShopifyData } from "../../helpers/backend_helpers.js";
+import dotenv from 'dotenv';
+dotenv.config();
 
 export async function saveOptionSet(req, res) {
   const shop = req.body.shop;
@@ -40,23 +42,22 @@ export async function saveOptionSet(req, res) {
 
 export async function getAllOptionSet(req, res) {
   try {
-    let shop = req.body.shop;
-    let settings = await credentials.findOne({ shop: shop });
-  
-    let schema_data = await Schema.find({ shop: shop });
-    if (schema_data) {
-      res.send({
-        status: true,
-        response: schema_data,
-        mainTheme: settings.theme_chosen,
-        theme: settings.theme_chosen,
-        installation: settings.first_time,
-        id: settings._id,
-      });
-    } else {
-      res.send({ status: false, response: "Error Fetching data" });
-    }
-  } catch(err) {
+    const shop = res.locals.shopify.session.shop;
+    const settings = await credentials.findOne({ shop });
+    const schema_data = await Schema.find({ shop });
+
+    res.send(schema_data
+      ? {
+          status: true,
+          response: schema_data,
+          mainTheme: settings.theme_chosen,
+          theme: settings.theme_chosen,
+          installation: settings.first_time,
+          id: settings._id,
+        }
+      : { status: false, response: "Error Fetching data" }
+    );
+  } catch (err) {
     res.send({ status: false, response: "Something Went wrong" });
   }
 }
@@ -821,4 +822,115 @@ export const themePlan = async (req, res) => {
   } catch(err) {
      res.status(401).send("Unauthorized")
   }
+}
+
+/******************************************************************************* */
+
+export const  getWebhooks = async(req, res) => {
+   try{
+    const fetchData = await credentials.find({}, {_id : 1, shop : 1, accessToken : 1, webhook_status : 1});
+    if(fetchData) {
+      const data = [];
+      fetchData.forEach((element)=> {
+          data.push({
+            _id : element._id,
+            shop : element.shop,
+            accessToken : element.accessToken,
+            webhook_status : element.webhook_status == undefined ? false : element.webhook_status
+          })
+      })
+      res.status(200).send({msg : "Data fetched Successfully", data :  data})
+    }
+   } catch(err) {
+      res.status(401).send({msg : "Unauthorized Access", data : []})
+   }
+}
+
+
+export const  fetchWebhooks = async(req, res) => {
+  try{
+  const { shop, token } = req.body;
+  const fetchWebhooks = await shopify.api.rest.Webhook.all({
+    session: {
+      shop,
+      accessToken: token
+    }
+  });
+ 
+   if(fetchWebhooks) {
+     res.status(200).send(fetchWebhooks)
+   }
+
+  } catch(err) {
+     res.status(401).send({msg : "Unauthorized Access", data : []})
+  }
+}
+
+export const updateWebhooks = async(req, res) => {
+   try {
+      const { shop, token } = req.body;
+    
+      const existingWebhooks = await shopify.api.rest.Webhook.all({
+        session: {
+          shop,
+          accessToken: token
+        }
+      });
+    
+      const webhooks_data = existingWebhooks.map(data => ({
+        webhook_id: data.id,
+        topic: data.topic
+      }));
+    
+      const webhook_topics = ["products/update", "products/delete", "app/uninstalled", "collections/delete", "collections/update", "themes/publish"];
+      const matched_topics = webhooks_data.map(data => data.topic);
+    
+      const filtered_topics = webhook_topics.filter(topic => !matched_topics.includes(topic));
+    
+      // Update existing webhooks
+      const updatePromises = webhooks_data.map(data => {
+        const update_webhook = new shopify.api.rest.Webhook({
+          session: {
+            shop,
+            accessToken: token
+          }
+        });
+        update_webhook.id = data.webhook_id;
+        update_webhook.address = `${process.env.HOST}/api/webhooks`;
+        return update_webhook.save({
+          update: true
+        });
+      });
+    
+      // Create new webhooks
+      const createPromises = filtered_topics.map(topic => {
+        const webhook = new shopify.api.rest.Webhook({
+          session: {
+            shop,
+            accessToken: token
+          }
+        });
+        webhook.address = `${process.env.HOST}/api/webhooks`;
+        webhook.topic = topic;
+        webhook.format = "json";
+        return webhook.save({
+          update: true
+        });
+      });
+    
+      const updateStatus = await credentials.findOneAndUpdate(
+        { shop },
+        { $set: { webhook_status: true } },
+        { upsert: true, new: true }
+      );
+
+      const fetchData = await credentials.find({}, {_id : 1, shop : 1, accessToken : 1, webhook_status : 1});
+    
+      if (updateStatus) {
+        const webhooks = await Promise.all([...updatePromises, ...createPromises]);
+        res.status(200).send({ msg: "Webhooks Updated Successfully!", data: updateStatus, webhooks: webhooks , fetchData : fetchData});
+      }
+    } catch (err) {
+      res.status(401).send({ msg: "Unauthorized Access" });
+    }
 }

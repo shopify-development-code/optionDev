@@ -1,5 +1,5 @@
 import express from "express";
-import { copyOptionSet, deleteDraftProducts, deleteOptionSet, getAllOptionSet, getCredentials, getFormList, getFormNames, getThemeId, saveOptionSet, saveTheme, searchByName, setformstatus, themeInstallation, themePlan, updateOptionSet, updateSettngs } from "../../controllers/admin/backendController.js";
+import { copyOptionSet, deleteDraftProducts, deleteOptionSet, fetchWebhooks, getAllOptionSet, getCredentials, getFormList, getFormNames, getThemeId, getWebhooks, saveOptionSet, saveTheme, searchByName, setformstatus, themeInstallation, themePlan, updateOptionSet, updateSettngs } from "../../controllers/admin/backendController.js";
 import { contactEmail } from "../../controllers/admin/mailController.js";
 // import { verifyToken } from "../middleware/verifyToken.js";
 // import {
@@ -75,5 +75,8 @@ adminRoutes.post("/shopify/theme-plan", themePlan);
 adminRoutes.post("/getformlist", getFormList);
 adminRoutes.post("/contact", contactEmail);
 
+/** Routes for Updating , getting Webhooks */
+adminRoutes.post("/getWebhooks", getWebhooks);
+adminRoutes.post("/show_webhooks", fetchWebhooks);
 
 export default adminRoutes;

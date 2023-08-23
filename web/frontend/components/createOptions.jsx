@@ -602,7 +602,7 @@ class Createoptions extends Component {
 
     let option_set_data = await DynamicApi(
       "/api/getAllOptionSet",
-      { shop: this.state.shop },
+      { shop: this.state.shop , id : this.state.editId },
       "POST",
       this.props.app
     );
@@ -632,6 +632,7 @@ class Createoptions extends Component {
         this.setState({ allChecked: allch });
         this.setState({ AllCheckedProduct: allChecked });
         this.setState({ allNames: all_names });
+
         if (option_set_data.data.installation) {
           this.setState({ filename: response.data.data[0].fileName });
           this.setState({
@@ -645,19 +646,18 @@ class Createoptions extends Component {
           this.setState({ name: response.data.data[0].name });
         }
       }
-      if (this.state.editId != undefined) {
+      if (this.state.editId != "create-new") {
         const result = editcreateoptionsdata.filter(
           (elem) => elem._id == this.state.editId
         );
         let obj = result[0];
-
         obj.all_names = this.state.allNames;
         this.setState({
           fileName: obj.fileName,
           optionSetData: obj.option_set.elements,
           objectItems: obj.items,
           updateId: obj._id,
-          allNames: obj?.all_names,
+          allNames: obj.all_names,
           name: obj.name,
           mainLayout: obj.mainLayout,
           layout: obj.layout,
