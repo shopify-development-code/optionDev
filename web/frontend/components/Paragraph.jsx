@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import "react-quill/dist/quill.bubble.css";
 export default class Paragraph extends Component {
   constructor(props) {
     super(props);

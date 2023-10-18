@@ -5,7 +5,6 @@ import {
   Icon,
   ButtonGroup,
   DataTable,
-  Card,
   Text,
 } from "@shopify/polaris";
 import { ImageMajor, DeleteMajor } from "@shopify/polaris-icons";
@@ -298,18 +297,7 @@ export default class AllSelect extends Component {
   };
 
   renderImage = (url, id) => {
-    // console.log(id);
-    // console.log(this.state.currentimage);
     if (url != "") {
-      // let mainurl
-      // if(id==this.state.currentimage)
-      // {
-      //    mainurl=url
-      // }
-      // else{
-      //    mainurl=""
-
-      // }
       var innerDiv;
       innerDiv = {
         backgroundImage: "url(" + url + ")",
@@ -336,8 +324,6 @@ export default class AllSelect extends Component {
   showimagedrop = (t, count) => {
     this.setState({ active: t });
     this.setState({ currentimage: count });
-
-    // console.log(count);
   };
   handleload = (v) => {
     this.setState({ loading: v });
@@ -375,12 +361,11 @@ export default class AllSelect extends Component {
     return (
       <>
         <div className="more_options">
-          <Card>
             <DataTable
               columnContentTypes={["text", "", "", "", ""]}
               headings={[
-                <Text variation="strong">Option name</Text>,
-                <Text variation="strong">Add on price</Text>,
+                <Text fontWeight="medium">Option name</Text>,
+                <Text fontWeight="medium">Add on price</Text>,
                 " ",
                 " ",
                 " ",
@@ -388,7 +373,6 @@ export default class AllSelect extends Component {
               rows={this.state.rows}
               totals={""}
             />
-          </Card>
           {this.state.optionValues.map((elem, index) => {
             return (
               <div key={index} className="select">

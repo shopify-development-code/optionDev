@@ -1,20 +1,29 @@
 import { credentials } from "../../Schema/schema.js";
 import { Schema } from "../../Schema/schema.js";
+import {S3Client, PutObjectCommand, DeleteObjectCommand} from '@aws-sdk/client-s3'
+import dotenv from 'dotenv';
+import axios from 'axios';
+import { LATEST_API_VERSION } from "@shopify/shopify-api";
+dotenv.config();
+
+const s3Client = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+  },
+});
 
 export const getOptions = async (req, res) => {
   try {
     const {shop, productId} = req.body;
-
-    console.log(req.body)
     const pid = `gid://shopify/Product/${productId}`;
-
     const response = await Schema.aggregate(
       [
         {
           $match: {
             shop : "nahidp-store.myshopify.com",
             status: true,
-            // "option_set.products.product_added.id": pid,
             $expr: {
               $cond: {
                 if: { $eq: ["$option_set.products.type", "manual"] },
@@ -64,54 +73,129 @@ export const getOptions = async (req, res) => {
 
 
 export const fileUpload = async (req, res) => {
-    try {
-        //code to upload file to s3 bucket
-        console.log(req.body);
-        res.status(200).send("Success")
-    } catch (err) {
-        res.status(502).send("Something went wrong!!!")
+  try{
+    const {size} = req.file;
+    if(size <=  2097152) {
+      const shop = "nahidp-store.myshopify.com";
+      const fileDataBuffer = Buffer.from(req.file.buffer, 'binary');
+      let  uniqueName = new Date().toISOString().replace(/[-:.]/g,"") + req.file.originalname;
+      const key = `${shop.replace(".myshopify.com","")}/${uniqueName}`;
+      const params = {
+        Bucket: process.env.AWS_BUCKET, 
+        Key: key, 
+        Body: fileDataBuffer, 
+        contentType : req.file.mimetype,
+        ContentDisposition: 'inline',
+      };
+        const command = new PutObjectCommand(params);
+        const result = await s3Client.send(command);
+        const imgUrl = `https://${process.env.AWS_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
+        if(imgUrl) {
+          return res.status(200).send({ status: 1,  url: imgUrl, key: key});  
+        } else {
+          return res.status(401).send({ status: 0 });
+        }
+    } else {
+       return res.status(413).send({ status: 0,  msg : "Image size must be less than 2MB"}); 
+    }
+
+    } catch(err) {
+      res.status(502).send({status:502, message: err})
     }
 }
 
 
-
-/*
-export const uploadImage = async(req, res, next) => {
-    console.log("enter in UPLOAD image")
-  try{
-  console.log(req.file)
-  console.log(req.body.customFolder)
-  // const {customFolder} = req.body
-  const shop = res.locals.shopify.session.shop
-  // console.log(req.files)
-  console.log(process.env.AWS_BUCKET)
-// console.log("customFolder ==>", customFolder)
-  const fileDataBuffer = Buffer.from(req.file.buffer, 'binary');
-
-  const key = `${shop.replace(".myshopify.com","-")}/${req.file.originalname}`
-  // const key = Date.now().toString() + '-' + req.file.originalname
-console.log("IMAGE NAME ==>", key)
+export const deleteFile = async(req, res) => {
+   try {
+     console.log(req.body);
+      const {url} = req.body;
+      
       const params = {
-        Bucket: process.env.AWS_BUCKET, // Replace with your S3 bucket name
-        Key: key, // Replace with the destination path in S3
-        Body: fileDataBuffer, // Use the Buffer containing the file data
-        // endpoint: 's3.amazonaws.com',
-        contentType : req.file.mimetype,
-        ContentDisposition: 'inline',
+        Bucket: process.env.AWS_BUCKET,
+        Key : url
       };
+      
+      const deleteCommand = new DeleteObjectCommand(params);
+      await s3Client.send(deleteCommand);
+      
+      return res.status(200).send({status : 1}) 
+   } catch (err) {
+     console.log(err);
+     res.status(502).send({status : 0})
+   }
+}
 
-    const command = new PutObjectCommand(params);
-    const result = await s3Client.send(command);
-    // console.log("result ==>", result)
-    const imgUrl = `https://${process.env.AWS_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
-    console.log(imgUrl)
-      res.send({status:200, data:"result.Location", url : imgUrl});
-      // res.send({status:200, data:"result.Location", url : key});
-  } catch(err){
-    console.log(err)
-    res.send({status:400, message: err})
+export async function createDraftProduct(req, res) {
+    try {
+      console.log(req.body, "create Image");
+      const {shop, title, price, vendor} = req.body;
+       let credentialsData = await credentials.findOne({shop}, {accessToken : 1 });
+       const dataProduct = {
+        product: {
+          title: title,
+          vendor: vendor,
+          handle: `genieoptions-${title}`,
+          tags: ["genie_product"],
+          variants: [
+            {
+              price: price,
+              // inventory_quantity: 1,
+              // inventory_management: "shopify",
+              // inventory_policy: "deny",
+            },
+          ],
+        },
+      };
+      let createProductURL = `https://${shop}/admin/api/${LATEST_API_VERSION}/products.json?access_token=${credentialsData.accessToken}`;
+      let createProduct = await axios
+      .post(createProductURL, dataProduct)
+      .then((result) => {
+        return result;
+      })
+      .catch((e) => {
+        return e;
+      });
+      if(createProduct.status === 201) {
+        console.log(createProduct.data.product, "product data");
+        let variant_id = createProduct.data.product.variants[0].id;
+        let product_id = createProduct.data.product.id;
+        
+        // const filter = { shop: shop, pid: product_id };
+        // const update = {
+        //   shop: shop,
+        //   pid: product_id,
+        //   product_status: "draft",
+        // };
+        // await custom.findOneAndUpdate(filter, update, {
+        //   new: true,
+        //   upsert: true, // Make this update into an upsert
+        // });
+
+        res.status(200).send({status : 1, data : variant_id})
+      } else {
+        res.send({ error: createProduct, data: "💥Not created" });
+      }
+    } catch (err) {
+      console.log(err)
+       res.status(502).send({status : 0, msg : 'Something went wrong!!!'})
+    }
+}
+
+export async function deleteDraftProduct(req, res) {
+  try {
+     console.log(req.body, "delete Image");
+     res.status(200).send({status : 1, msg: "Success"})
+  } catch (err) {
+     res.send(502).send({status : 0, msg : 'Something went wrong!!!'})
   }
 }
 
+export async function updateDraftProduct(req, res) {
+  try {
+     console.log(req.body, "update draft image");
+     res.status(200).send({status : 1, msg: "Success"})
+  } catch (err) {
+     res.send(502).send({status : 0, msg : 'Something went wrong!!!'})
+  }
+}
 
-*/

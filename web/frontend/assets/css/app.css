@@ -81,20 +81,6 @@ a {
   color: #4a0ca5;
 }
 
-/* div[data-rbd-droppable-id="root"]>div:not(:first-child) .inputDatadiv:before {
-    z-index: 2;
-    position: absolute;
-    top: 0;
-    bottom: auto;
-    right: 0;
-    left: 0;
-    height: 0.1rem;
-    background-color: #dfe3e8;
-    pointer-events: none;
-    content: "";
-    transition: opacity 0.2s cubic-bezier(0.64, 0, 0.35, 1);
-} */
-
 .specific-date-picker {
   line-height: 2.4rem;
   text-transform: initial;
@@ -177,84 +163,6 @@ a {
   text-align: left;
   margin-top: 10px;
 }
-
-/* 
-#checkbox_text {
-    float: right;
-    padding: 0px;
-    min-height: 0px;
-}
-
-#checkbox_text_hover {
-    float: right;
-    padding: 0px;
-    min-height: 0px;
-}
-
-#checkbox_text_active {
-    float: right;
-    padding: 0px;
-    min-height: 0px;
-}
-
-#checkbox_button_hover {
-    float: right;
-    padding: 0px;
-    min-height: 0px;
-}
-
-#checkbox_button_active {
-    float: right;
-    padding: 0px;
-    min-height: 0px;
-}
-
-#button_back {
-    float: right;
-    padding: 0px;
-    min-height: 0px;
-}
-
-#button_back_active {
-    float: right;
-    padding: 0px;
-    min-height: 0px;
-}
-
-#button_back_hover {
-    float: right;
-    padding: 0px;
-    min-height: 0px;
-}
-
-#button_text_active {
-    float: right;
-    padding: 0px;
-    min-height: 0px;
-}
-
-#button_text_hover {
-    float: right;
-    padding: 0px;
-    min-height: 0px;
-}
-
-#button_text {
-    float: right;
-    padding: 0px;
-    min-height: 0px;
-} 
-#swatch_back_active {
-    float: right;
-    padding: 0px;
-    min-height: 0px;
-}
-
-#swatch_hover {
-    float: right;
-    padding: 0px;
-    min-height: 0px;
-}*/
 
 .Polaris-Labelled--hidden_riqie {
   display: none;
@@ -430,23 +338,6 @@ label span input {
   fill: #000;
 }
 
-/************************ RESPONSIVE CSS ****************************/
-
-@media only screen and (max-width: 950px) {
-  .all_elements_layout {
-    padding: 5%;
-    background-color: white;
-    height: 100%;
-    border: 1px solid rgb(246, 246, 247);
-    display: block;
-    align-content: center;
-  }
-  .right_appearence {
-    flex: 0.65;
-    margin-top: 20px;
-    margin-left: 0px;
-  }
-}
 
 .limit_dates {
   margin-top: 10px;
@@ -588,8 +479,6 @@ label span input {
   border-radius: 0.4rem;
 }
 
-/*=============== 06-April-21 ================*/
-
 .box-wrapper {
   display: inline-block;
   width: 100%;
@@ -662,8 +551,6 @@ label span input {
   position: relative;
 }
 
-/*=============== 04-june-21 ================*/
-
 .Polaris-Card,
 [data-has-navigation] .Polaris-Card {
   border-radius: 8px;
@@ -715,10 +602,6 @@ label span input {
   border: 0;
   padding: 0;
 }
-
-/* .leftSidebar .Polaris-Tabs__Wrapper .Polaris-Tabs__TabContainer {
-    margin: 0 0px 0 -1px;
-} */
 
 .leftSidebar
   .Polaris-Tabs__Wrapper
@@ -1204,4 +1087,22 @@ main#AppFrameMain .Polaris-Layout__Section--secondary {
   .Polaris-Button
   svg {
   fill: rgb(255 255 255);
+}
+
+/************************ RESPONSIVE CSS ****************************/
+
+@media only screen and (max-width: 950px) {
+  .all_elements_layout {
+    padding: 5%;
+    background-color: white;
+    height: 100%;
+    border: 1px solid rgb(246, 246, 247);
+    display: block;
+    align-content: center;
+  }
+  .right_appearence {
+    flex: 0.65;
+    margin-top: 20px;
+    margin-left: 0px;
+  }
 }

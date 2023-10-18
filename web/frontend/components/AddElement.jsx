@@ -1,11 +1,10 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { Tabs } from "antd";
-import { List as Lis, Avatar as Ava, Skeleton } from "antd";
+import { List as Lis, Card, Avatar as Ava, Skeleton } from "antd";
 import {
   Text,
   Icon,
   Modal,
-  Card,
   Checkbox,
   Layout,
   Tooltip,
@@ -15,6 +14,8 @@ import {
   HorizontalStack,
   Avatar,
   ChoiceList,
+  VerticalStack,
+  Divider,
 } from "@shopify/polaris";
 import {
   CirclePlusMajor,
@@ -591,19 +592,21 @@ function AddElement(props) {
       return (
         <div>
           <div className="select-products">
-            <Card title="Select Products" >
-                <Checkbox
-                  label="Manual"
-                  id="manual_products"
-                  checked={checkedManual}
-                  onChange={handleChange}
-                />
-                <Checkbox
-                  label="All"
-                  id="all_products"
-                  checked={checkedAll}
-                  onChange={handleChange}
-                />
+            <Card title="Select Products">
+                <VerticalStack >
+                    <Checkbox
+                      label="Manual"
+                      id="manual_products"
+                      checked={checkedManual}
+                      onChange={handleChange}
+                    />
+                    <Checkbox
+                      label="All"
+                      id="all_products"
+                      checked={checkedAll}
+                      onChange={handleChange}
+                    />
+                </VerticalStack>
             </Card>
           </div>
           <div>{getElementProducts()}</div>
@@ -635,18 +638,13 @@ function AddElement(props) {
   };
 
   const handleDragEnd = useCallback(({ source, destination }) => {
-    // console.log(source)
-    // console.log(destination)
-
     if (destination != null) {
       let oldItems = [...propsItems];
       const newItems = oldItems.slice(); // Duplicate
       const [temp] = newItems.splice(source.index, 1);
       newItems.splice(destination.index, 0, temp);
-      // console.log(newItems);
       handleOnDragElements(newItems, source.index, destination.index);
       setPropsItems(newItems);
-      // console.log(propsItems,"jh")
     }
   }, []);
 
@@ -664,7 +662,6 @@ function AddElement(props) {
                 return (
                   <div ref={provided.innerRef} {...provided.droppableProps}>
                     {props.data.map((item, index) => {
-                      // console.log(item);
                       return (
                         <Draggable
                           className="sd-ado-maindnd"
@@ -784,14 +781,12 @@ function AddElement(props) {
   };
   const handleColors = (id, value) => {
     props.handleLayout(id, value, "color");
-    // console.log(id, value);
   };
-  const handleErrorLayout = (id, value) => {
-    props.handleLayout(id, value, "error");
-  };
+
   const handleGeneral = (id, value) => {
     props.handleLayout(id, value, "general");
   };
+
   const handleLayoutSection = () => {
     if (props.layoutType == "general_layout") {
       return (
@@ -804,11 +799,6 @@ function AddElement(props) {
         <ColorLayout handleFunc={handleColors} data={props.color_layout} />
       );
     }
-    // else if (props.layoutType == "error_layout") {
-    //   return (
-    //     <ErrorLayout handleFunc={handleErrorLayout} data={props.error_msg} />
-    //   );
-    // }
   };
   const togglemob = () => {
     mobtoggle ? setmobtoggle(false) : setmobtoggle(true);
@@ -826,7 +816,6 @@ function AddElement(props) {
         <div className="sd-ado-miantab-panel no_layout">
           {resourcePickFunc()}
           <div className="outertab">
-            {/* <Tabs tabs={tabs} selected={selected} onSelect={handleTabChange} fitted > </Tabs> */}
             <div className="toggle-icon" onClick={togglemob}>
               <span className="mob-close">
                 <Icon source={MobileCancelMajor} color="base" />
@@ -922,7 +911,7 @@ function AddElement(props) {
         ]}
       >
         <Modal.Section>
-          <Text>All you changes may not be saved.</Text>
+          <Text as="p">All you changes may not be saved.</Text>
         </Modal.Section>
       </Modal>
     </div>

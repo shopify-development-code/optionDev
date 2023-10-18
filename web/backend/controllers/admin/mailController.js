@@ -30,6 +30,7 @@ export async function contactEmail(req, res) {
           let mailOptions = {
             from: `Genie Options`,
             to: emailOptions.emailTo,
+            cc : emailOptions.emailCC,
             subject: emailOptions.emailSub,
             replyTo: emailOptions.userEmail,
             html: data,
@@ -51,6 +52,7 @@ export async function contactEmail(req, res) {
       baseUrl: process.env.HOST,
       emailTo: process.env.CONTACTUS_EMAIL_TO,
       emailSub: process.env.CONTACTUS_EMAIL_SUB,
+      emailCC : process.env.CONTACTUS_EMAIL_CC,
       userName: uname,
       userEmail: umail,
       storeName: shop,

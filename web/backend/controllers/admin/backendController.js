@@ -866,71 +866,45 @@ export const  fetchWebhooks = async(req, res) => {
   }
 }
 
-export const updateWebhooks = async(req, res) => {
-   try {
-      const { shop, token } = req.body;
+export const updateWebhooks = async (req, res) => {
+  try {
+    const { shop, token } = req.body;
+    const webhookTopics = ["products/update", "products/delete", "app/uninstalled", "themes/publish", "orders/create"];
     
-      const existingWebhooks = await shopify.api.rest.Webhook.all({
-        session: {
-          shop,
-          accessToken: token
-        }
-      });
+    const existingWebhooks = await shopify.api.rest.Webhook.all({ session: { shop, accessToken: token } });
+    const existingTopics = existingWebhooks.data.map(data => data.topic);
     
-      const webhooks_data = existingWebhooks.map(data => ({
-        webhook_id: data.id,
-        topic: data.topic
-      }));
+    const filteredTopics = webhookTopics.filter(topic => !existingTopics.includes(topic));
     
-      const webhook_topics = ["products/update", "products/delete", "app/uninstalled", "collections/delete", "collections/update", "themes/publish"];
-      const matched_topics = webhooks_data.map(data => data.topic);
+    const updatePromises = existingWebhooks.data.map(data => {
+      const updateWebhook = new shopify.api.rest.Webhook({ session: { shop, accessToken: token } });
+      updateWebhook.id = data.id;
+      updateWebhook.address = `${process.env.HOST}/api/webhooks`;
+      return updateWebhook.save({ update: true });
+    });
     
-      const filtered_topics = webhook_topics.filter(topic => !matched_topics.includes(topic));
+    const createPromises = filteredTopics.map(topic => {
+      const webhook = new shopify.api.rest.Webhook({ session: { shop, accessToken: token } });
+      webhook.address = `${process.env.HOST}/api/webhooks`;
+      webhook.topic = topic;
+      webhook.format = "json";
+      return webhook.save({ update: true });
+    });
     
-      // Update existing webhooks
-      const updatePromises = webhooks_data.map(data => {
-        const update_webhook = new shopify.api.rest.Webhook({
-          session: {
-            shop,
-            accessToken: token
-          }
-        });
-        update_webhook.id = data.webhook_id;
-        update_webhook.address = `${process.env.HOST}/api/webhooks`;
-        return update_webhook.save({
-          update: true
-        });
-      });
-    
-      // Create new webhooks
-      const createPromises = filtered_topics.map(topic => {
-        const webhook = new shopify.api.rest.Webhook({
-          session: {
-            shop,
-            accessToken: token
-          }
-        });
-        webhook.address = `${process.env.HOST}/api/webhooks`;
-        webhook.topic = topic;
-        webhook.format = "json";
-        return webhook.save({
-          update: true
-        });
-      });
-    
-      const updateStatus = await credentials.findOneAndUpdate(
-        { shop },
-        { $set: { webhook_status: true } },
-        { upsert: true, new: true }
-      );
+    const updateStatus = await credentials.findOneAndUpdate(
+      { shop },
+      { $set: { webhook_status: true } },
+      { upsert: true, new: true }
+    );
 
-      const fetchData = await credentials.find({}, {_id : 1, shop : 1, accessToken : 1, webhook_status : 1});
-    
-      if (updateStatus) {
-        const webhooks = await Promise.all([...updatePromises, ...createPromises]);
-        res.status(200).send({ msg: "Webhooks Updated Successfully!", data: updateStatus, webhooks: webhooks , fetchData : fetchData});
-      }
-    } catch (err) {
-      res.status(401).send({ msg: "Unauthorized Access" });
+    const fetchData = await credentials.find({}, { _id: 1, shop: 1, accessToken: 1, webhook_status: 1 });
+
+    if (updateStatus) {
+      const webhooks = await Promise.all([...updatePromises, ...createPromises]);
+      res.status(200).send({ msg: "Webhooks Updated Successfully!", data: updateStatus, fetchData });
     }
-}
+  } catch (err) {
+    console.log(err);
+    res.status(401).send({ msg: "Unauthorized Access" });
+  }
+};

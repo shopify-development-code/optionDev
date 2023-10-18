@@ -11,6 +11,7 @@ const credentialSchema = new mongoose.Schema(
     active_status: Number,
     payment_status: Number,
     first_time: Boolean,
+    webhook_status : Boolean
   },
   {
     timestamps: true,

@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import {
-  Button,
-  SkeletonThumbnail,
-  SkeletonDisplayText,
-  SkeletonBodyText,
+  Button
 } from "@shopify/polaris";
 import CustomInput from "./CustomInput";
 import CustomSelect from "./CustomSelect";
@@ -12,7 +9,6 @@ import CustomSwatch from "./CustomSwatch";
 import dummy from "../assets/images/dummy.jpg";
 
 export default class AllElements extends Component {
-  // export default function AllElementsPage() {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,12 +25,6 @@ export default class AllElements extends Component {
     this.conditionsFunc = this.conditionsFunc.bind(this);
     this.checkParent = this.checkParent.bind(this);
   }
-  // componentDidMount ()  {
-  //   const element1 = document.querySelector(`[id^="color_swatches"]`);
-  //   console.log(element1);
-  //       console.log("element1");
-
-  // }
   handleAllChanges(id, value) {
     let type = id.split("_");
     if (
@@ -94,7 +84,6 @@ export default class AllElements extends Component {
         result.push(output);
       }
     }
-    // console.log(result);
     var bool = result.every(
       (val) => val.display == "block" || val.display == null
     );
@@ -913,12 +902,9 @@ export default class AllElements extends Component {
             data={data}
             type={type}
             value={value}
-            // showimage={this.props.showimage}
-            // imageURL={this.props.imageURL}
           />
         );
       } else if (type == "Paragraph") {
-        // console.log(data);
         return (
           <div
             id="my-metafeild_1"
@@ -941,14 +927,9 @@ export default class AllElements extends Component {
     return (
       <div className="all_elements_layout" spacing={0}>
         <div className="left_appearence">
-          {/* <SkeletonThumbnail size="medium" /> */}
           <img src={dummy} />
         </div>
         <div className="right_appearence">
-          {/* <SkeletonBodyText />
-          <div style={{ marginTop: "20px" }}>
-            <SkeletonDisplayText size="medium" />
-          </div> */}
           {this.props.data.map((elem, index) => {
             return (
               <div key={index}>

@@ -222,3 +222,48 @@ async function makeShopifyRequest(clientConfig, path, method, data) {
     console.log(err);
   }
 }
+
+
+const deleteAllImages = async(shop, folderName) => {
+  console.log("ENTER IN DELETE ALL CONTROLLER")
+      try {
+        // console.log(req.body)
+        // const session = res.locals.shopify.session
+        // const {folder_name} = req.body
+        console.log(shop)
+        const params = {
+          Bucket: process.env.AWS_BUCKET, // Replace with your S3 bucket name
+          Prefix : shop.replace(".myshopify.com","-")+"gr16qqutv8e"+"/"
+        }
+        const ListObjectsCommand = new ListObjectsV2Command(params)
+        const response = await s3Client.send(ListObjectsCommand)
+          console.log("response.Contents", response.Contents)
+          if(response.Contents){
+            const objectKeysToDelete = response.Contents.map((obj)=>({Key:obj.Key}))
+            console.log("CHECk BELOW")
+          console.log(objectKeysToDelete)
+          if(objectKeysToDelete.length == 0){
+            console.log("No image Found")
+            return ""
+          }
+          const deleteObjectsCommand = new DeleteObjectsCommand({
+            Bucket:process.env.AWS_BUCKET,
+            Delete : {
+              Objects: objectKeysToDelete,
+              Quiet: false,
+            }
+          })
+
+          console.log("deleteObjectsCommand", deleteObjectsCommand.input.Delete)
+          const deleteResponse = await s3Client.send(deleteObjectsCommand)
+          console.log("Objects deleted successfully", deleteResponse)
+          }
+     
+        return "sucess"
+        // res.send({status:200, message:"sucess"})
+      } catch(err) {
+        console.log(err)
+        return "error"
+        // res.send({status:400, message:"err"})
+      }
+}

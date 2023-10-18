@@ -69,9 +69,6 @@ const updateProductsWebhook = () => {
     },
   ];
 
-
-  console.log(data, "dataaaa", view)
-
   const handleView = async(shop, token) => {
      setOpen(true)
      const sessionToken = await getSessionToken(app);
@@ -102,12 +99,15 @@ const updateProductsWebhook = () => {
    }
 
 
+
+   console.log(data)
+
+
    const handleUpdateWebhook = async(shop , token) => {
      setClickedIndex(shop);
       const sessionToken = await getSessionToken(app);
       await axios.post("/api/updateWebhooks", {shop, token}, {headers : { Authorization: `Bearer ${sessionToken}`}}).then((response)=> {
         message.success(response.data.msg);
-        console.log(response.data, "status update");
         setLoader(false);
         setClickedIndex("")
         setData(response.data.fetchData)

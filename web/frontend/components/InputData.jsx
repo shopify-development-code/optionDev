@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   TextField,
-  Card,
   Checkbox,
   HorizontalStack,
   Tabs,
@@ -564,13 +563,13 @@ class InputData extends Component {
           onSelect={this.changeTab}
           fitted
         >
-          <Card>{this.fillBlanks(this.state.selected)}</Card>
+          {this.fillBlanks(this.state.selected)}
         </Tabs>
       );
     } else {
       return (
         <div>
-          <Card>{this.fillBlanks(this.state.selected)}</Card>
+          {this.fillBlanks(this.state.selected)}
         </div>
       );
     }
