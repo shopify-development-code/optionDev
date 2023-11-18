@@ -23,11 +23,7 @@ dist/
 
 # extensions build output
 extensions/*/build
-
-.gitignore
-package.json
-shopify.web.toml
-shopify.app.toml
+.toml
 
 # Node library SQLite database
 web/database.sqlite

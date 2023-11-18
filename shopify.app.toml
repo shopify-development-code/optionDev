@@ -2,7 +2,7 @@
 
 name = "Genie Options Development"
 client_id = "232a8ae5eeebd995e254d74787d9f1ba"
-application_url = "https://iceland-qui-silicon-comply.trycloudflare.com"
+application_url = "https://trucks-caution-wishing-cinema.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -12,9 +12,9 @@ use_legacy_install_flow = true
 
 [auth]
 redirect_urls = [
-  "https://iceland-qui-silicon-comply.trycloudflare.com/auth/callback",
-  "https://iceland-qui-silicon-comply.trycloudflare.com/auth/shopify/callback",
-  "https://iceland-qui-silicon-comply.trycloudflare.com/api/auth/callback"
+  "https://trucks-caution-wishing-cinema.trycloudflare.com/auth/callback",
+  "https://trucks-caution-wishing-cinema.trycloudflare.com/auth/shopify/callback",
+  "https://trucks-caution-wishing-cinema.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
