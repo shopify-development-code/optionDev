@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+   <div class="wrapper" style=" width: 100%; max-width: 600px; padding-top: 15px; padding-bottom: 15px; margin-left: auto; margin-right: auto; background-color: #f4f4f4;">
+      <div class="inner-wrap" style=" background-color: #fff; max-width: 495px; margin-left: auto; margin-right: auto;">
+         <table width="100%">
+            <thead>
+               <tr>
+                  <th style="padding-top: 60px; padding-bottom: 60px;"><img src="<%= emailOptions.baseUrl %>/src/assets/images/logo.png" alt="" class="img-fluid" style="width: 121px; height: 121px;"></th>
+               </tr>
+               <tr>
+                  <th style="font-family: Arial, sans-serif; font-size: 33px; line-height: 36px; font-weight:bold;padding-top: 20px; padding-bottom: 50px; color: #1c1c33;">Dear Support</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td style="font-family: Arial, sans-serif; font-size: 18px; line-height: 30px; font-weight:400; padding-bottom: 40px; color: #63636e; text-align: left;">
+                     <p style='line-height: 26px; color:#444; padding: 0px 38px; font-size: 16px;'><b>Name:</b> <%= emailOptions.userName %></p>
+                     <p style='line-height: 26px; color:#444; padding: 0px 38px; font-size: 16px;'><b>Email:</b> <%= emailOptions.userEmail %></p>
+                     <p style='line-height: 26px; color:#444; padding: 0px 38px; font-size: 16px;'><b>Store Name:</b> <%= emailOptions.storeName %></p>
+                     <% if(emailOptions.storePass){ %>
+                        <p style='line-height: 26px; color:#444; padding: 0px 38px; font-size: 16px;'><b>Store Password:</b> <%= emailOptions.storePass %></p>
+                     <% } %>
+                     <p style='line-height: 26px; color:#444; padding: 0px 38px; font-size: 16px;'><b>Message:</b> <%= emailOptions.message %></p>
+                  </td>
+               </tr>
+            </tbody>
+            <tfoot>
+            </tfoot>
+         </table>
+      </div>
+   </div>
+
+</body>
+</html>

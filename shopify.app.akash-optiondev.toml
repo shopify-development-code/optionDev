@@ -1,0 +1,28 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "akash-OptionDev"
+client_id = "a4cedd3f6a80199a10ea2af38e3f62f0"
+application_url = "https://sink-class-traffic-classification.trycloudflare.com"
+embedded = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_products,write_products,read_orders,write_orders,read_themes"
+
+[auth]
+redirect_urls = [
+  "https://sink-class-traffic-classification.trycloudflare.com/auth/callback",
+  "https://sink-class-traffic-classification.trycloudflare.com/auth/shopify/callback",
+  "https://sink-class-traffic-classification.trycloudflare.com/api/auth/callback",
+  "https://sink-class-traffic-classification.trycloudflare.com/.shopify/graphiql/auth/callback"
+]
+
+[webhooks]
+api_version = "2023-10"
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "playgroundstoree.myshopify.com"

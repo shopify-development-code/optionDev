@@ -1,0 +1,52 @@
+<script type='text/javascript'>
+    console.log('genieoptions***');
+    let collectionNames = [];
+      
+    {% for collection in product.collections %}
+        collectionNames.push("{{ collection.title }}");
+    {% endfor %}
+                             
+    let tags = [];
+    {% for tag in product.tags %}
+        tags.push("{{ tag }}");
+    {% endfor %}
+
+    let product_v="{{ product.vendor }}"
+    let product_t="{{ product.title | replace: '"', "'" }}"
+    let product_p="{{ product.price }}"
+    let product_te="{{ product.type }}"                    
+    var Shine = {
+        "option":{
+            data:{}
+        },    
+        "setting":{},
+        product_vendor: product_v,
+        product_title: product_t,
+        product_price: product_p,
+        product_type: product_te,
+        product_tag: tags,
+        collection: collectionNames,
+    };       
+    let option_set_time = [];
+    let _sd_mainurl = window.location.href;
+    let _sd_pageType = '{{request.page_type}}';
+    // let product_id = window.ShopifyAnalytics.meta['page']['resourceId'];
+    var productJson, _sd_product_id;
+    if (_sd_pageType == "product"){
+       productJson = {{ product | json }};
+       _sd_product_id = '{{product.id}}';  
+    }
+
+    let developersetting = {
+        product:{
+            "quantity_Selector" : '[name="quantity"]',
+            "addToCart_button":'.Sd_addProduct.add_to_cart, button[name="add"], .pt-row-custom-01, .ProductForm__AddToCart.Button, .product-form__add-button',
+            "addToCart_form":'.product-form form[action="/cart/add"], form[action="/cart/add"]',
+        },
+        cart:{
+            "checkout_button":'button[name="checkout"], input[name="checkout"]',
+        },
+    };
+    let collectionGridSelectors = 'li.grid__item, [data-product-grid]';
+</script>
+
