@@ -358,7 +358,6 @@ function numberInput(el, optionsDiv, optionIndex) {
   }
 }
 function Dropdown(el, optionsDiv, optionIndex) {
-  // console.log("Dropdown",optionIndex)
   valdationArr.push({ required: false });
 
   addOnArray.push([]);
