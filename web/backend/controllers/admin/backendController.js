@@ -1,15 +1,15 @@
 import { credentials, Schema, custom } from "../../Schema/schema.js";
 import shopify from "../../../shopify.js";
-import {DataType} from "@shopify/shopify-api";
+import { DataType } from "@shopify/shopify-api";
 import fs from "fs";
 import { getShopifyData } from "../../helpers/backend_helpers.js";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 
 export async function saveOptionSet(req, res) {
   const shop = req.body.shop;
   const formStatus = req.body.status;
-  const status = formStatus === 'set_draft' ? false : true;
+  const status = formStatus === "set_draft" ? false : true;
 
   const optionSetData = {
     shop: shop,
@@ -29,13 +29,13 @@ export async function saveOptionSet(req, res) {
     await Schema.create(optionSetData);
     res.json({
       status: true,
-      result: 'Successfully Saved Option Set',
+      result: "Successfully Saved Option Set",
       activedraft: req.body.status,
     });
   } catch (error) {
     res.json({
       status: false,
-      result: 'Error Saving Data ... Please Try Again ...!!',
+      result: "Error Saving Data ... Please Try Again ...!!",
     });
   }
 }
@@ -45,19 +45,21 @@ export async function getAllOptionSet(req, res) {
     const shop = res.locals.shopify.session.shop;
     const settings = await credentials.findOne({ shop });
     const schema_data = await Schema.find({ shop });
-
-    res.send(schema_data
-      ? {
-          status: true,
-          response: schema_data,
-          mainTheme: settings.theme_chosen,
-          theme: settings.theme_chosen,
-          installation: settings.first_time,
-          id: settings._id,
-        }
-      : { status: false, response: "Error Fetching data" }
+    console.log(settings, "lll");
+    res.send(
+      schema_data
+        ? {
+            status: true,
+            response: schema_data,
+            mainTheme: settings?.theme_chosen,
+            theme: settings?.theme_chosen,
+            installation: settings?.first_time,
+            id: settings?._id,
+          }
+        : { status: false, response: "Error Fetching data" }
     );
   } catch (err) {
+    console.log(err, "err");
     res.send({ status: false, response: "Something Went wrong" });
   }
 }
@@ -140,7 +142,6 @@ export async function copyOptionSet(req, res) {
   }
 }
 
-
 export async function checkOptionSetOnInstall(req, res) {
   let findData = req.query.Params;
   let data = await Schema.find(findData);
@@ -165,14 +166,16 @@ export async function getCredentials(req, res) {
         mainTheme: settings.theme_chosen,
       });
     } else {
-      res.send({ noerror: false, data: "No data found for the specified shop" });
+      res.send({
+        noerror: false,
+        data: "No data found for the specified shop",
+      });
     }
   } catch (error) {
     console.error(error);
     res.status(500).send({ noerror: false, data: "An error occurred" });
   }
 }
-
 
 export async function handleServerScript(req, res) {
   const doc = printer.createPdfKitDocument(
@@ -215,55 +218,61 @@ export async function updateSettngs(req, res) {
   }
 }
 
-
 //Delete the draft product from the backend bulk delete
 export async function deleteDraftProducts(req, res) {
   const { shop } = res.locals.shopify.session;
-  const { accessToken, session } = res.locals.shopify.session;
-  const param = {
-    path: "products",
-    query: {
-      fields: "id",
-      vendor: "Genie Options",
-      status: "draft",
-    },
-  };
+  let session = res.locals.shopify.session;
 
-  const getproductsList = await getShopifyData(shop, accessToken, param);
-  const productList = getproductsList.response.body.products;
+  let productList = await custom.find({ shop: shop });
+  console.log(productList, "opopop");
 
   if (productList.length === 0) {
     res.send({ status: false, message: "No Product To Delete Exist" });
   } else {
-    const client = new shopify.api.clients.Rest({ session });
-    let resp = { sat: false, message: "err" };
+    const client = new shopify.api.clients.Graphql({ session });
 
-    for (const product of productList) {
-      const delDraftResponse = await client
-        .delete({
-          path: `products/${product.id}`,
-        })
-        .then(() => {
-          resp = { sat: true, message: "All Products have been Deleted" };
-        });
-
-      if (resp.sat) {
-        try {
-          await custom.deleteOne({
-            pid: product.id,
-            shop,
-            product_status: "draft",
-          });
-        } catch (error) {
-          continue;
+    let product_delete_mutation = `mutation productDelete($input: ProductDeleteInput!) {
+      productDelete(input: $input) {
+        deletedProductId
+        userErrors {
+          field
+          message
         }
       }
+    }`;
+
+    let successFlag = true; // Flag to track if any error occurred during the loop
+
+    for (const product of productList) {
+      let input = {
+        input: {
+          id: product.pid,
+        },
+      };
+
+      try {
+        let productDelete = await client.query({
+          data: { query: product_delete_mutation, variables: input },
+        });
+
+        if (productDelete.body.data.productDelete.userErrors.length === 0) {
+          // If there are no user errors, delete the product from the database
+          await custom.deleteOne({ pid: product.pid });
+        }
+      } catch (error) {
+        // Handle errors, if any
+        console.error("Error deleting product:", error);
+        successFlag = false; // Set flag to false if an error occurs
+      }
     }
-    res.send({ status: resp.sat, message: resp.message });
+
+    if (successFlag) {
+      res.send({ status: true, message: "Products deleted successfully" });
+    } else {
+      res.send({ status: false, message: "Something went wrong" });
+    }
   }
 }
-
-
 
 export async function getDefaultInstallationData(req, res) {
   const shop = req.query.shop;
@@ -291,7 +300,7 @@ export async function getDefaultInstallationData(req, res) {
       },
       translations: {
         selection_addon: "Selection will add {{addon}} to the price",
-        custom_product_name: "{{product_title}} - Selections",
+        custom_product_name: "Selections",
       },
     },
   };
@@ -580,25 +589,33 @@ export async function themeInstallation(req, res) {
 }
 
 export async function getFormList(req, res) {
+  console.log(res.locals.shopify.session, "original");
   try {
     const { id } = req.body;
     const shop = res.locals.shopify.session.shop;
     const n = 12;
-    const skipCount = (id > 0 ? (id - 1) * n : 0);
+    const skipCount = id > 0 ? (id - 1) * n : 0;
 
-    const returnData = await Schema.find({ shop }, { name: 1, option_set: 1, status: 1, _id: 1 })
+    const returnData = await Schema.find(
+      { shop },
+      { name: 1, option_set: 1, status: 1, _id: 1 }
+    )
       .sort({ _id: -1 })
       .skip(skipCount)
       .limit(n);
 
     const total = await Schema.countDocuments({ shop });
-    res.json({ returnData, total: id > 1 ? total - skipCount : total, n, wholedata: total });
+    res.json({
+      returnData,
+      total: id > 1 ? total - skipCount : total,
+      n,
+      wholedata: total,
+    });
   } catch (error) {
     console.error("enter", error);
-    res.status(500).json({ error: 'Something went wrong' });
+    res.status(500).json({ error: "Something went wrong" });
   }
 }
-
 
 export async function getFormNames(req, res) {
   try {
@@ -607,10 +624,9 @@ export async function getFormNames(req, res) {
     res.json({ names });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Something went wrong' });
+    res.status(500).json({ error: "Something went wrong" });
   }
 }
-
 
 export async function searchByName(req, res) {
   const { find, value } = req.body;
@@ -642,7 +658,6 @@ export async function searchByName(req, res) {
     res.status(500).send({ error: "An error occurred" });
   }
 }
-
 
 // export async function setformstatus(req, res) {
 //   console.log("hello", req.body.key);
@@ -735,7 +750,10 @@ export async function setformstatus(req, res) {
 
     if (currentstatus === "true") {
       if (type === "none") {
-        return res.send({ status: false, data: "First add products to optionset" });
+        return res.send({
+          status: false,
+          data: "First add products to optionset",
+        });
       }
 
       const query = { shop, status: "true", "option_set.products.type": type };
@@ -751,14 +769,45 @@ export async function setformstatus(req, res) {
         }
       } else {
         const data = await Schema.find(query, projection);
-        const allid = data.flatMap(element => element.option_set.products.product_added.map(ele => ele.product_id));
-        const common = allid.filter(item => id.includes(item));
+        console.log(data[0].option_set.products, "else");
+        const allid = data.flatMap((element) =>
+          element.option_set.products.product_added.map((ele) => ele.product_id)
+        );
+        const common = allid.filter((item) => id.includes(item));
+
+        console.log(common, "uuu");
+        // const dataString =
+        // typeof common === "string"
+        //   ? common
+        //   : JSON.stringify(common);
+        // fs.writeFile("hiiiii.txt", dataString, (err) => {
+        //   if (err) {
+        //     console.error("Error writing to file:", err);
+        //   } else {
+        //     console.log("Data written to file successfully!");
+        //   }
+        // });
+
+   let aha= data.find(
+          (element) =>
+            element.option_set.products.product_added.find(
+              (ele) => ele.product_id == common[0]
+            )
+        );
+        console.log(aha,"lokok")
+
 
         if (common.length > 0) {
-          const commonname = data.find(element => common[0] === element.option_set.products.product_added.find(ele => ele.product_id === common[0]).product_id).name;
+          const commonname = data.find(
+            (element) =>
+              element.option_set.products.product_added.find(
+                (ele) => ele.product_id == common[0]
+              )
+          );
+          console.log(commonname,"nammem")
           return res.send({
             status: false,
-            data: `Same product is available in other optionset (${commonname})`,
+            data: `Same product is available in other optionset (${commonname.name})`,
           });
         }
       }
@@ -776,7 +825,6 @@ export async function setformstatus(req, res) {
   }
 }
 
-
 export async function makedir(req, res) {
   let dirname = req.body.shop;
   const dir = `src/assets/uploads/${dirname}`;
@@ -791,7 +839,7 @@ export async function makedir(req, res) {
 export async function getThemeId(req, res) {
   try {
     const session = res.locals.shopify.session;
-    const client = new shopify.api.clients.Rest({session});
+    const client = new shopify.api.clients.Rest({ session });
     const {
       body: { themes },
     } = await client.get({ path: "themes", type: DataType.JSON });
@@ -803,105 +851,134 @@ export async function getThemeId(req, res) {
   }
 }
 
-
 export const themePlan = async (req, res) => {
-  try{
+  try {
     const session = res.locals.shopify.session;
     const hasActivePlan = await shopify.api.rest.Shop.all({
-       session
-     })
-     const data = {
-        myshopify_domain : hasActivePlan.data[0].myshopify_domain,
-        shop_owner : hasActivePlan.data[0].shop_owner,
-        plan_name : hasActivePlan.data[0].plan_name,
-        email : hasActivePlan.data[0].email
-     }
-     if(hasActivePlan) {
-        res.status(200).send(data)
-     }
-  } catch(err) {
-     res.status(401).send("Unauthorized")
+      session,
+    });
+    const data = {
+      myshopify_domain: hasActivePlan.data[0].myshopify_domain,
+      shop_owner: hasActivePlan.data[0].shop_owner,
+      plan_name: hasActivePlan.data[0].plan_name,
+      email: hasActivePlan.data[0].email,
+    };
+    if (hasActivePlan) {
+      res.status(200).send(data);
+    }
+  } catch (err) {
+    res.status(401).send("Unauthorized");
   }
-}
+};
 
 /******************************************************************************* */
 
-export const  getWebhooks = async(req, res) => {
-   try{
-    const fetchData = await credentials.find({}, {_id : 1, shop : 1, accessToken : 1, webhook_status : 1});
-    if(fetchData) {
+export const getWebhooks = async (req, res) => {
+  try {
+    const fetchData = await credentials.find(
+      {},
+      { _id: 1, shop: 1, accessToken: 1, webhook_status: 1 }
+    );
+    if (fetchData) {
       const data = [];
-      fetchData.forEach((element)=> {
-          data.push({
-            _id : element._id,
-            shop : element.shop,
-            accessToken : element.accessToken,
-            webhook_status : element.webhook_status == undefined ? false : element.webhook_status
-          })
-      })
-      res.status(200).send({msg : "Data fetched Successfully", data :  data})
+      fetchData.forEach((element) => {
+        data.push({
+          _id: element._id,
+          shop: element.shop,
+          accessToken: element.accessToken,
+          webhook_status:
+            element.webhook_status == undefined
+              ? false
+              : element.webhook_status,
+        });
+      });
+      res.status(200).send({ msg: "Data fetched Successfully", data: data });
     }
-   } catch(err) {
-      res.status(401).send({msg : "Unauthorized Access", data : []})
-   }
-}
-
-
-export const  fetchWebhooks = async(req, res) => {
-  try{
-  const { shop, token } = req.body;
-  const fetchWebhooks = await shopify.api.rest.Webhook.all({
-    session: {
-      shop,
-      accessToken: token
-    }
-  });
- 
-   if(fetchWebhooks) {
-     res.status(200).send(fetchWebhooks)
-   }
-
-  } catch(err) {
-     res.status(401).send({msg : "Unauthorized Access", data : []})
+  } catch (err) {
+    res.status(401).send({ msg: "Unauthorized Access", data: [] });
   }
-}
+};
+
+export const fetchWebhooks = async (req, res) => {
+  try {
+    const { shop, token } = req.body;
+    const fetchWebhooks = await shopify.api.rest.Webhook.all({
+      session: {
+        shop,
+        accessToken: token,
+      },
+    });
+
+    if (fetchWebhooks) {
+      res.status(200).send(fetchWebhooks);
+    }
+  } catch (err) {
+    res.status(401).send({ msg: "Unauthorized Access", data: [] });
+  }
+};
 
 export const updateWebhooks = async (req, res) => {
   try {
     const { shop, token } = req.body;
-    const webhookTopics = ["products/update", "products/delete", "app/uninstalled", "themes/publish", "orders/create"];
-    
-    const existingWebhooks = await shopify.api.rest.Webhook.all({ session: { shop, accessToken: token } });
-    const existingTopics = existingWebhooks.data.map(data => data.topic);
-    
-    const filteredTopics = webhookTopics.filter(topic => !existingTopics.includes(topic));
-    
-    const updatePromises = existingWebhooks.data.map(data => {
-      const updateWebhook = new shopify.api.rest.Webhook({ session: { shop, accessToken: token } });
+    const webhookTopics = [
+      "products/update",
+      "products/delete",
+      "app/uninstalled",
+      "themes/publish",
+      "orders/create",
+    ];
+
+    const existingWebhooks = await shopify.api.rest.Webhook.all({
+      session: { shop, accessToken: token },
+    });
+    const existingTopics = existingWebhooks.data.map((data) => data.topic);
+
+    const filteredTopics = webhookTopics.filter(
+      (topic) => !existingTopics.includes(topic)
+    );
+
+    const updatePromises = existingWebhooks.data.map((data) => {
+      const updateWebhook = new shopify.api.rest.Webhook({
+        session: { shop, accessToken: token },
+      });
       updateWebhook.id = data.id;
       updateWebhook.address = `${process.env.HOST}/api/webhooks`;
       return updateWebhook.save({ update: true });
     });
-    
-    const createPromises = filteredTopics.map(topic => {
-      const webhook = new shopify.api.rest.Webhook({ session: { shop, accessToken: token } });
+
+    const createPromises = filteredTopics.map((topic) => {
+      const webhook = new shopify.api.rest.Webhook({
+        session: { shop, accessToken: token },
+      });
       webhook.address = `${process.env.HOST}/api/webhooks`;
       webhook.topic = topic;
       webhook.format = "json";
       return webhook.save({ update: true });
     });
-    
+
     const updateStatus = await credentials.findOneAndUpdate(
       { shop },
       { $set: { webhook_status: true } },
       { upsert: true, new: true }
     );
 
-    const fetchData = await credentials.find({}, { _id: 1, shop: 1, accessToken: 1, webhook_status: 1 });
+    const fetchData = await credentials.find(
+      {},
+      { _id: 1, shop: 1, accessToken: 1, webhook_status: 1 }
+    );
 
     if (updateStatus) {
-      const webhooks = await Promise.all([...updatePromises, ...createPromises]);
-      res.status(200).send({ msg: "Webhooks Updated Successfully!", data: updateStatus, fetchData });
+      const webhooks = await Promise.all([
+        ...updatePromises,
+        ...createPromises,
+      ]);
+      res
+        .status(200)
+        .send({
+          msg: "Webhooks Updated Successfully!",
+          data: updateStatus,
+          fetchData,
+        });
     }
   } catch (err) {
     console.log(err);

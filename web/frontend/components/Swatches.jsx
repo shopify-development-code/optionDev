@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TextField, Button, ButtonGroup, Select, Icon } from "@shopify/polaris";
+import { TextField, Button, ButtonGroup, Select, Icon, DataTable, Text } from "@shopify/polaris";
 import { DeleteMajor } from "@shopify/polaris-icons";
 
 export default class Swatches extends Component {
@@ -294,6 +294,16 @@ export default class Swatches extends Component {
   render() {
     return (
       <div className="more_options">
+              <DataTable
+              columnContentTypes={["text", ""]}
+              headings={[
+                <Text fontWeight="medium">Option name</Text>,
+                <Text fontWeight="medium">Add on price</Text>,
+               
+              ]}
+              rows={[]}
+              totals={""}
+            />
         {this.state.optionValues.map((elem, index) => {
           return (
             <div key={index} className="select_swatches">

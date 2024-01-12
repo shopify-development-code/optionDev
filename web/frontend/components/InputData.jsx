@@ -9,6 +9,7 @@ import {
   Text,
   Button,
   VerticalStack,
+  Card
 } from "@shopify/polaris";
 import {
   QuestionMarkMinor,
@@ -43,21 +44,21 @@ class InputData extends Component {
       label_error: false,
     };
 
-    this.handleTextChange = this.handleTextChange.bind(this);
-    this.fillBlanks = this.fillBlanks.bind(this);
-    this.changeTab = this.changeTab.bind(this);
-    this.selectSaveData = this.selectSaveData.bind(this);
-    this.appearenceType = this.appearenceType.bind(this);
-    this.setAppearence = this.setAppearence.bind(this);
-    this.showInputFeilds = this.showInputFeilds.bind(this);
-    this.showTabs = this.showTabs.bind(this);
-    this.handleParagraph = this.handleParagraph.bind(this);
-    this.showCondtions = this.showCondtions.bind(this);
-    this.saveConditionalData = this.saveConditionalData.bind(this);
-    this.saveDateTimeData = this.saveDateTimeData.bind(this);
-    this.handleConditionalSelect = this.handleConditionalSelect.bind(this);
-    this.showConditionPerElement = this.showConditionPerElement.bind(this);
-    this.handleSelectError = this.handleSelectError.bind(this);
+    // this.handleTextChange = this.handleTextChange.bind(this);
+    // this.fillBlanks = this.fillBlanks.bind(this);
+    // this.changeTab = this.changeTab.bind(this);
+    // this.selectSaveData = this.selectSaveData.bind(this);
+    // this.appearenceType = this.appearenceType.bind(this);
+    // this.setAppearence = this.setAppearence.bind(this);
+    // this.showInputFeilds = this.showInputFeilds.bind(this);
+    // this.showTabs = this.showTabs.bind(this);
+    // this.handleParagraph = this.handleParagraph.bind(this);
+    // this.showCondtions = this.showCondtions.bind(this);
+    // this.saveConditionalData = this.saveConditionalData.bind(this);
+    // this.saveDateTimeData = this.saveDateTimeData.bind(this);
+    // this.handleConditionalSelect = this.handleConditionalSelect.bind(this);
+    // this.showConditionPerElement = this.showConditionPerElement.bind(this);
+    // this.handleSelectError = this.handleSelectError.bind(this);
   }
 
   handleValidation = (noticeErrorSucess, statusErrorSucess) => {
@@ -68,7 +69,7 @@ class InputData extends Component {
     );
   };
 
-  saveConditionalData(arr) {
+  saveConditionalData=(arr)=> {
     let items = [...this.state.items];
     items = arr;
     this.state.items = items;
@@ -78,7 +79,7 @@ class InputData extends Component {
       items: items,
     });
   }
-  handleConditionalSelect(value, id) {
+  handleConditionalSelect=(value, id)=> {
     let items = [...this.state.items];
     let item = { ...items[this.state.index] };
     if (value) {
@@ -128,14 +129,14 @@ class InputData extends Component {
       });
     }
   }
-  handleErrorFunc(bool, label, id) {
+  handleErrorFunc=(bool, label, id)=> {
     let obj = {
       label: label,
       id: id,
     };
     this.props.handleError(bool, obj);
   }
-  handleTextChange(value, id) {
+  handleTextChange=(value, id)=> {
     let items = [...this.props.data];
     let item = { ...items[this.state.index] };
     let newItem = { ...item.setting };
@@ -250,7 +251,7 @@ class InputData extends Component {
       items: items,
     });
   }
-  selectSaveData(obj) {
+  selectSaveData=(obj)=> {
     let items = [...this.state.items];
     let item = { ...items[this.state.index] };
     let newItem = { ...item.setting };
@@ -263,7 +264,7 @@ class InputData extends Component {
       items: items,
     });
   }
-  handleParagraph(obj) {
+  handleParagraph=(obj)=> {
     let items = [...this.state.items];
     let item = { ...items[this.state.index] };
     item = obj;
@@ -274,7 +275,7 @@ class InputData extends Component {
       items: items,
     });
   }
-  saveDateTimeData(data) {
+  saveDateTimeData=(data)=> {
     let items = [...this.props.data];
     items = data;
     this.state.items = items;
@@ -283,11 +284,11 @@ class InputData extends Component {
       items: items,
     });
   }
-  handleSelectError(bool, label, id) {
+  handleSelectError=(bool, label, id)=> {
     this.handleErrorFunc(bool, label, id);
   }
 
-  checkTheType() {
+  checkTheType=()=> {
     if (this.state.type != "none") {
       if (this.state.type == "Datetime") {
         return (
@@ -342,13 +343,13 @@ class InputData extends Component {
       }
     }
   }
-  changeTab(e) {
+  changeTab=(e)=> {
     this.setState({
       selected: e,
     });
   }
 
-  showInputFeilds() {
+  showInputFeilds=()=> {
     if (this.state.items[this.state.index].name != "Paragraph") {
       return (
         <div className="sd-ado-maindatasets">
@@ -499,7 +500,7 @@ class InputData extends Component {
       );
     }
   }
-  placehoderFunc(name) {
+  placehoderFunc=(name)=> {
     if (name == "Text Area" || name == "Text" || name == "Number") {
       return (
         <TextField
@@ -513,7 +514,7 @@ class InputData extends Component {
       return <div></div>;
     }
   }
-  showConditionPerElement() {
+  showConditionPerElement=()=> {
     if (this.state.index == 0) {
       return <div></div>;
     } else {
@@ -534,28 +535,30 @@ class InputData extends Component {
       );
     }
   }
-  showTabs() {
+  showTabs=()=> {
     const tabs = [
       {
         id: "setting-0",
         content: (
-          <div className="set-icon">
-            <Icon source={SettingsMajor} color="base" />
-            Settings{" "}
-          </div>
+          // <div className="set-icon">
+          //   <Icon source={SettingsMajor} color="base" />
+            "Settings"
+          // </div>
         ),
       },
       {
         id: "appearence-0",
-        content: (
-          <div className="set-icon">
-            <Icon source={ColorsMajor} color="base" />
-            Appearance{" "}
-          </div>
+        content:
+          (
+          // <div className="set-icon">
+          //   <Icon source={ColorsMajor} color="base" />
+            "Appearance"
+          // </div>
         ),
       },
     ];
     if (this.state.items[this.state.index].name != "Paragraph") {
+      console.log("djfdjsfj")
       return (
         <Tabs
           tabs={tabs}
@@ -563,42 +566,66 @@ class InputData extends Component {
           onSelect={this.changeTab}
           fitted
         >
-          {this.fillBlanks(this.state.selected)}
+          <>{this.fillBlanks(this.state.selected)}</>
         </Tabs>
       );
     } else {
       return (
         <div>
-          {this.fillBlanks(this.state.selected)}
+         <>{this.fillBlanks(this.state.selected)}</> 
         </div>
       );
     }
   }
-  fillBlanks(val) {
+  fillBlanks=(val)=> {
     console.log(this.state.items[this.state.index].name);
     this.state.type = this.state.items[this.state.index].name;
     if (val == 0) {
-      return this.showInputFeilds();
+      return <>{this.showInputFeilds()}</>;
     } else if (val == 1) {
-      return this.appearenceType();
+      return <>{this.appearenceType()}</>;
     }
   }
-  setAppearence(obj) {
-    let items = [...this.props.data];
-    let item = { ...items[this.state.index] };
-    let newItem = { ...item.setting };
-    let appearenceItem = { ...newItem.css };
-    appearenceItem = obj;
-    newItem.css = appearenceItem;
-    item.setting = newItem;
-    items[this.state.index] = item;
-    this.state.items = items;
-    this.props.saveData(items);
-    this.setState({
-      items: items,
+  // setAppearence(obj) {
+  //   let items = [...this.props.data];
+  //   let item = { ...items[this.state.index] };
+  //   let newItem = { ...item.setting };
+  //   let appearenceItem = { ...newItem.css };
+  //   appearenceItem = obj;
+  //   newItem.css = appearenceItem;
+  //   item.setting = newItem;
+  //   items[this.state.index] = item;
+  //   this.state.items = items;
+    
+  //   this.setState({  
+  //     items: items,
+  //   });
+  //   // console.log(this.state.items)
+  //   this.props.saveData(items);
+  // }
+  setAppearence = (obj) => {
+     
+    console.log(obj, "ojbj")
+    this.setState((prevState) => {
+      const items = [...prevState.items];
+      const item = { ...items[prevState.index] };
+      const newItem = { ...item.setting };
+      const appearenceItem = { ...newItem.css, ...obj };
+      newItem.css = appearenceItem;
+      item.setting = newItem;
+      items[prevState.index] = item;
+  
+      // Uncomment the following line if you want to log the updated items
+      // console.log(items);
+  
+      // Uncomment the following line to save data using props
+      this.props.saveData(items);
+  
+      return { items: items };
     });
   }
-  appearenceType() {
+  
+  appearenceType=()=> {
     return (
       <Appearence
         index={this.state.index}
@@ -609,7 +636,7 @@ class InputData extends Component {
     );
   }
 
-  showCondtions() {
+  showCondtions=()=> {
     if (!this.props.data[this.props.index - 1].conditionalField) {
       return <div className="conditional_base"></div>;
     } else {

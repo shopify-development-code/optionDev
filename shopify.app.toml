@@ -1,28 +1,28 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-name = "Genie Options Development"
-client_id = "232a8ae5eeebd995e254d74787d9f1ba"
-application_url = "https://iceland-qui-silicon-comply.trycloudflare.com"
+name = "virenderOptionApp"
+client_id = "345036bb02d550c5462f30f5035a200d"
+application_url = "https://norway-burke-transition-signal.trycloudflare.com"
 embedded = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
 scopes = "read_products,write_products,read_orders,write_orders,read_themes"
-use_legacy_install_flow = true
 
 [auth]
 redirect_urls = [
-  "https://iceland-qui-silicon-comply.trycloudflare.com/auth/callback",
-  "https://iceland-qui-silicon-comply.trycloudflare.com/auth/shopify/callback",
-  "https://iceland-qui-silicon-comply.trycloudflare.com/api/auth/callback"
+  "https://norway-burke-transition-signal.trycloudflare.com/auth/callback",
+  "https://norway-burke-transition-signal.trycloudflare.com/auth/shopify/callback",
+  "https://norway-burke-transition-signal.trycloudflare.com/api/auth/callback",
+  "https://norway-burke-transition-signal.trycloudflare.com/.shopify/graphiql/auth/callback"
 ]
 
 [webhooks]
-api_version = "2023-07"
+api_version = "2023-10"
 
 [pos]
 embedded = false
 
 [build]
 automatically_update_urls_on_dev = true
-dev_store_url = "nahidp-store.myshopify.com"
+dev_store_url = "subscription-react-app.myshopify.com"

@@ -1,0 +1,86 @@
+
+<div class="genie-options-app-block">
+    <div class='genie-options-block-outer'>
+        {% if request.design_mode %}
+            
+            <div class="sd-elements-wrap">
+                <div class="sd-options-wrap">
+                    <div class="sd-option sd-text_area_1" style="margin-bottom:10px;align-items:left;width:100%;display:flex;flex-direction:column" id="main_text_area_1">
+                        <label class="sd-el-label" style="color:#000000;font-size:14px" id="label_text_area_1"> 
+                            Comments 
+                            <span id="label_add_text_area_1">
+                                <span></span>
+                            </span>
+                        </label>
+                        <input class="shine_input shineOptionArea" type="text" name="properties[Comments]" id="input_text_area_1" attr-sdinput="Text Area" placeholder="" style="border-radius:0px;background-color:#ffffff;font-size:14px;color:#000000;width:100%;">
+                        <small style="font-size:14px;color:#737373" id="help_text_area_1"></small>
+                    </div>
+                    <div class="sd-option sd-number_1" style="margin-bottom:10px;align-items:left;width:100%;display:flex;flex-direction:column" id="main_number_1">
+                        <label class="sd-el-label" style="color:#000000;font-size:14px" id="label_number_1"> 
+                            Print number 
+                            <span id="label_add_number_1">
+                                <span></span>
+                            </span>
+                        </label>
+                        <input class="shine_input shineOptionArea" type="number" name="properties[Print number]" id="input_number_1" attr-sdinput="Number" placeholder="" style="border-radius:0px;background-color:#ffffff;font-size:14px;color:#000000;width:100%;">
+                        <small style="font-size:14px;color:#737373" id="help_number_1"></small>
+                    </div>
+                    <div class="sd-option sd-color_swatches_1" id="main_color_swatches_1" style="margin-bottom:10px;align-items:left;width:100%;display:flex;flex-direction: column" ;="" id="main_color_swatches_1">
+                        <label class="sd-el-label" style="color:#000000;font-size:14px" id="label_color_swatches_1">
+                            Color Swatches 1 
+                            <span id="label_add_color_swatches_1">
+                                <span></span>
+                            </span>
+                        </label>
+                        <div id="out-color_swatches_1" class="outer_image_swatches" attr-sdinput="Color Swatches" style="border-radius:0px;display: flex;">
+                            <div class="sd-color_values" id="select-color_swatches_1_0">
+                                <div class="shine_swatches" onmouseover="this.style.boxShadow='1px 1px 8px 2px #ddd'" onmouseout="this.style.boxShadow='1px 1px 8px 2px #ffffff'" data-value="Color_1" id="in-color_swatches_1_0" data-hover="#ddd" data-active="#ddd" style="border-radius:0px;">
+                                    <div data-value="Color_1" data-hover="#ddd" data-active="#ddd" id="vin-color_swatches_1_0" style="background-color:#c01616;height:100%;width:100%;"></div>
+                                </div>
+                            </div>
+                            <div class="sd-color_values" id="select-color_swatches_1_1">
+                                <div class="shine_swatches" onmouseover="this.style.boxShadow='1px 1px 8px 2px #ddd'" onmouseout="this.style.boxShadow='1px 1px 8px 2px #ffffff'" data-value="Color_2" id="in-color_swatches_1_1" data-hover="#ddd" data-active="#ddd" style="border-radius:0px;">
+                                    <div data-value="Color_2" data-hover="#ddd" data-active="#ddd" id="vin-color_swatches_1_1" style="background-color:#2719e6;height:100%;width:100%;"></div>
+                                </div>
+                            </div>
+                            <div class="sd-color_values" id="select-color_swatches_1_2">
+                                <div class="shine_swatches" onmouseover="this.style.boxShadow='1px 1px 8px 2px #ddd'" onmouseout="this.style.boxShadow='1px 1px 8px 2px #ffffff'" data-value="Color_3" id="in-color_swatches_1_2" data-hover="#ddd" data-active="#ddd" style="border-radius:0px;">
+                                    <div data-value="Color_3" data-hover="#ddd" data-active="#ddd" id="vin-color_swatches_1_2" style="background-color:#60c21e;height:100%;width:100%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <small style="font-size:14px;color:#737373" id="help_color_swatches_1"></small>
+                    </div>
+                </div>
+                <div style="float:right;">
+                    <p style="font-size: 12px">
+                        Powered by 
+                        <a href="#" style=" text-decoration: none">
+                            <b>shinedezign product options</b>
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+        {% endif %}
+    </div>
+</div>
+  
+  
+{% schema %}
+    {
+        "name": "Genie Options app block",
+        "templates": ["product"],
+        "target": "section",
+        "settings": [
+            {
+              "type": "header",
+              "content": "Note"
+            },
+            {
+              "type": "paragraph",
+              "content": "This is the example for the position of the Option Set. You may now check the storefront product page for Option Set that you've added the app block here."
+            }
+        ]
+    }
+{% endschema %}

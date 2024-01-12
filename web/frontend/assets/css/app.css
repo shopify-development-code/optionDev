@@ -195,8 +195,11 @@ label.filebutton {
   overflow: hidden;
   position: relative;
   margin-right: 4px;
+  cursor: pointer;
 }
-
+.mainimagediv .fileslink {
+  cursor: pointer;
+}
 label span input {
   z-index: 999;
   line-height: 0;
@@ -1105,4 +1108,10 @@ main#AppFrameMain .Polaris-Layout__Section--secondary {
     margin-top: 20px;
     margin-left: 0px;
   }
+}
+
+.sd-ado-rightnav .Polaris-TopBar__Container {
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  justify-items: self-end;
 }

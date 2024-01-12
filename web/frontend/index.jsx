@@ -1,6 +1,6 @@
 import App from "./App";
 import "./assets/css/style.css";
-import "./assets/css/App.css";
+import "./assets/css/app.css";
 import { createRoot } from 'react-dom/client';
 // import { Suspense } from "react";
 const container = document.getElementById('app');

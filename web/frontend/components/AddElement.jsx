@@ -612,29 +612,30 @@ function AddElement(props) {
           <div>{getElementProducts()}</div>
         </div>
       );
-    } else if (val == 2) {
-      return (
-        <div className="globallayout-tabs">
-          <div>
-            <Checkbox
-              label="Enable Global Layout"
-              id="single_layout"
-              checked={props.singleLayout}
-              onChange={(value, id) => {
-                props.handle(value, id);
-              }}
-            />
-            <p style={{ fontSize: "12px" }}>
-              Note : If checked, below settings will work instead of particular
-              element appearence.
-            </p>
-          </div>
-          <div className="empty">
-            <Tabs defaultActiveKey="1" items={tabItems} />
-          </div>
-        </div>
-      );
     }
+    // else if (val == 2) {
+    //   return (
+    //     <div className="globallayout-tabs">
+    //       <div>
+    //         <Checkbox
+    //           label="Enable Global Layout"
+    //           id="single_layout"
+    //           checked={props.singleLayout}
+    //           onChange={(value, id) => {
+    //             props.handle(value, id);
+    //           }}
+    //         />
+    //         <p style={{ fontSize: "12px" }}>
+    //           Note : If checked, below settings will work instead of particular
+    //           element appearence.
+    //         </p>
+    //       </div>
+    //       <div className="empty">
+    //         <Tabs defaultActiveKey="1" items={tabItems} />
+    //       </div>
+    //     </div>
+    //   );
+    // }
   };
 
   const handleDragEnd = useCallback(({ source, destination }) => {
@@ -833,10 +834,10 @@ function AddElement(props) {
               <Icon source={ProductsMajor} color="base" />
               Products
             </div>
-            <div className="tab-item" onClick={() => handleTabChange(2)}>
+            {/* <div className="tab-item" onClick={() => handleTabChange(2)}>
               <Icon source={TemplateMajor} color="base" />
               Layout
-            </div>
+            </div> */}
           </div>
           <div className="tabdata">{handleTabs(selected)}</div>
         </div>

@@ -889,6 +889,7 @@ export default class AllElements extends Component {
           />
         );
       } else if (type == "Color Swatches" || type == "Image Swatches") {
+        console.log(data,"kkk")
         return (
           <CustomSwatch
             correctswatch={this.props.correctswatch}
@@ -931,6 +932,7 @@ export default class AllElements extends Component {
         </div>
         <div className="right_appearence">
           {this.props.data.map((elem, index) => {
+            console.log(elem,"mainn")
             return (
               <div key={index}>
                 {this.allData(

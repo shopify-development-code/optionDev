@@ -29,7 +29,7 @@ export default function TypoLayout(props) {
                     // onChange={handleChange}
                 /> */}
         <TextField
-          label="Helptext font"
+          label="Helptext font size"
           id="help_font_size"
           type="number"
           value={props.data.help_font_size}
@@ -43,7 +43,7 @@ export default function TypoLayout(props) {
                     // onChange={handleChange}
                 /> */}
         <TextField
-          label="Label font"
+          label="Label font size"
           id="label_font_size"
           type="number"
           value={props.data.label_font_size}

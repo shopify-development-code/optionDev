@@ -64,7 +64,7 @@ export default function Header(props) {
     if (!check) {
       props.toastErrorSucessState(
         true,
-        "Can't publish the option set. Similar products exits in other option set",
+        "Can't publish the option set. Similar products exists in other option set",
         true
       );
     } else {
@@ -212,7 +212,7 @@ export default function Header(props) {
                         if (checkLabel.length > 0) {
                           props.toastErrorSucessState(
                             true,
-                            "Same label name already exits",
+                            "Same label name already exists",
                             true
                           );
                         } else {

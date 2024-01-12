@@ -27,31 +27,54 @@ export default class Appearence extends Component {
       // { label: "66", value: 66 },
       { label: "100%", value: 100 },
     ];
-    this.handleChange = this.handleChange.bind(this);
-    this.checkType = this.checkType.bind(this);
-    this.extraSettings = this.extraSettings.bind(this);
-    this.setColor = this.setColor.bind(this);
-    this.handleSelectChange = this.handleSelectChange.bind(this);
-    this.handleFontSizes = this.handleFontSizes.bind(this);
-    this.checkCollumnType = this.checkCollumnType.bind(this);
-    this.checkBorderType = this.checkBorderType.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
+    // this.checkType = this.checkType.bind(this);
+    // this.extraSettings = this.extraSettings.bind(this);
+    // this.setColor = this.setColor.bind(this);
+    // this.handleSelectChange = this.handleSelectChange.bind(this);
+    // this.handleFontSizes = this.handleFontSizes.bind(this);
+    // this.checkCollumnType = this.checkCollumnType.bind(this);
+    // this.checkBorderType = this.checkBorderType.bind(this);
   }
-  handleChange(value, id) {
-    let item = { ...this.state.data };
-    if (id == "input_font_size") {
-      item.input_font_size = value;
-    } else if (id == "help_font_size") {
-      item.help_font_size = value;
-    } else if (id == "label_font_size") {
-      item.label_font_size = value;
-    }
-    this.state.data = item;
-    this.props.saveData(this.state.data);
-    this.setState({
-      data: item,
+  // handleChange(value, id) {
+  //   let item = { ...this.state.data };
+  //   if (id == "input_font_size") {
+  //     item.input_font_size = value;
+  //   } else if (id == "help_font_size") {
+  //     item.help_font_size = value;
+  //   } else if (id == "label_font_size") {
+  //     item.label_font_size = value;
+  //   }
+  //   this.state.data = item;
+  //   this.props.saveData(this.state.data);
+  //   this.setState({
+  //     data: item,
+  //   });
+  // }
+  handleChange = (value, id) => {
+    console.log(value, id, "hhhhhh");
+    this.setState((prevState) => {
+      const updatedData = { ...prevState.data };
+
+      if (id === "input_font_size") {
+        updatedData.input_font_size = value;
+      } else if (id === "help_font_size") {
+        updatedData.help_font_size = value;
+      } else if (id === "label_font_size") {
+        updatedData.label_font_size = value;
+      }
+
+      // Uncomment the following line if you want to log the updated state
+      // console.log(updatedData);
+
+      // Uncomment the following line to save data using props
+      this.props.saveData(updatedData);
+
+      return { data: updatedData };
     });
-  }
-  setColor(e) {
+  };
+
+  setColor = (e) => {
     let item = { ...this.state.data };
     const value = e.target.value;
     const id = e.target.id;
@@ -124,8 +147,8 @@ export default class Appearence extends Component {
     this.setState({
       data: item,
     });
-  }
-  extraSettings() {
+  };
+  extraSettings = () => {
     if (
       this.state.type == "Text Area" ||
       this.state.type == "Number" ||
@@ -193,9 +216,7 @@ export default class Appearence extends Component {
       return (
         <div>
           <div className="sd-ado-feild button_text_div">
-            <Text variation="subdued">
-              {this.state.type + " text"}
-            </Text>
+            <Text variation="subdued">{this.state.type + " text"}</Text>
             <Button id="checkbox_text">
               <input
                 id="checkbox_text"
@@ -206,9 +227,7 @@ export default class Appearence extends Component {
             </Button>
           </div>
           <div className="sd-ado-feild text_hover_div">
-            <Text variation="subdued">
-              {this.state.type + " text hover"}
-            </Text>
+            <Text variation="subdued">{this.state.type + " text hover"}</Text>
             <Button id="checkbox_text_hover">
               <input
                 id="checkbox_text_hover"
@@ -245,9 +264,7 @@ export default class Appearence extends Component {
             </Button>
           </div> */}
           <div className="sd-ado-feild button_active_div">
-            <Text variation="subdued">
-              {this.state.type + " on active"}
-            </Text>
+            <Text variation="subdued">{this.state.type + " on active"}</Text>
             <Button id="checkbox_button_active">
               <input
                 id="checkbox_button_active"
@@ -364,8 +381,8 @@ export default class Appearence extends Component {
     } else if (this.state.type === "Paragraph") {
       <div></div>;
     }
-  }
-  handleSelectChange(value, id) {
+  };
+  handleSelectChange = (value, id) => {
     let item = { ...this.state.data };
     if (id == "border_type") {
       item.type = value;
@@ -379,15 +396,17 @@ export default class Appearence extends Component {
     this.setState({
       data: item,
     });
-  }
-  checkBorderType() {
+  };
+  checkBorderType = () => {
     if (this.state.type == "Checkbox" || this.state.type == "Radio Buttons") {
       return <div></div>;
     } else {
       return (
         <div className="sd-ado-feild input_border">
+          <Text>Type</Text>
+
           <Select
-            label="Type"
+            // label="Type"
             id="border_type"
             options={this.optionType}
             onChange={this.handleSelectChange}
@@ -396,16 +415,18 @@ export default class Appearence extends Component {
         </div>
       );
     }
-  }
-  checkCollumnType() {
+  };
+  checkCollumnType = () => {
     if (this.state.type == "Checkbox" || this.state.type == "Radio Buttons") {
       return <div></div>;
     } else {
       return (
         <div className="sd-ado-feild column_width">
+          <Text>Column width</Text>
+
           <Select
             id="column_width"
-            label="Column width"
+            // label="Column width"
             options={this.width}
             onChange={this.handleSelectChange}
             value={this.state.data.columnWidth}
@@ -413,15 +434,17 @@ export default class Appearence extends Component {
         </div>
       );
     }
-  }
-  checkType() {
+  };
+  checkType = () => {
     return (
       <div>
         {this.checkBorderType()}
         <div className="sd-ado-feild alignment_type">
+          <Text>Alignment</Text>
+
           <Select
             id="alignment_type"
-            label="Alignment"
+            // label="Alignment"
             options={this.alignment}
             onChange={this.handleSelectChange}
             value={this.state.data.alignment}
@@ -466,8 +489,8 @@ export default class Appearence extends Component {
         {this.extraSettings()}
       </div>
     );
-  }
-  handleFontSizes() {
+  };
+  handleFontSizes = () => {
     if (
       this.state.type == "Text Area" ||
       this.state.type == "Number" ||
@@ -477,8 +500,9 @@ export default class Appearence extends Component {
       return (
         <div>
           <div className="sd-ado-feild input_font">
+            <Text>Input font size</Text>
             <TextField
-              label="Input font size"
+              // label="Input font size"
               id="input_font_size"
               type="number"
               value={this.state.data.input_font_size}
@@ -486,8 +510,10 @@ export default class Appearence extends Component {
             />
           </div>
           <div className="sd-ado-feild helptext_font">
+            <Text>Helptext font size</Text>
+
             <TextField
-              label="Helptext font"
+              // label="Helptext font size"
               id="help_font_size"
               type="number"
               value={this.state.data.help_font_size}
@@ -495,8 +521,10 @@ export default class Appearence extends Component {
             />
           </div>
           <div className="sd-ado-feild label_font">
+            <Text>Label font size</Text>
+
             <TextField
-              label="Label font"
+              // label="Label font size"
               id="label_font_size"
               type="number"
               value={this.state.data.label_font_size}
@@ -509,8 +537,10 @@ export default class Appearence extends Component {
       return (
         <div>
           <div className="sd-ado-feild helptext_font">
+            <Text>Helptext font size</Text>
+
             <TextField
-              label="Helptext font"
+              // label="Helptext font size"
               id="help_font_size"
               type="number"
               value={this.state.data.help_font_size}
@@ -518,8 +548,10 @@ export default class Appearence extends Component {
             />
           </div>
           <div className="sd-ado-feild label_font">
+            <Text>Label font size</Text>
+
             <TextField
-              label="Label font"
+              // label="Label font size"
               id="label_font_size"
               type="number"
               value={this.state.data.label_font_size}
@@ -529,7 +561,7 @@ export default class Appearence extends Component {
         </div>
       );
     }
-  }
+  };
   render() {
     return <div className="all_apperence">{this.checkType()}</div>;
   }

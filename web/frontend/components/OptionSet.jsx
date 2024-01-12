@@ -116,7 +116,7 @@ function optionSet(props) {
       ],
     },
     {
-      title: "Meta feilds",
+      title: "Meta fields",
       items: [
         {
           label: "Paragraph",

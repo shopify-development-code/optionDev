@@ -362,15 +362,14 @@ export default class AllSelect extends Component {
       <>
         <div className="more_options">
             <DataTable
-              columnContentTypes={["text", "", "", "", ""]}
-              headings={[
+              columnContentTypes={["","text",""]}
+            headings={[
+                "",
                 <Text fontWeight="medium">Option name</Text>,
                 <Text fontWeight="medium">Add on price</Text>,
-                " ",
-                " ",
-                " ",
+
               ]}
-              rows={this.state.rows}
+              rows={[]}
               totals={""}
             />
           {this.state.optionValues.map((elem, index) => {

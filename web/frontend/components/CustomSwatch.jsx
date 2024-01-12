@@ -58,6 +58,7 @@ export default function CustomSwatch(props) {
       border: "1px solid #ddd",
       width: "32px",
       height: "32px",
+      cursor:"pointer"
     };
     let maindiv = {
       marginLeft: "0px",
@@ -147,6 +148,7 @@ export default function CustomSwatch(props) {
           </div>
           <div className="main_image_swatch">
             {props.data.option_values.map((elem, index) => {
+              console.log(elem,"uiuui")
               if (elem.color_type == "one-color") {
                 var innerdiv = {
                   backgroundColor: elem.color1,
@@ -158,7 +160,7 @@ export default function CustomSwatch(props) {
                 var innerdiv = {
                   width: "100%",
                   height: "100%",
-                  backgroundColor: "#013A6B",
+                  backgroundColor: "#6b0101",
                   backgroundImage:
                     "-webkit-linear-gradient(315deg, " +
                     elem.color1 +
@@ -193,7 +195,7 @@ export default function CustomSwatch(props) {
                   data-active="color"
                   onMouseOver={mouseInEvent}
                   onClick={(e) => {
-                    // console.log("dbaya");
+                    console.log("dbaya",e.target.dataset.click);
                     let id = e.target.id;
                     let active = e.target.dataset.click;
                     let hover = e.target.dataset.col;
@@ -207,7 +209,7 @@ export default function CustomSwatch(props) {
                     for (var i = 0; i < children.length; i++) {
                       children[i].firstChild.style.border = "";
                     }
-                    e.target.style.border = "1px solid blue";
+                    e.target.style.border = `3px solid ${active}`;
                   }}
                   onMouseLeave={mouseOutEvent}
                   className={`outer_div_${elem.count} wowoption-colorswatch_outer`}
@@ -324,7 +326,7 @@ export default function CustomSwatch(props) {
                       for (var i = 0; i < children.length; i++) {
                         children[i].firstChild.style.border = "";
                       }
-                      e.target.style.border = "1px solid" + active;
+                      e.target.style.border = "1.5px solid" + active;
                       let value = e.target.dataset.val;
                       props.handleAllChanges(id, value);
                     }}

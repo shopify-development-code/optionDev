@@ -48,13 +48,9 @@ export const Schema = mongoose.model("optionset", optionsetSchema);
 
 const customproducts = new mongoose.Schema(
   {
-    pid: Number,
+    pid: String,
     shop: String,
-    product_status: {
-      type: String,
-      enum: ["active", "draft"],
-      default: "draft",
-    },
+    product_status:Boolean,
   },
   {
     timestamps: true,

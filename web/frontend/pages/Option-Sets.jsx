@@ -306,16 +306,16 @@ export default function FrameExample(props) {
     setIsLoading(true);
     setSearchForm("");
     setproductids([]);
-    let ab = data.option_set.products.product_added;
-    let bc = [];
-    ab.map((data) => {
-      bc.push(data.product_id);
-      setproductids(bc);
+    let addedProducts = data.option_set.products.product_added;
+    let pids = [];
+    addedProducts.map((data) => {
+      pids.push(data.product_id);
+      setproductids(pids);
     });
     const response = await DynamicApi(
       "/api/setformstatus",
       {
-        productids: bc,
+        productids: pids,
         shop: getShop,
         currentstatus: e.target.value,
         key: data._id,

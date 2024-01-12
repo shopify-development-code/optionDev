@@ -1,0 +1,317 @@
+.sd-genie-spinner{
+   width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  border-top: 5px solid #292929;
+  border-right: 5px solid #efefef;
+  border-bottom: 5px solid #efefef;
+  border-left: 5px solid #efefef;
+  border-radius: 100px;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.sd-genie-text-Area-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sd-genie-input{
+    padding: 10px 10px;
+    border: 1px solid #d1d1d1;
+    outline: none;
+    box-shadow: none;
+    min-height: 42px;
+}
+.sd-genie-text-container {
+    display: flex;
+    justify-content: space-between;
+}
+.sd-genie-img-box img {
+    height: 30px;
+    width: 30px;
+}
+.sd-genie-option-img-swatch-box{
+  display:flex;
+
+}
+.sd-genie-img-box {
+    padding: 5px;
+  
+}
+
+.sd-genie-img-inner-box label {
+    display: flex;
+    padding-bottom: 0;
+    cursor:pointer;  
+}
+.sd-genie-img-inner-box {
+    border: 1px solid;
+    padding: 3px;
+    cursor:pointer;
+}
+.sd-genie-color{
+  display:block;
+      height: 30px;
+    width: 30px;
+
+}
+.sd-genie-option-color-swatch-box{
+  display:flex;
+  
+}
+.sd-genie-color-inner-box {
+    border: 1px solid;
+    padding: 3px;
+    cursor:pointer;
+}
+.sd-genie-color-inner-box label {
+    display: flex;
+    padding-bottom: 0;
+    cursor:pointer;
+  
+}
+.sd-genie-color-box {
+    padding: 5px;
+  
+}
+.sd-genie-color {
+    display:block !important;
+  
+}
+.sd-genie-options {
+    padding: 10px 0;
+}
+input.sd-upload {
+    border: 1px solid rgb(220, 220, 220);
+    padding: 10px 15px;
+}
+.sd-genie-option-img-swatch-preview {
+    transition: 1s ease;
+}
+.sd-genie-img-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: flex;
+}
+.sd-genie-preview-container {
+    width: 20%;
+    height: auto;
+    border: 1px solid;
+}
+form.sd-genie-upload-form {
+    position: relative;
+}
+
+span.sd-genie-delete-file-icon {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+}
+.sd-genie-delete-file-icon svg#cross {
+    width: 25px;
+    height: 25px;
+  cursor:pointer;
+}
+.sd-genie-modal-background {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: #000000b8;
+    overflow: auto;
+    z-index: 9999;
+    
+}
+.sd-genie-preview-modal-container img {
+    display: block;
+    margin: auto;
+}
+.sd-genie-preview-modal-container {
+    background: #f2f2f2;
+    height: auto;
+    width: 50%;
+    margin: 5% auto;
+    text-align: center;
+    position: relative;
+}
+.sd-genie-preview-modal-container span {
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    top: 0;
+}
+.sd-genie-preview-modal-container span svg#cross {
+    width: 30px;
+    height: 30px;
+    background: #d1d1d1;
+    padding: 4px;
+}
+
+
+
+.sd-upload-loader {
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    overflow: hidden;
+    background-color: #ddd;
+    margin: 100px auto;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    top: -60px;
+}
+
+        .sd-upload-loader:before {
+            content: "";
+            position: absolute;
+            left: -50%;
+            height: 3px;
+            width: 40%;
+            background-color: #00de87;
+            -webkit-animation: lineAnim 1s linear infinite;
+            -moz-animation: lineAnim 1s linear infinite;
+            animation: lineAnim 1s linear infinite;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+        }
+
+        @keyframes lineAnim {
+            0% {
+                left: -40%;
+            }
+            50% {
+                left: 20%;
+                width: 80%;
+            }
+            100% {
+                left: 100%;
+                width: 100%;
+            }
+        }
+
+
+
+.genie-cart-btn-loader{
+    width: 20px;
+    height: 20px;
+    margin: 0 auto;
+    border-top: 3px solid #292929;
+    border-right: 3px solid #00c3ff;
+    border-bottom: 3px solid #00c3ff;
+    border-left: 3px solid #00c3ff;
+    border-radius: 100px;
+    animation: spin 1s infinite linear;
+
+}
+
+.genie-hide{
+  display:none !important
+}
+.sd-genie-number-container {
+    display: flex;
+    justify-content: space-between;
+}
+.sd-genie-dropdown-container {
+    display: flex;
+    justify-content: space-between;
+}
+label.sd-genie-checkbox-label {
+    cursor: pointer;
+}
+.sd-genie-image-swatches-container {
+    display: flex;
+    justify-content: space-between;
+}
+.sd-genie-color-swatches-container {
+    display: flex;
+    justify-content: space-between;
+} 
+
+.sd-genie-option-main-div label {
+    font-weight: 600;
+}
+.sd-genie-checkbox-label, .sd-genie-radio-box label {
+    font-weight: 200;
+}
+.sd-genie-checkbox-box label, .sd-genie-radio-box label {
+    padding-bottom: 0;
+    font-weight: 200;
+}
+.sd-genie-radio-box, .sd-genie-checkbox-box {
+    display: flex;
+    column-gap: 5px;
+    align-items: center;
+}
+.sd-genie-option-img-swatch-preview {
+    position: relative;
+}
+.sd-genie-option-img-swatch-preview img {
+    height: 160px;
+    min-width: 160px;
+    position: absolute;
+    top: -42px;
+    transform: translateY(-100%);
+    object-fit: cover;
+}
+.sd-genie-radio-box label {
+  cursor: pointer;
+}
+
+
+
+/* paragraph css */
+.ql-align-right {
+   text-align: right;
+ }
+ 
+ .ql-align-left {
+   text-align: left;
+ }
+ 
+ .ql-align-center {
+   text-align: center;
+ }
+ 
+ .ql-align-justify {
+   text-align: justify;
+ }
+ /* }/// */
+
+
+
+/* //////////////////////////cart page loader */
+.loader-container {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(255, 255, 255, 0.8);
+   justify-content: center;
+   align-items: center;
+   z-index: 1000;
+ }
+
+ .loader {
+   border: 8px solid #f3f3f3;
+   border-top: 8px solid #3498db;
+   border-radius: 50%;
+   width: 50px;
+   height: 50px;
+   animation: spin 1s linear infinite;
+ }
+
+ @keyframes spin {
+   0% { transform: rotate(0deg); }
+   100% { transform: rotate(360deg); }
+ }

@@ -17,8 +17,10 @@ export default function GeneralLayout(props) {
   return (
     <div className="general-layout">
       <div className="sd-ado-layout-item input_border">
+      <Text>Type</Text>
+
         <Select
-          label="Type"
+          // label="Type"
           id="border_type"
           options={optionType}
           onChange={handleSelectChange}
@@ -26,9 +28,11 @@ export default function GeneralLayout(props) {
         />
       </div>
       <div className="sd-ado-layout-item alignment_type">
+      <Text>Alignment</Text>
+
         <Select
           id="alignment_type"
-          label="Alignment"
+          // label="Alignment"
           options={alignment}
           onChange={handleSelectChange}
           value={props.data.alignment}

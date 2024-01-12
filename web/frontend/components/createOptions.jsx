@@ -19,6 +19,7 @@ import { DynamicApi } from "./common/DynamicAxios";
 
 class Createoptions extends Component {
   constructor(props) {
+    console.log(props)
     super(props);
     this.theme = {};
     this.state = {
@@ -80,7 +81,7 @@ class Createoptions extends Component {
           check_button_hover: "#000000",
           check_button_active: "#ddd",
           swatch_hover: "#ddd",
-          swatch_active: "#ddd",
+          swatch_active: "#000000",
           button_back: "#ddd",
           button_back_active: "#379198",
           button_back_hover: "#94d275",
@@ -651,6 +652,7 @@ class Createoptions extends Component {
           (elem) => elem._id == this.state.editId
         );
         let obj = result[0];
+        console.log(result,"onnn");
         obj.all_names = this.state.allNames;
         this.setState({
           fileName: obj.fileName,
@@ -2180,10 +2182,10 @@ class Createoptions extends Component {
           <Icon source={ProductsMajor} color="base" />
           Products
         </div>
-        <div className="tab-item" onClick={() => this.handleTabChange(2, val)}>
+        {/* <div className="tab-item" onClick={() => this.handleTabChange(2, val)}>
           <Icon source={TemplateMajor} color="base" />
           Layout
-        </div>
+        </div> */}
       </div>
     );
   };
@@ -2225,6 +2227,7 @@ class Createoptions extends Component {
         </div>
       );
     } else if (this.state.step === 3) {
+      console.log("ooooo")
       return (
         <div className="sd-ado-miantab-panel">
           {this.stickybar("inputdata")}
@@ -2276,6 +2279,11 @@ class Createoptions extends Component {
   };
 
   keepSavingData = (obj) => {
+    // this.setState((prevState) => { 
+    //   let items = [...prevState.optionSetData]; 
+    //   items=obj
+    //   return { optionSetData: items };
+    // })
     this.setState({
       action_perform: true,
       optionSetData: obj,
@@ -2378,8 +2386,12 @@ class Createoptions extends Component {
     this.setState({ isLoading: v });
   };
 
-  render() {
 
+
+  
+  render() {
+    
+    console.log("steps", this.state.step)
     return (
       <Spin tip="Please Wait..." spinning={this.state.isLoading}>
         <div>

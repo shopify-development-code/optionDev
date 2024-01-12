@@ -62,6 +62,7 @@ export default class Paragraph extends Component {
   };
 
   handleChange(value) {
+    this.state.text=value
     this.setState({ text: value });
 
     let item = { ...this.state.data };

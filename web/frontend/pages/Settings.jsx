@@ -17,6 +17,7 @@ import { useAPI } from "../store/Getshop";
 import { DynamicApi } from "../components/common/DynamicAxios";
 import { getBridge } from "../store/GetAppBridge";
 
+
 export default function Setting() {
   const { getShop } = useAPI();
   const { app } = getBridge();
@@ -52,6 +53,7 @@ export default function Setting() {
         app
       );
       if (response != "" && response != undefined) {
+        console.log(response,"ooo")
         setMainSettings(response.data.settings.settings);
         setWidgetPosition(
           response.data.settings.settings.general.widget_position
@@ -225,24 +227,26 @@ export default function Setting() {
           <Layout.AnnotatedSection
             id="setting_general"
             title="Product page translation"
-            description=""
           >
             <Card sectioned>
               <FormLayout>
-                <div style={{ display: "none" }}>
+                <div style={{ display: "none" }}> 
                   <TextField
                     label="Label and price separator"
                     value={mainSettings?.general?.label_price_seperator}
                     onChange={handleChange}
                     id="label_separator"
-                    style={{ display: "none" }}
-                  />
+                    
+                    
+                    />
                 </div>
                 <TextField
                   onChange={handleChange}
                   id="label_addon_price"
                   value={mainSettings?.general?.label_addonprice_format}
                   label="Label Add-on price format"
+                  helpText="use {{addon}} to show the addon price"
+
                 />
                 <div style={{ display: "none" }}>
                   <TextField
@@ -269,11 +273,14 @@ export default function Setting() {
           >
             <Card sectioned>
               <FormLayout>
+             
                 <TextField
                   label="Option set product name on cart page"
                   value={mainSettings?.translations?.custom_product_name}
                   onChange={handleChange}
                   id="custom_product_name"
+                  helpText="use {{product_title}} to use the same product name of option product as well"
+                  requiredIndicator
                 />
               </FormLayout>
             </Card>

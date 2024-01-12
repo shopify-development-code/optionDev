@@ -13,16 +13,20 @@ import cors from 'cors';
 import { verifyWebhooks } from "./backend/controllers/webhooks/verifyWebhooks.js";
 import { privayPolicy } from "./backend/controllers/admin/privacyPolicy.js";
 import storeRoutes from "./backend/Routes/storefront/storeRoutes.js";
+import dotenv from 'dotenv'
+const __dirname = path.resolve();
+import path from 'path';
 
 dbMongo();
-
+dotenv.config()
 const PORT = parseInt(
-  process.env.BACKEND_PORT || process.env.PORT || "3000",
+  process.env.BACKEND_PORT || process.env.PORT || "8090",
   10
 );
 
 
-console.log(process.env.HOST)
+// console.log("PORT ==>",process.env.PORT)
+// console.log("NAME ==>",process.env.name)
 
 const STATIC_PATH =
   process.env.NODE_ENV === "production"
@@ -38,7 +42,20 @@ app.use(express.json());
 app.use(cors({ origin: "*" }));
 app.get("/api/privacy-policy", privayPolicy);
 app.use("/api/", storeRoutes);
+app.get("/api/js", (req, res) => {
+  console.log("enterrrrrrrrrrrrrrrrrrr");
+  console.log(__dirname)
+  const customerPortalScriptPath = path.join(__dirname, 'virender.js');
+  res.sendFile(customerPortalScriptPath)
+})
+app.get("/api/css", (req, res) => {
+  console.log("enterrrrrrrrrrrrrrrrrrrincsss");
+  console.log(__dirname)
+  const customerPortalScriptPath = path.join(__dirname, 'virender.css');
+  console.log("__dirname",customerPortalScriptPath)
 
+  res.sendFile(customerPortalScriptPath)
+})
 
 // Set up Shopify authentication and webhook handling
 app.get(shopify.config.auth.path, shopify.auth.begin());
@@ -60,7 +77,7 @@ app.get(
         },
         translations: {
           selection_addon: "Selection will add {{addon}} to the price",
-          custom_product_name: "{{product_title}} - Selections",
+          custom_product_name: "Selections",
         },
         error_mssg: {
           required: "This field is required",
