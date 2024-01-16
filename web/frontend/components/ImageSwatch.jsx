@@ -47,6 +47,9 @@ export default function ImageSwatch(props) {
             {/* <div>
             <video width="300" height="200" controls  src="https://youtu.be/j_18UV939DM"></video>
             </div> */}
+
+<a href="shopify://admin/products" >Products page</a>
+
             <a className="fileslink" onClick={redirect}>
               Click here to go to shopify files section
             </a>

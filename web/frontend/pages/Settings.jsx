@@ -248,19 +248,21 @@ export default function Setting() {
                   helpText="use {{addon}} to show the addon price"
 
                 />
-                <div style={{ display: "none" }}>
+                <div>
                   <TextField
-                    label="Selection will add {{addon}} to the price"
+                    label="Total selections price format"
                     value={mainSettings?.translations?.selection_addon}
                     onChange={handleChange}
                     id="selection_addon"
+                    helpText="use {{totalprice}} to show the total selections price"
+
                   />
-                  <Checkbox
+                  {/* <Checkbox
                     label="Hide additional payment button"
                     checked={mainSettings?.general?.hide_pay_button}
                     onChange={handleChange}
                     id="hide_pay_button"
-                  />
+                  /> */}
                 </div>
               </FormLayout>
             </Card>

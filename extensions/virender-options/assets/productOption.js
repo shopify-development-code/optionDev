@@ -1,8 +1,9 @@
-const server = "https://norway-burke-transition-signal.trycloudflare.com";
-console.log("virender##");
+const server = "https://recruitment-library-listed-unto.trycloudflare.com";
+console.log("eeeee");
 let requiredText = "Please fill the required field."
 let optionProductName = "{{product_title}}-Selections"
 let addOnPriceformat = "(+ {{addon}})"
+let totalSelectionText = "Selection will add {{totalprice}} to the price"
 let allowedExtensions=[]
 let genieBlock = document.getElementsByClassName("genie-options-block-outer");
 if (_sd_pageType == "cart") {
@@ -66,10 +67,26 @@ async function getAllData() {
         } else {
           addOnPriceformat="(+ {{addon}})"
         }
+        if (data[0].settings.translations.selection_addon.trim().length > 0)
+        {
+          totalSelectionText=data[0].settings.translations.selection_addon
+        } else {
+          totalSelectionText="Selection will add {{totalprice}} to the price"
+        }
 
         allowedExtensions=data[0].settings.allowed_extensions
         console.log(data[0].settings.allowed_extensions,"koko")
         genieOption(data);
+        let waterMarkWrapper = document.createElement("div")
+        waterMarkWrapper.classList.add("genie-options-watermark")
+
+        let waterMark = document.createElement("span")
+        waterMark.innerHTML = `Powered by <a class="sd-watermark-link" href="https://shinedezigninfonet.com/">Shine Dezign Infonet</a>.`
+        waterMarkWrapper.append(waterMark)
+        genieBlock[0].append(waterMarkWrapper)
+
+        
+
       } else {
         console.log("no data found");
       }
@@ -100,7 +117,8 @@ totalArr.forEach( num => {
   sum += num;
 })
   let totalselection = document.getElementById("sd-genie-total")
-  totalselection.innerText = `Total ${sum} `
+  const replacedString = totalSelectionText.replace("{{totalprice}}",`<span class="sd-total-price">${showAmountWithCurrency(parseFloat(sum).toFixed(2))}</span>`);
+  totalselection.innerHTML = replacedString
   if (sum == 0) {
     totalselection.style.display="none"
   } else {
@@ -165,6 +183,7 @@ function createOption(data, mainDiv) {
 
   let test = document.createElement("div")
   test.id = "sd-genie-total"
+  test.classList.add("sd-genie-options")
   mainDiv.append(test);
 }
 
@@ -219,7 +238,7 @@ function TextArea(el, optionsDiv, optionIndex) {
     // console.log("insert")
     textAreaLabelDiv.append(addOnPrice);
     value = el.setting.addon;
-    let newPrice = showAmountWithCurrency(value);
+    let newPrice = showAmountWithCurrency(parseFloat(value).toFixed(2));
     console.log(newPrice, "op");
     const replacedString = addOnPriceformat.replace("{{addon}}", newPrice);
 ;
@@ -353,7 +372,7 @@ function Text(el, optionsDiv, optionIndex) {
   if (el.setting.addon !== 0 && el.setting.addon !== "") {
     textLabelDiv.append(addOnPrice);
     value = el.setting.addon;
-    let newPrice = showAmountWithCurrency(value);
+    let newPrice = showAmountWithCurrency(parseFloat(value).toFixed(2));
     const replacedString = addOnPriceformat.replace("{{addon}}", newPrice);
 ;
 ;
@@ -420,6 +439,7 @@ function Text(el, optionsDiv, optionIndex) {
     let helpTextOuterDiv = document.createElement("div");
     helpTextOuterDiv.style.textAlign = el.setting.css.alignment;
     let helpText = document.createElement("span");
+    helpTextOuterDiv.append(helpText);
     helpText.className = "sd-genie-option-helpText";
     optionsDiv.append(helpTextOuterDiv);
     helpText.innerText = el.setting.helptext;
@@ -474,7 +494,7 @@ function numberInput(el, optionsDiv, optionIndex) {
   if (el.setting.addon !== 0 && el.setting.addon !== "") {
     numberLabelDiv.append(addOnPrice);
     let value = el.setting.addon;
-    let newPrice = showAmountWithCurrency(value);
+    let newPrice = showAmountWithCurrency(parseFloat(value).toFixed(2));
     // totalPrice = totalPrice + Number(value);
     const replacedString = addOnPriceformat.replace("{{addon}}", newPrice);
 ;
@@ -538,6 +558,7 @@ let check= false
     let helpTextOuterDiv = document.createElement("div");
     helpTextOuterDiv.style.textAlign = el.setting.css.alignment;
     let helpText = document.createElement("span");
+    helpTextOuterDiv.append(helpText);
     helpText.className = "sd-genie-option-helpText";
     optionsDiv.append(helpTextOuterDiv);
     helpText.innerText = el.setting.helptext;
@@ -653,7 +674,7 @@ let check=false
       totalArr[optionIndex] = Number(value);
       TotalSelectionPrice()
       console.log("totalArr",totalArr)
-      let newPrice = showAmountWithCurrency(value);
+      let newPrice = showAmountWithCurrency(parseFloat(value).toFixed(2));
       // if (!check) {
       //   totalPrice = totalPrice + Number(value);
       //   console.log(totalPrice,"loo")
@@ -673,6 +694,7 @@ let check=false
     let helpTextOuterDiv = document.createElement("div");
     helpTextOuterDiv.style.textAlign = el.setting.css.alignment;
     let helpText = document.createElement("span");
+    helpTextOuterDiv.append(helpText);
     helpText.className = "sd-genie-option-helpText";
     optionsDiv.append(helpTextOuterDiv);
     helpText.innerText = el.setting.helptext;
@@ -791,7 +813,7 @@ function Checkbox(el, optionsDiv, optionIndex) {
 
 
 
-          let newPrice = showAmountWithCurrency(value);
+          let newPrice = showAmountWithCurrency(parseFloat(value).toFixed(2));
           dropValuePrice=value
           // if (!check) {
           //   totalPrice = totalPrice + Number(dropValuePrice);
@@ -862,6 +884,17 @@ function Checkbox(el, optionsDiv, optionIndex) {
       }
     });
   });
+  if (el.setting.helptext.length > 0) {
+    let helpTextOuterDiv = document.createElement("div");
+    helpTextOuterDiv.style.textAlign = el.setting.css.alignment;
+    let helpText = document.createElement("div");
+    helpTextOuterDiv.append(helpText);
+    helpText.className = "sd-genie-option-helpText";
+    optionsDiv.append(helpTextOuterDiv);
+    helpText.innerText = el.setting.helptext;
+    helpText.style.color = el.setting.css.help_text_color;
+    helpText.style.fontSize = el.setting.css.help_font_size + "px";
+  }
 }
 function RadioButton(el, optionsDiv, optionIndex) {
   // console.log("radiobtn")
@@ -970,7 +1003,7 @@ function RadioButton(el, optionsDiv, optionIndex) {
           totalArr[optionIndex] = Number(value);
           TotalSelectionPrice()
           // console.log("totalArr",totalArr)
-          let newPrice = showAmountWithCurrency(value);
+          let newPrice = showAmountWithCurrency(parseFloat(value).toFixed(2));
           //  dropValuePrice = value
           // if (!check) {
           //   totalPrice = totalPrice + Number(dropValuePrice);
@@ -1002,6 +1035,7 @@ function RadioButton(el, optionsDiv, optionIndex) {
     let helpTextOuterDiv = document.createElement("div");
     helpTextOuterDiv.style.textAlign = el.setting.css.alignment;
     let helpText = document.createElement("div");
+    helpTextOuterDiv.append(helpText);
     helpText.className = "sd-genie-option-helpText";
     optionsDiv.append(helpTextOuterDiv);
     helpText.innerText = el.setting.helptext;
@@ -1052,29 +1086,43 @@ function ImageSwatches(el, optionsDiv, optionIndex) {
       imageSwatchesLabel.append(requiredField);
     }
   }
-  let addOnPrice = document.createElement("span");
-  imageSwatchesLabelDiv.append(addOnPrice);
   let imageSwatchValueDiv = document.createElement("span");
   imageSwatchesLabelDiv.append(imageSwatchValueDiv);
+  let addOnPrice = document.createElement("span");
+  imageSwatchesLabelDiv.append(addOnPrice);
 
   let imgSwatchDiv = document.createElement("div");
   imgSwatchDiv.className = "sd-genie-option-img-swatch-box";
   optionsDiv.append(imgSwatchDiv);
   el.setting.option_values.forEach((ele, index) => {
+
     let imgBox = document.createElement("div");
-    let tooltip1 = document.createElement("div");
-    tooltip1.textContent = ele.value;
-    tooltip1.style.display = "none"; // Initially hide the tooltip1
-    tooltip1.style.position = "fixed"; // Use fixed positioning
-    tooltip1.style.backgroundColor = "#000000bf";
-    tooltip1.style.color = "white";
-    tooltip1.style.padding = "2px";
-    tooltip1.style.border = "1px solid #ccc";
-    tooltip1.style.borderRadius = "10px";
-    document.body.appendChild(tooltip1);
+    // let tooltip1 = document.createElement("div");
+    // tooltip1.textContent = ele.value;
+    // tooltip1.style.display = "none"; // Initially hide the tooltip1
+    // tooltip1.style.position = "fixed"; // Use fixed positioning
+    // tooltip1.style.backgroundColor = "#000000bf";
+    // tooltip1.style.color = "white";
+    // tooltip1.style.padding = "5px 10px";
+    // // tooltip1.style.border = "1px solid #ccc";
+    // tooltip1.style.borderRadius = "6px";
+    // tooltip1.style.fontSize = "13px";
+    // tooltip1.style.lineHeight = "normal";
+    // tooltip1.style.textTransform = "capitalize";
+    // document.body.appendChild(tooltip1);
+    // tooltip1.classList.add("sd-options-tooltip")
     let ImageSwatchOptionName = document.createElement("p");
     ImageSwatchOptionName.innerHTML = ele.value;
     imgBox.className = "sd-genie-img-box";
+
+    ////////////////////
+
+
+
+    //////////////////
+
+
+
     imgSwatchDiv.append(imgBox);
     let innerImageBox = document.createElement("div");
     innerImageBox.className = "sd-genie-img-inner-box";
@@ -1109,11 +1157,11 @@ function ImageSwatches(el, optionsDiv, optionIndex) {
       let rect = imgBox.getBoundingClientRect();
 
       // Position the tooltip below innerColorBox
-      tooltip1.style.top = rect.bottom + "10px";
-      tooltip1.style.left = rect.left + "px";
+      // tooltip1.style.top = rect.bottom + "10px";
+      // tooltip1.style.left = rect.left + "px";
 
       // Show the tooltip
-      tooltip1.style.display = "block";
+      // tooltip1.style.display = "block";
       // innerImageBox.style.background = el.setting.css.swatch_hover;
       innerImageBox.style.boxShadow =
         "0px 0px 19px 1px" + el.setting.css.swatch_hover;
@@ -1123,11 +1171,15 @@ function ImageSwatches(el, optionsDiv, optionIndex) {
       imgBox.append(previewDiv);
       previewDiv.className = "sd-genie-option-img-swatch-preview";
       let imgPreview = document.createElement("img");
+      let tooltipSpan = document.createElement("span");
+      tooltipSpan.classList.add("sd-image-swatch-tooltip")
+      tooltipSpan.innerText = ele.value
+      previewDiv.append(tooltipSpan)
       previewDiv.append(imgPreview);
       imgPreview.setAttribute("src", ele.url);
     });
     imgLabel.addEventListener("mouseout", () => {
-      tooltip1.style.display = "none";
+      // tooltip1.style.display = "none";
 
       innerImageBox.style.boxShadow = "";
       //    imgSw.style.width = ""
@@ -1173,7 +1225,7 @@ let check = false
             TotalSelectionPrice()
             console.log("totalArr",totalArr)
 
-            let newPrice = showAmountWithCurrency(value);
+            let newPrice = showAmountWithCurrency(parseFloat(value).toFixed(2));
             // if (!check) {
             //   totalPrice = totalPrice + Number(value);
             //   console.log(totalPrice,"loo")
@@ -1201,6 +1253,7 @@ let check = false
     let helpTextOuterDiv = document.createElement("div");
     helpTextOuterDiv.style.textAlign = el.setting.css.alignment;
     let helpText = document.createElement("span");
+    helpTextOuterDiv.append(helpText);
     helpText.className = "sd-genie-option-helpText";
     optionsDiv.append(helpTextOuterDiv);
     helpText.innerText = el.setting.helptext;
@@ -1251,10 +1304,10 @@ function ColorSwatches(el, optionsDiv, optionIndex) {
       colorSwatchesLabel.append(requiredField);
     }
   }
-  let addOnPrice = document.createElement("span");
-  colorSwatchesLabelDiv.append(addOnPrice);
   let colorSwatcheValueDiv = document.createElement("span");
   colorSwatchesLabelDiv.append(colorSwatcheValueDiv);
+  let addOnPrice = document.createElement("span");
+  colorSwatchesLabelDiv.append(addOnPrice);
 
   let colorSwatchDiv = document.createElement("div");
   colorSwatchDiv.className = "sd-genie-option-color-swatch-box";
@@ -1263,19 +1316,33 @@ function ColorSwatches(el, optionsDiv, optionIndex) {
     console.log(ele, "colorswatchdata");
 
     let colorBox = document.createElement("div");
-    let tooltip = document.createElement("div");
-    tooltip.textContent = ele.value;
-    tooltip.style.display = "none"; // Initially hide the tooltip
-    tooltip.style.position = "fixed"; // Use fixed positioning
-    tooltip.style.backgroundColor = "#000000bf";
-    tooltip.style.color = "white";
-    tooltip.style.padding = "2px";
-    tooltip.style.border = "1px solid #ccc";
-    tooltip.style.borderRadius = "10px";
-    document.body.appendChild(tooltip);
+    // let tooltip = document.createElement("div");
+    // tooltip.textContent = ele.value;
+    // tooltip.style.display = "none"; // Initially hide the tooltip
+    // tooltip.style.position = "fixed"; // Use fixed positioning
+    // tooltip.style.backgroundColor = "#000000bf";
+    // tooltip.style.color = "white";
+    // tooltip.style.padding = "5px 10px";
+    // tooltip.style.borderRadius = "6px";
+    // tooltip.style.fontSize = "13px";
+    // tooltip.style.lineHeight = "normal";
+    // tooltip.style.marginTop = "8px";
+    // tooltip.style.marginLeft = "-5px";
+    // tooltip.style.textTransform = "capitalize";
+    // document.body.appendChild(tooltip);
 
     // colorBox.setAttribute("title", ele.value);
     colorBox.className = "sd-genie-color-box";
+
+
+    let newTooltip = document.createElement("span")
+    newTooltip.classList.add("tooltiptext")
+    newTooltip.textContent = ele.value;
+    if(ele.value.length > 0){
+      
+      colorBox.append(newTooltip)
+    }
+    
     colorSwatchDiv.append(colorBox);
     let innerColorBox = document.createElement("div");
     innerColorBox.className = "sd-genie-color-inner-box";
@@ -1315,17 +1382,17 @@ function ColorSwatches(el, optionsDiv, optionIndex) {
       let rect = colorLabel.getBoundingClientRect();
 
       // Position the tooltip below innerColorBox
-      tooltip.style.top = rect.bottom + "10px";
-      tooltip.style.left = rect.left + "px";
+      // tooltip.style.top = rect.bottom + "10px";
+      // tooltip.style.left = rect.left + "px";
 
       // Show the tooltip
-      tooltip.style.display = "block";
+      // tooltip.style.display = "block";
       // innerColorBox.style.background = el.setting.css.swatch_hover;
       innerColorBox.style.boxShadow =
         "0px 0px 19px 1px" + el.setting.css.swatch_hover;
     });
     colorLabel.addEventListener("mouseout", () => {
-      tooltip.style.display = "none";
+      // tooltip.style.display = "none";
 
       innerColorBox.style.boxShadow = "";
     });
@@ -1366,7 +1433,7 @@ let check = false
             TotalSelectionPrice()
             console.log("totalArr",totalArr)
 
-            let newPrice = showAmountWithCurrency(value);
+            let newPrice = showAmountWithCurrency(parseFloat(value).toFixed(2));
             // if (!check) {
             //   totalPrice = totalPrice + Number(value);
             //   console.log(totalPrice,"loo")
@@ -1395,6 +1462,7 @@ let check = false
     let helpTextOuterDiv = document.createElement("div");
     helpTextOuterDiv.style.textAlign = el.setting.css.alignment;
     let helpText = document.createElement("span");
+    helpTextOuterDiv.append(helpText);
     helpText.className = "sd-genie-option-helpText";
     optionsDiv.append(helpTextOuterDiv);
     helpText.innerText = el.setting.helptext;
@@ -1415,7 +1483,7 @@ function Paragraph(el, optionsDiv, optionIndex) {
 }
 function FileUpload(el, optionsDiv, optionIndex) {
   totalArr.push(0)
-  // console.log("FileUpload")
+  console.log("FileUpload",el)
   valdationArr.push({ required: false });
   addOnArray.push([]);
   addOnArray[optionIndex] = 0;
@@ -1464,8 +1532,15 @@ function FileUpload(el, optionsDiv, optionIndex) {
   uploadFileInput.className = "sd-upload";
   uploadFileInput.type = "file";
   uploadFileInput.accept = el.setting.allowed_extensions.join(",");
-  uploadFileInput.style.width = `${el.setting.css.columnWidth}%`;
+  imageUploadDiv.style.width = `${el.setting.css.columnWidth}%`;
+  uploadFileInput.style.width = "100%";
+
   uploadFileInput.style.background = el.setting.css.input_back_color;
+  if (el.setting.css.type == "rounded_border") {
+    uploadFileInput.style.borderRadius = "40px";
+  } else {
+    uploadFileInput.style.borderRadius = "0";
+  }
   let formInput = document.createElement("input");
   formInput.hidden = true;
   formInput.setAttribute("name", `properties[${el.setting.label}]`);
@@ -1476,7 +1551,7 @@ function FileUpload(el, optionsDiv, optionIndex) {
     const size = (file.size / 1024 / 1024).toFixed(2);
     console.log(size);
     if (size > 2) {
-      alert("File must be between the size of 2-4 MB");
+      alert("File size must be smaller than 2 MB");
       uploadFileInput.value = "";
     } else {
       const fileName = file.name;
@@ -1485,6 +1560,7 @@ function FileUpload(el, optionsDiv, optionIndex) {
           // alert("Invalid file type. Allowed file types: " + allowedExtensions.join(', '));
         uploadFileInput.value = "";
         console.log("not aloowed")
+        errormsg.classList.add("genie-required-error")
         errormsg.innerText = `Invalid file type. Allowed file types: ${allowedExtensions.join(', ')}`
         errormsg.style.color="red"
           return;
@@ -1575,12 +1651,14 @@ function FileUpload(el, optionsDiv, optionIndex) {
     let helpTextOuterDiv = document.createElement("div");
     helpTextOuterDiv.style.textAlign = el.setting.css.alignment;
     let helpText = document.createElement("span");
+    helpTextOuterDiv.append(helpText);
     helpText.className = "sd-genie-option-helpText";
     optionsDiv.append(helpTextOuterDiv);
     helpText.innerText = el.setting.helptext;
     helpText.style.color = el.setting.css.help_text_color;
     helpText.style.fontSize = el.setting.css.help_font_size + "px";
   }
+  
 }
 
 async function deleteUploadFile(
@@ -1631,7 +1709,7 @@ async function deleteUploadFile(
 function checkValidate() {
   let hasErrors = false;
   document
-    .querySelectorAll("#genie-required-error")
+    .querySelectorAll(".genie-required-error")
     ?.forEach((e) => e.remove());
   const check = valdationArr.forEach((el) => {
     if (el.required == true) {
@@ -1641,7 +1719,7 @@ function checkValidate() {
           `sd-genie-${el.class}`
         );
         let errorDiv = document.createElement("div");
-        errorDiv.id = "genie-required-error";
+        errorDiv.classList.add("genie-required-error");
         errParentDiv[0].append(errorDiv);
         errorDiv.innerText = requiredText;
         errorDiv.style.color = "red";
@@ -1768,7 +1846,7 @@ function cartButton() {
             hiddenBtn.click();
           }
         } else {
-          let myElement = document.getElementById("genie-required-error");
+          let myElement = document.querySelector("genie-required-error");
           myElement.scrollIntoView();
         }
       });

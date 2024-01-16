@@ -158,7 +158,8 @@ export const fileUpload = async (req, res) => {
       const shop = req.body.shop;
       const fileDataBuffer = Buffer.from(req.file.buffer, 'binary');
       let  uniqueName = new Date().toISOString().replace(/[-:.]/g,"") + req.file.originalname;
-      const key = `${shop.replace(".myshopify.com","")}/${uniqueName}`;
+      const key = `${shop.replace(".myshopify.com", "")}/uploads/${uniqueName}`;
+      console.log("keyy",key)
       const params = {
         Bucket: process.env.AWS_BUCKET, 
         Key: key, 
@@ -250,7 +251,7 @@ export async function createDraftProduct(req, res) {
         const filter = { shop: shop, pid: product_id };
         const data = {
           shop: shop,
-          pid: `gid://shopify/Product/${product_id}`,
+          pid: product_id,
           // product_status: "active",
         };
         await custom.create(data);

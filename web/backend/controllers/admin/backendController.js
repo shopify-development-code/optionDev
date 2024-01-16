@@ -246,7 +246,7 @@ export async function deleteDraftProducts(req, res) {
     for (const product of productList) {
       let input = {
         input: {
-          id: product.pid,
+          id: `gid://shopify/Product/${product.pid}`,
         },
       };
 
