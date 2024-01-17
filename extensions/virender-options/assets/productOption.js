@@ -1,4 +1,4 @@
-const server = "https://recruitment-library-listed-unto.trycloudflare.com";
+const server = "https://gained-bytes-carry-ethernet.trycloudflare.com";
 console.log("eeeee");
 let requiredText = "Please fill the required field."
 let optionProductName = "{{product_title}}-Selections"
@@ -258,8 +258,7 @@ function TextArea(el, optionsDiv, optionIndex) {
   TextArea.style.backgroundColor = el.setting.css.input_back_color;
   TextArea.style.color = el.setting.css.input_text_color;
   let formInput = document.createElement("input");
-  formInput.type = "text";
-  formInput.hidden = true;
+  formInput.type = "hidden";
   formInput.setAttribute("name", `properties[${el.setting.label}]`);
   let check = false;
   let checkValLength;
@@ -1808,10 +1807,12 @@ function cartButton() {
                         properties: {
                           _variant_id: productVariantId,
                           _unique_id: cartProductUniqueNumber,
+                          "Part of": productJson.title
+                          
                         },
                       },
                     ],
-                    attributes: { GENIE_PRODUCT_OPTION: "testing" },
+                    attributes: { is_genie_product_option: "true" },
                   };
                   fetch(window.Shopify.routes.root + "cart/add.js", {
                     method: "POST",

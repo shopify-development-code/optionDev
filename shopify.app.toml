@@ -2,7 +2,7 @@
 
 name = "virenderOptionApp"
 client_id = "345036bb02d550c5462f30f5035a200d"
-application_url = "https://recruitment-library-listed-unto.trycloudflare.com"
+application_url = "https://gained-bytes-carry-ethernet.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,10 +11,9 @@ scopes = "read_products,write_products,read_orders,write_orders,read_themes"
 
 [auth]
 redirect_urls = [
-  "https://recruitment-library-listed-unto.trycloudflare.com/auth/callback",
-  "https://recruitment-library-listed-unto.trycloudflare.com/auth/shopify/callback",
-  "https://recruitment-library-listed-unto.trycloudflare.com/api/auth/callback",
-  "https://recruitment-library-listed-unto.trycloudflare.com/.shopify/graphiql/auth/callback"
+  "https://gained-bytes-carry-ethernet.trycloudflare.com/auth/callback",
+  "https://gained-bytes-carry-ethernet.trycloudflare.com/auth/shopify/callback",
+  "https://gained-bytes-carry-ethernet.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

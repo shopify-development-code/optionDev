@@ -9,11 +9,12 @@
     "dev": "shopify app dev",
     "info": "shopify app info",
     "generate": "shopify app generate",
-    "deploy": "shopify app deploy"
+    "deploy": "shopify app deploy",
+    "start": "node web/index.js"
   },
   "dependencies": {
-    "@shopify/app": "^3.48.1",
-    "@shopify/cli": "^3.48.1",
+    "@shopify/app": "^3.53.0",
+    "@shopify/cli": "^3.53.0",
     "dotenv": "^16.3.1"
   }
 }

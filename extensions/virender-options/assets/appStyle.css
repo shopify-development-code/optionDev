@@ -517,7 +517,10 @@ input.sd-upload[disabled] {
 }
 
 .genie-options-watermark {
-    background: #dddddd;
-    padding: 5px 5px;
-    font-size: 12px;
+    background: #f5f5f5;
+    padding: 5px 10px;
+    font-size: 10px;
+}
+.sd-ado-rightnav .Polaris-TopBar__LeftContent {
+        display: none;
 }
