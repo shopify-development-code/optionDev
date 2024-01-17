@@ -301,8 +301,8 @@ label span input {
 .sd-search-header-Outer {
   display: flex;
   width: 100%;
-  max-width: 90%;
   margin-left: auto;
+  justify-content: center;
 }
 
 .sd-optionSet-name-input {
@@ -317,9 +317,9 @@ label span input {
 
 .sd-desktop-mobile-view {
   display: flex;
-  width: 100%;
+  /* width: 100%;
   max-width: 70%;
-  justify-content: center;
+   justify-content: center;  */
   align-items: center;
 }
 
@@ -805,7 +805,9 @@ label span input {
   padding: 0 30px;
   padding-left: 20px;
 }
-
+.sd-adotopnav .Polaris-TopBar {
+  height: auto;
+}
 .sd-ado-leftnav {
   -ms-flex: 0 0 25%;
   flex: 0 0 25%;
@@ -1112,6 +1114,7 @@ main#AppFrameMain .Polaris-Layout__Section--secondary {
 
 .sd-ado-rightnav .Polaris-TopBar__Container {
   width: 100%;
+  display: flex;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   justify-items: self-end;
 }

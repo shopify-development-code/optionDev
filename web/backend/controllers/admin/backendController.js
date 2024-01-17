@@ -251,9 +251,19 @@ export async function deleteDraftProducts(req, res) {
       };
 
       try {
-        let productDelete = await client.query({
-          data: { query: product_delete_mutation, variables: input },
+        // let productDelete = await client.query({
+        //   data: { query: product_delete_mutation, variables: input },
+        // });
+        let productDelete = await client.request(product_delete_mutation,{
+          variables: input ,
         });
+
+
+        // const response = await client.request(QUERY, {
+        //   variables: {first: 1},
+        //   headers: {myHeader: '1'},
+        //   retries: 2,
+        // });
 
         if (productDelete.body.data.productDelete.userErrors.length === 0) {
           // If there are no user errors, delete the product from the database

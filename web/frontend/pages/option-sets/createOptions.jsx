@@ -15,7 +15,7 @@ function FunctionalCreate() {
   
   const redirect = () => {
     // fullscreen.dispatch(Fullscreen.Action.ENTER)
-    // navigate("/option-sets");
+    navigate("/option-sets");
   };
 
   const { id } = useParams();

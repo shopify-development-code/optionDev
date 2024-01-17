@@ -1,8 +1,9 @@
 import { LATEST_API_VERSION } from "@shopify/shopify-api";
 import { shopifyApp } from "@shopify/shopify-app-express";
 import { SQLiteSessionStorage } from "@shopify/shopify-app-session-storage-sqlite";
-import { restResources } from "@shopify/shopify-api/rest/admin/2023-07";
-
+let { restResources } = await import(
+  `@shopify/shopify-api/rest/admin/${LATEST_API_VERSION}`
+);
 const DB_PATH = `${process.cwd()}/database.sqlite`;
 
 console.log(LATEST_API_VERSION, "api")

@@ -6,7 +6,7 @@ import serveStatic from "serve-static";
 import shopify from "./shopify.js";
 import GDPRWebhookHandlers from "./gdpr.js";
 import dbMongo from "./backend/connection/conn.js";
-import { credentials } from "./backend/Schema/schema.js";
+import {merchantInfo, credentials } from "./backend/Schema/schema.js";
 import { DataType} from "@shopify/shopify-api";
 import adminRoutes from "./backend/Routes/admin/adminRoutes.js";
 import cors from 'cors';
@@ -115,6 +115,20 @@ app.get(
       await shopData.save();
       console.log("Shop Info successfully saved");
     }
+    const merchantData = await shopify.api.rest.Shop.all({ session });
+    console.log(merchantData.data[0], "data merchant")
+    const saveData = await merchantInfo.findOneAndUpdate({ shop }, {
+      shop,
+      email : merchantData.data[0].email,
+      country_name: merchantData.data[0].country_name,
+      shop_owner : merchantData.data[0].shop_owner,
+      iana_timezone : merchantData.data[0].iana_timezone
+    }, {
+      upsert: true, 
+      new : true
+    })
+     
+    console.log("Merchant info Succesfully Saved!", saveData)
     next();
   },
   shopify.redirectToShopifyOrAppRoot()

@@ -74,6 +74,7 @@ const storeSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const merchantInfo = mongoose.model("merchantInfo", storeSchema);
+storeSchema.index({ shop: 1 }); 
 
-export default merchantInfo;
+export const merchantInfo = mongoose.model("merchantInfo", storeSchema);
+

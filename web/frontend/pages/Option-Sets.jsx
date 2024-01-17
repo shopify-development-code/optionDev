@@ -15,6 +15,7 @@ import {
   EmptyState,
   Icon,
   Loading,
+  LegacyCard,
 } from "@shopify/polaris";
 import {
   EditMajor,
@@ -545,16 +546,20 @@ export default function FrameExample(props) {
       );
     } else {
       return (
+        <>
+        <LegacyCard sectioned>
         <EmptyState
           heading="Let's create your first option set"
-          action={{
-            content: "Create",
-            onAction: () => {
-              setStep(1);
-            },
-          }}
+          // action={{content: 'Add transfer'}}
+          // secondaryAction={{
+          //   content: 'Learn more',
+          //   url: 'https://help.shopify.com',
+          // }}
           image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
-        ></EmptyState>
+        >
+        </EmptyState>
+          </LegacyCard>
+          </>
       );
     }
   }
